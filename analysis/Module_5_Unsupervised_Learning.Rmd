@@ -43,7 +43,7 @@ Normalization/Scaling: Standardize the data to bring features to a common scale,
 ```{r}
 # Example in R
 library(dplyr)
-data <- read.csv("path/to/your/data.csv")
+data <- iris[,-5]
 data_clean <- na.omit(data)  # Remove missing values
 data_scaled <- scale(data_clean)  # Normalize data
 ```
@@ -66,7 +66,6 @@ Filter Out Low Variance Genes: Genes with low variance are less informative for 
 ```{r}
 #
 variances <- apply(data_scaled, 2, var)
-data_filtered <- data_scaled[, variances > threshold]  # Keep only high variance genes
 
 ```
 
@@ -77,85 +76,9 @@ Steps:
 - Identify and exclude outcome variables from the dataset.
 - Ensure the dataset contains only features used for unsupervised learning.
 
-```{r}
-# Example in R
-data_no_outcome <- data_filtered %>%
-    select(-outcome_variable)  # Remove the outcome variable
-```
 
 
 #### Step 3: Clustering Prep & Criterion Evaluation
 Objective: Determine the number of clusters and evaluation criteria to ensure meaningful clusters.
 
 Determine Number of Clusters: Use methods like the elbow method, silhouette score, or cross-validation to decide the optimal number of clusters.
-
-```{r}
-# Example in R using KODAMA
-library(KODAMA)
-# Define parameters for KODAMA
-results <- KODAMA.matrix(data_filtered, M = 100, Tcycle = 20, dims = 2)
-```
-
-#### Step 4: KODAMA for Feature Extraction & Clustering
-Objective: Use KODAMA for unsupervised feature extraction and clustering.
-
-Feature Extraction with KODAMA: Extract relevant features from the data to simplify the clustering process.
-Clustering with KODAMA: Perform clustering based on the extracted features.
-
-```{r}
-# Example in R using KODAMA
-# KODAMA performs feature extraction and clustering
-results <- KODAMA.matrix(data_filtered, M = 100, Tcycle = 20, FUN = "KNN")
-
-```
-
-#### Step 5: Visualization with PCA
-Objective: Simplify and visualize the dataset using PCA to understand the structure and separation of clusters.
-
-Principal Component Analysis (PCA): Reduces dimensionality while preserving variance, helping to visualize data clusters.
-
-```{r}
-# Example in R
-library(ggplot2)
-pca <- prcomp(data_filtered, scale. = TRUE)
-pca_results <- as.data.frame(pca$x)
-ggplot(pca_results, aes(PC1, PC2, color = as.factor(cluster_labels))) + 
-    geom_point() + 
-    ggtitle("PCA of Gene Expression Data")
-```
-
-#### Step 6: Visualization with t-SNE
-Objective: Use t-SNE to visualize high-dimensional data in a lower-dimensional space.
-
-t-SNE: Captures complex nonlinear relationships and helps visualize clusters in a 2D or 3D space.
-
-```{r}
-# Example in R
-library(Rtsne)
-tsne_results <- Rtsne(data_filtered)
-tsne_df <- as.data.frame(tsne_results$Y)
-ggplot(tsne_df, aes(V1, V2, color = as.factor(cluster_labels))) + 
-    geom_point() + 
-    ggtitle("t-SNE Visualization of Gene Expression Data")
-```
-
-#### Step 7: Advanced Visualization with KODAMA
-Objective: Use KODAMA.visualization to project KODAMA clustering results into a low-dimensional space for better interpretation.
-
-KODAMA.visualization: This function allows you to visualize the dissimilarity matrix obtained from KODAMA in a low-dimensional space using methods such as t-SNE, MDS, or UMAP
-#### Determine optimal K:
-
-```{r}
-# Example in R using KODAMA.visualization
-library(KODAMA)
-visualization_results <- KODAMA.visualization(results, method = "UMAP")
-# Convert visualization results to a data frame for plotting
-visualization_df <- as.data.frame(visualization_results)
-ggplot(visualization_df, aes(V1, V2, color = as.factor(cluster_labels))) + 
-    geom_point() + 
-    ggtitle("KODAMA Visualization of Gene Expression Data")
-
-```
-
-
-
