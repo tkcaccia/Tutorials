@@ -1,0 +1,161 @@
+---
+title: "Module 3: Multivariate Regression"
+author: "Stefano Cacciatore"
+output: 
+  html_document:
+  toc: true
+  toc_depth: 2
+  theme: united
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+---
+
+## Unsupervised Learning (UL)
+
+UL is a type of ML that helps us discover patterns in data **without** needing predefined labels or much human guidance. 
+
+Unlike supervised learning, which uses data with known outcomes, UL explores **relationships within** the data itself. 
+
+A common approach to UL is **clustering** --> where data points are grouped based on similarities. Methods include **K-means clustering**, **Hierarchical clustering** or **Probabilistic clustering**.
+
+- For example, if we are analysing mRNA expression data, we use clustering to group genes with similar expression profiles. 
+
+We also apply dimensionality reduction techniques: **PCA** (Principal Component Analysis) & **t-SNE** (t-Distributed Stochastic Neighbor Embedding) to **simplify** and **visualize** complex data. 
+
+- This allows us to uncover hidden structures and gain insights into the genetic basis of various conditions. 
+
+Models trained using **UNLABELLED** data 
+
+-	Only **INPUT** provided 
+
+-	Discovers **patterns**, **groupings**, or **relationships** within data 
+
+```{r}
+library(dplyr)
+```
+
+#### Step 1: Prepare Data
+
+Objective: Prepare and clean the data to ensure its quality and suitability for analysis.
+
+Data Cleaning: Handle missing values, outliers, and ensure that data is formatted correctly.
+Normalization/Scaling: Standardize the data to bring features to a common scale, making it easier for clustering algorithms to work effectively.
+
+```{r}
+# Example in R
+library(dplyr)
+data <- read.csv("path/to/your/data.csv")
+data_clean <- na.omit(data)  # Remove missing values
+data_scaled <- scale(data_clean)  # Normalize data
+```
+
+#### Step 2: Data Filtering and Reduction
+
+To enhance the quality of our clustering, we will only focus on variables that show significant variation, as they provide more meaningful insights for grouping. 
+
+This step involves filtering out variables with ***low variance*** and any ***missing values*** to ensure our data is clean and robust for analysis.
+
+This step is crucial for preprocessing data before it's used for downstream analysis, such as clustering or visualization. 
+
+The aim is to filter out variables that are ***unlikely to be informative*** for ***distinguishing between different samples***. 
+
+Objective: Focus on genes or features that have significant variability to improve clustering results.
+
+Filter Out Low Variance Genes: Genes with low variance are less informative for distinguishing between samples.
+
+
+```{r}
+#
+variances <- apply(data_scaled, 2, var)
+data_filtered <- data_scaled[, variances > threshold]  # Keep only high variance genes
+
+```
+
+##### SIDE: 
+
+- Objective: Ensure that the analysis is purely unsupervised by removing any outcome or label variables from the data.
+Steps:
+- Identify and exclude outcome variables from the dataset.
+- Ensure the dataset contains only features used for unsupervised learning.
+
+```{r}
+# Example in R
+data_no_outcome <- data_filtered %>%
+    select(-outcome_variable)  # Remove the outcome variable
+```
+
+
+#### Step 3: Clustering Prep & Criterion Evaluation
+Objective: Determine the number of clusters and evaluation criteria to ensure meaningful clusters.
+
+Determine Number of Clusters: Use methods like the elbow method, silhouette score, or cross-validation to decide the optimal number of clusters.
+
+```{r}
+# Example in R using KODAMA
+library(KODAMA)
+# Define parameters for KODAMA
+results <- KODAMA.matrix(data_filtered, M = 100, Tcycle = 20, dims = 2)
+```
+
+#### Step 4: KODAMA for Feature Extraction & Clustering
+Objective: Use KODAMA for unsupervised feature extraction and clustering.
+
+Feature Extraction with KODAMA: Extract relevant features from the data to simplify the clustering process.
+Clustering with KODAMA: Perform clustering based on the extracted features.
+
+```{r}
+# Example in R using KODAMA
+# KODAMA performs feature extraction and clustering
+results <- KODAMA.matrix(data_filtered, M = 100, Tcycle = 20, FUN = "KNN")
+
+```
+
+#### Step 5: Visualization with PCA
+Objective: Simplify and visualize the dataset using PCA to understand the structure and separation of clusters.
+
+Principal Component Analysis (PCA): Reduces dimensionality while preserving variance, helping to visualize data clusters.
+
+```{r}
+# Example in R
+library(ggplot2)
+pca <- prcomp(data_filtered, scale. = TRUE)
+pca_results <- as.data.frame(pca$x)
+ggplot(pca_results, aes(PC1, PC2, color = as.factor(cluster_labels))) + 
+    geom_point() + 
+    ggtitle("PCA of Gene Expression Data")
+```
+
+#### Step 6: Visualization with t-SNE
+Objective: Use t-SNE to visualize high-dimensional data in a lower-dimensional space.
+
+t-SNE: Captures complex nonlinear relationships and helps visualize clusters in a 2D or 3D space.
+
+```{r}
+# Example in R
+library(Rtsne)
+tsne_results <- Rtsne(data_filtered)
+tsne_df <- as.data.frame(tsne_results$Y)
+ggplot(tsne_df, aes(V1, V2, color = as.factor(cluster_labels))) + 
+    geom_point() + 
+    ggtitle("t-SNE Visualization of Gene Expression Data")
+```
+
+#### Step 7: Advanced Visualization with KODAMA
+Objective: Use KODAMA.visualization to project KODAMA clustering results into a low-dimensional space for better interpretation.
+
+KODAMA.visualization: This function allows you to visualize the dissimilarity matrix obtained from KODAMA in a low-dimensional space using methods such as t-SNE, MDS, or UMAP
+#### Determine optimal K:
+
+```{r}
+# Example in R using KODAMA.visualization
+library(KODAMA)
+visualization_results <- KODAMA.visualization(results, method = "UMAP")
+# Convert visualization results to a data frame for plotting
+visualization_df <- as.data.frame(visualization_results)
+ggplot(visualization_df, aes(V1, V2, color = as.factor(cluster_labels))) + 
+    geom_point() + 
+    ggtitle("KODAMA Visualization of Gene Expression Data")
+
+```
+
+
+

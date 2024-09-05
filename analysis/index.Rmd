@@ -1,0 +1,31 @@
+---
+title: "Data Analysis in R"
+site: workflowr::wflow_site
+output:
+  workflowr::wflow_html:
+    toc: false
+editor_options:
+  chunk_output_type: console
+---
+
+This site is designed to provide you with valuable insights and hands-on experience through a series of detailed modules. Each module covers a different aspect of data science, from foundational concepts to advanced techniques.
+
+## Modules
+
+- [Module 1: Basics](Module_1_Basics.html)
+
+Start with the fundamentals. This module covers the essential concepts and methods that form the foundation of data analysis.
+
+- [Module 2: Visualisation](Module_2_Visualisation.html)
+
+Learn how to effectively communicate data insights through visual representation. This module delves into various visualization techniques and tools.
+
+- [Module 3: Univariate Analysis](Module_3_Univariate_Analysis.html)
+
+Explore techniques for analyzing univariate data. This module includes methods for summarizing and interpreting individual variables.
+
+- [Module 5: Unsupervised Learning](Module_5_Unsupervised_Learning.html)
+
+Discover unsupervised learning methods. This module focuses on techniques for identifying patterns and structures in unlabeled data, including clustering and dimensionality reduction.
+
+**Feel free to navigate through the modules using the links above to gain a deeper understanding of each topic. Whether you're new to data science or looking to refine your skills, this site offers a wealth of information and practical exercises to enhance your knowledge.**
