@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Stefano Cacciatore" />
+
+<meta name="date" content="2024-09-05" />
+
+<title>Module 3: Univariate Analysis</title>
+
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">R Tutorial</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Module 3: Univariate Analysis</h1>
+<h4 class="author">Stefano Cacciatore</h4>
+<h4 class="date">September 05, 2024</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2024-09-05
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>Tutorials/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.1). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20240905code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20240905)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20240905code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20240905)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreedbbf64a13dd39b3b9d61c9ef937c76fa8b968481targetblankdbbf64aa">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/tkcaccia/Tutorials/tree/dbbf64a13dd39b3b9d61c9ef937c76fa8b968481" target="_blank">dbbf64a</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreedbbf64a13dd39b3b9d61c9ef937c76fa8b968481targetblankdbbf64aa"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/tkcaccia/Tutorials/tree/dbbf64a13dd39b3b9d61c9ef937c76fa8b968481" target="_blank">dbbf64a</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were
+made to the R Markdown
+(<code>analysis/Module_3_Univariate_Analysis.Rmd</code>) and HTML
+(<code>docs/Module_3_Univariate_Analysis.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/8486be7d2014ccd12d74778795578c68ab79519c/analysis/Module_3_Univariate_Analysis.Rmd" target="_blank">8486be7</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-05
+</td>
+<td>
+update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="univariate-analysis" class="section level2">
+<h2>Univariate Analysis</h2>
+<p><em>What is univariate analysis ?</em></p>
+<p>The idea of univariate analysis is to first understand the variables
+individually. It is typically the first step in understanding a data
+set. A variable in UA is a condition or subset that your data falls
+into. You can think of it as a “category” such as “age”, “weight” or
+“length”. However, UA does not look at &gt; than 1 variable at a time
+(this would be a bivariate analysis)</p>
+<div id="learning-objectives" class="section level4">
+<h4>Learning Objectives:</h4>
+<ul>
+<li><p>Summarising Data</p></li>
+<li><p>Frequency Tables</p></li>
+<li><p>Univariate Hypothesis Testing</p></li>
+<li><p>Visualising Univariate Data</p></li>
+<li><p>Correlation</p></li>
+<li><p>Simple Regression analysis</p></li>
+</ul>
+<pre class="r"><code># Installation of packages (usually needed)
+# install.packages(&quot;ggplot2&quot;)
+# install.packages(&quot;dplyr&quot;)
+# install.packages(&quot;ggpubr&quot;)
+# install.packages(&quot;corrplot&quot;)
+
+# Loading of packages
+library(ggplot2)
+library(dplyr)</code></pre>
+<pre><code>
+Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    filter, lag</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(ggpubr)
+library(corrplot)</code></pre>
+<pre><code>corrplot 0.92 loaded</code></pre>
+<pre class="r"><code>library(stats)</code></pre>
+</div>
+<div id="summarising-data" class="section level3">
+<h3>1. Summarising Data</h3>
+<pre class="r"><code># Using the data set stored in Rstudio called &quot;cars&quot;
+
+# We need to create an array of our single variable for UA:
+x &lt;- cars$speed</code></pre>
+<p>Looking at the <strong>CENTRAL TENDENCY</strong> of the data:</p>
+<pre class="r"><code>mean(x)</code></pre>
+<pre><code>[1] 15.4</code></pre>
+<pre class="r"><code>median(x)</code></pre>
+<pre><code>[1] 15</code></pre>
+<pre class="r"><code>mode(x)</code></pre>
+<pre><code>[1] &quot;numeric&quot;</code></pre>
+<p>Looking at the <strong>DISPERSION</strong> of the data:</p>
+<pre class="r"><code>min(x)</code></pre>
+<pre><code>[1] 4</code></pre>
+<pre class="r"><code>max(x)</code></pre>
+<pre><code>[1] 25</code></pre>
+<pre class="r"><code># Range of the data:
+range(x)</code></pre>
+<pre><code>[1]  4 25</code></pre>
+<pre class="r"><code># Inter-quantile range:
+IQR(x)</code></pre>
+<pre><code>[1] 7</code></pre>
+<pre class="r"><code># Variance --&gt;
+var(x)</code></pre>
+<pre><code>[1] 27.95918</code></pre>
+<pre class="r"><code># Standard Deviation:
+sd(x)</code></pre>
+<pre><code>[1] 5.287644</code></pre>
+<p><strong><em>TIP:</em></strong> you can use the function
+<code>summary</code> to produce result summaries of the results of
+various model fitting functions.</p>
+<pre class="r"><code>summary(x)</code></pre>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    4.0    12.0    15.0    15.4    19.0    25.0 </code></pre>
+</div>
+<div id="frequency-tables" class="section level3">
+<h3>2. Frequency Tables:</h3>
+<ul>
+<li><p>The frequency of an observation tells you the number of times the
+observation occurs in the data.</p></li>
+<li><p>A frequency table is a collection of these observations and their
+frequencies.</p></li>
+<li><p>A frequency table can be shown either graphically (bar
+chart/histogram) or as a frequency distribution table.</p></li>
+<li><p>These tables can show qualitative (categorical) or quantitative
+(numeric) variables.</p></li>
+</ul>
+<div id="example-data" class="section level4">
+<h4>Example Data</h4>
+<p>We will use a data frame with a categorical variable and a numerical
+variable to demonstrate each type of table.</p>
+<pre class="r"><code># Create example data
+set.seed(123)  # For reproducibility
+data &lt;- data.frame(
+  category = sample(c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;), 100, replace = TRUE),
+  value = rnorm(100, mean = 50, sd = 10)
+)
+head(data)</code></pre>
+<pre><code>  category    value
+1        C 52.53319
+2        C 49.71453
+3        C 49.57130
+4        B 63.68602
+5        C 47.74229
+6        B 65.16471</code></pre>
+<pre class="r"><code># Frequency table for the categorical variable
+freq_table &lt;- table(data$category)
+freq_table</code></pre>
+<pre><code>
+ A  B  C  D 
+28 26 29 17 </code></pre>
+<pre class="r"><code># Qualitative Variables:
+freq_table_numeric &lt;- table(data$value)
+freq_table_numeric </code></pre>
+<pre><code>
+26.9083112435919 29.4675277845948 33.3205806341186 33.8211729171084 
+               1                1                1                1 
+33.9846382642541 34.2785584085451 34.5124719576978 34.8533234621825 
+               1                1                1                1 
+ 35.382444150041 35.3935992907518  35.561068390282 37.1296952396482 
+               1                1                1                1 
+37.7928228774546 39.2820877352442 39.7357909969322 39.7587120939509 
+               1                1                1                1 
+39.8142461689291 40.3814336586987 40.4838143273498  40.525253858152 
+               1                1                1                1 
+41.5029565396642 42.1509553054292  42.895934363007 42.9079923741761 
+               1                1                1                1 
+43.1199138353264 43.4805009830454 43.5929399169462 43.7209392396063 
+               1                1                1                1 
+43.9974041285287 44.2465303739161  44.690934778297  44.976765468907 
+               1                1                1                1 
+45.0896883394346 45.0944255629933 45.7750316766038 46.1977347971224 
+               1                1                1                1 
+46.2933996820759 46.5245740060227 46.6679261633058 46.7406841446877 
+               1                1                1                1 
+47.1522699294899 47.3780251059753 47.4390780780175 47.5330812153763 
+               1                1                1                1 
+47.6429964089952 47.7422901434073 47.7951343818125 48.6110863756096 
+               1                1                1                1 
+ 49.286919138764 49.4443803447546 49.5497227519108 49.5712954270868 
+               1                1                1                1 
+ 49.714532446513 50.0576418589989 50.4123292199294  50.530042267305 
+               1                1                1                1 
+50.7796084956371 51.0567619414894 51.1764659710013 51.2385424384461 
+               1                1                1                1 
+51.8130347974915 52.1594156874397 52.3538657228486 52.3873173511144 
+               1                1                1                1 
+52.5331851399475 52.5688370915653 53.0115336216671 53.0352864140426 
+               1                1                1                1 
+ 53.317819639157 53.7963948275988 53.8528040112633  54.351814908338 
+               1                1                1                1 
+54.4820977862943 54.5150405307921 55.1940720394346 55.4839695950807 
+               1                1                1                1 
+55.8461374963607 56.0796432222503 56.4437654851883 56.8791677297583 
+               1                1                1                1 
+57.0178433537471 57.3994751087733 59.1899660906077 59.2226746787974 
+               1                1                1                1 
+59.9350385596212 60.0573852446226  60.255713696967 60.9683901314935 
+               1                1                1                1 
+61.3133721341418 61.4880761845109 63.6065244853001 63.6860228401446 
+               1                1                1                1 
+64.4455085842335 65.1647060442954 65.3261062618519 68.4386200523221 
+               1                1                1                1 
+69.0910356921748 70.5008468562714 71.0010894052567 71.8733299301658 
+               1                1                1                1 </code></pre>
+<p><strong>Note:</strong> the frequency table is CASE-SENSITIVE so the
+frequencies of the variables corresponds to how many times that specific
+number of string appears.</p>
+</div>
+<div id="grouped-tables" class="section level4">
+<h4>Grouped Tables:</h4>
+<p>Grouped tables aggregate the data into groups or bins.</p>
+<pre class="r"><code># 1st Step: Create BINS for the numerical data
+bins &lt;- cut(x, breaks = 5)
+freq_table_numeric &lt;- table(bins)
+freq_table_numeric</code></pre>
+<pre><code>bins
+ (3.98,8.2]  (8.2,12.4] (12.4,16.6] (16.6,20.8]   (20.8,25] 
+          5          10          13          15           7 </code></pre>
+<pre class="r"><code># Group data into bins and create a grouped table:
+grouped_table &lt;- table(cut(x, breaks = 5))
+grouped_table</code></pre>
+<pre><code>
+ (3.98,8.2]  (8.2,12.4] (12.4,16.6] (16.6,20.8]   (20.8,25] 
+          5          10          13          15           7 </code></pre>
+</div>
+<div id="percentage-proportion-tables" class="section level4">
+<h4>Percentage (Proportion) Tables</h4>
+<p>Percentage tables show the proportion of each unique value or group
+in the data.</p>
+<pre class="r"><code># Percentage table for the categorical variable
+percentage_table &lt;- prop.table(table(x)) * 100
+percentage_table</code></pre>
+<pre><code>x
+ 4  7  8  9 10 11 12 13 14 15 16 17 18 19 20 22 23 24 25 
+ 4  4  2  2  6  4  8  8  8  6  4  6  8  6 10  2  2  8  2 </code></pre>
+<pre class="r"><code># Percentage table for the grouped numerical data
+percentage_table_numeric &lt;- prop.table(table(cut(x, breaks = 5))) * 100
+percentage_table_numeric</code></pre>
+<pre><code>
+ (3.98,8.2]  (8.2,12.4] (12.4,16.6] (16.6,20.8]   (20.8,25] 
+         10          20          26          30          14 </code></pre>
+</div>
+<div id="cumulative-proportion-tables" class="section level4">
+<h4>Cumulative Proportion Tables</h4>
+<p>Cumulative proportion tables show the cumulative proportion of each
+unique value or group.</p>
+<pre class="r"><code># Cumulative proportion table for the categorical variable
+cumulative_prop &lt;- cumsum(prop.table(table(data$category)))
+cumulative_prop &lt;- cumulative_prop * 100
+cumulative_prop</code></pre>
+<pre><code>  A   B   C   D 
+ 28  54  83 100 </code></pre>
+<pre class="r"><code># Cumulative proportion table for the grouped numerical data
+cumulative_prop_numeric &lt;- cumsum(prop.table(table(cut(x, breaks = 5))))
+cumulative_prop_numeric &lt;- cumulative_prop_numeric * 100
+cumulative_prop_numeric</code></pre>
+<pre><code> (3.98,8.2]  (8.2,12.4] (12.4,16.6] (16.6,20.8]   (20.8,25] 
+         10          30          56          86         100 </code></pre>
+<p><span style="color:red;"><strong><em>Question
+1:</em></strong></span></p>
+<p>Using the <code>cars</code> datset:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Calculate the mean, median, and standard deviation of variable
+“speed”.</p></li>
+<li><p>Interpret what these statistics tell you about the speed
+data.</p></li>
+<li><p>Compute the range and interquartile range (IQR) of
+speed.</p></li>
+<li><p>What do these measures reveal about the dispersion of the speed
+data?</p></li>
+<li><p>Use the summary function to get a summary of x.</p></li>
+<li><p>Describe the central tendency and dispersion metrics provided by
+the summary output.</p></li>
+</ol>
+<p><span style="color:red;"><strong><em>Question
+2:</em></strong></span></p>
+<p><em>Using the below:</em></p>
+<pre class="r"><code>xy &lt;- data.frame(
+  category = sample(c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;), 100, replace = TRUE)
+)
+head(xy)</code></pre>
+<pre><code>  category
+1        B
+2        B
+3        A
+4        B
+5        A
+6        A</code></pre>
+<ol style="list-style-type: lower-alpha">
+<li><p>Create a frequency table for the category variable.</p></li>
+<li><p>What is the frequency of each category?</p></li>
+</ol>
+<p><em>Using the below:</em></p>
+<pre class="r"><code>data &lt;- data.frame(
+  value = rnorm(100, mean = 50, sd = 10)
+)</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li><p>Create a frequency table for the value variable.</p></li>
+<li><p>How many observations fall into each unique value?</p></li>
+</ol>
+<p><em>Using the below:</em></p>
+<pre class="r"><code>x &lt;- data$value
+bins &lt;- cut(x, breaks = 5)</code></pre>
+<ol start="5" style="list-style-type: lower-alpha">
+<li><p>Create a grouped frequency table for the value variable using 5
+bins.</p></li>
+<li><p>What are the frequencies for each bin?</p></li>
+</ol>
+<p><em>Using the below:</em></p>
+<pre class="r"><code>x &lt;- data$value
+bins &lt;- cut(x, breaks = 5)</code></pre>
+<ol start="7" style="list-style-type: lower-alpha">
+<li><p>Create a percentage (proportion) table for the grouped value
+data.</p></li>
+<li><p>What percentage of the observations fall into each bin?</p></li>
+</ol>
+<details>
+<summary>
+Answers:
+</summary>
+<pre class="r"><code># Question 1:
+# a. Calculate the mean, median, and standard deviation of variable &quot;speed&quot;
+mean_speed &lt;- mean(x)
+median_speed &lt;- median(x)
+sd_speed &lt;- sd(x)
+
+# c. Compute the range and interquartile range (IQR) of speed
+range_speed &lt;- range(x)
+iqr_speed &lt;- IQR(x)
+
+# e. Use the summary function to get a summary of x
+summary_speed &lt;- summary(x)
+
+# Question 2:
+# a. Create a frequency table for the category variable
+freq_table_category &lt;- table(xy$category)
+
+# c. Create a frequency table for the value variable
+freq_table_value &lt;- table(data$value)
+
+# e. Create a grouped frequency table for the value variable using 5 bins
+grouped_table &lt;- table(bins)
+
+# g. Create a percentage (proportion) table for the grouped value data
+percentage_table &lt;- prop.table(grouped_table) * 100</code></pre>
+</div>
+</div>
+<div id="univariate-hypothesis-testing" class="section level3">
+<h3>3. Univariate Hypothesis Testing:</h3>
+<p>Often, the data you are dealing with is a subset (sample) of the
+complete data (population). Thus, the common question here is:</p>
+<ul>
+<li><em>Can the findings of the sample be extrapolated to the
+population? i.e., Is the sample representative of the population, or has
+the population changed?</em></li>
+</ul>
+<p>Such questions are answered using specific hypothesis tests designed
+to deal with such univariate data-based problems.</p>
+<p>Example Dataframe:</p>
+<pre class="r"><code>set.seed(42)  # For reproducibility
+
+# Generate numerical data
+sample_data_large &lt;- rnorm(50, mean = 100, sd = 15)  # Sample size &gt; 30
+sample_data_small &lt;- rnorm(20, mean = 100, sd = 15)  # Sample size &lt; 30
+
+# Known population parameters
+population_mean &lt;- 100
+population_sd &lt;- 15
+
+# Generate categorical data
+category_data &lt;- sample(c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;), 100, replace = TRUE)
+ordinal_data &lt;- sample(c(&quot;Low&quot;, &quot;Medium&quot;, &quot;High&quot;), 100, replace = TRUE)</code></pre>
+<ol style="list-style-type: lower-alpha">
+<li><strong>Z Test:</strong> Used for numerical (quantitative) data
+where the sample size is greater than 30 and the population’s standard
+deviation is known.</li>
+</ol>
+<pre class="r"><code># Z Test: Test if sample mean is significantly different from population mean
+library(stats)
+
+# Perform Z Test
+z_score &lt;- (mean(sample_data_large) - population_mean) / (population_sd / sqrt(length(sample_data_large)))
+z_score</code></pre>
+<pre><code>[1] -0.2522376</code></pre>
+<pre class="r"><code>p_value_z &lt;- 2 * pnorm(-abs(z_score))  # Two-tailed test
+p_value_z</code></pre>
+<pre><code>[1] 0.8008574</code></pre>
+<p>Interpretation: If the p-value is less than the significance level
+(commonly 0.05), the sample mean is significantly different from the
+population mean.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li><strong>One-Sample t-Test:</strong> Used for numerical
+(quantitative) data where the sample size is less than 30 or the
+population’s standard deviation is unknown.</li>
+</ol>
+<pre class="r"><code># One-Sample t-Test: Test if sample mean is significantly different from population mean
+t_test_result &lt;- t.test(sample_data_small, mu = population_mean)
+t_test_result</code></pre>
+<pre><code>
+    One Sample t-test
+
+data:  sample_data_small
+t = 1.2497, df = 19, p-value = 0.2266
+alternative hypothesis: true mean is not equal to 100
+95 percent confidence interval:
+  97.17831 111.18375
+sample estimates:
+mean of x 
+  104.181 </code></pre>
+<p>Interpretation: The t-test result provides a p-value and confidence
+interval for the sample mean. A p-value less than 0.05 indicates a
+significant difference from the population mean.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li><strong>Chi-Square Test:</strong> Used with ordinal categorical
+data</li>
+</ol>
+<pre class="r"><code># Chi-Square Test: Test the distribution of categorical data
+observed_counts &lt;- table(category_data)
+expected_counts &lt;- rep(length(category_data) / length(observed_counts), length(observed_counts))
+
+chi_square_result &lt;- chisq.test(observed_counts, p = expected_counts / sum(expected_counts))
+chi_square_result</code></pre>
+<pre><code>
+    Chi-squared test for given probabilities
+
+data:  observed_counts
+X-squared = 2.18, df = 2, p-value = 0.3362</code></pre>
+<p>Interpretation: The Chi-Square test assesses whether the observed
+frequencies differ from the expected frequencies. A p-value less than
+0.05 suggests a significant difference.</p>
+<ol start="4" style="list-style-type: lower-alpha">
+<li><strong>Kolmogorov-Smirnov Test:</strong> Used with nominal
+categorical data</li>
+</ol>
+<pre class="r"><code># Kolmogorov-Smirnov Test: Compare sample distribution to a normal distribution
+ks_test_result &lt;- ks.test(sample_data_large, &quot;pnorm&quot;, mean = population_mean, sd = population_sd)
+ks_test_result</code></pre>
+<pre><code>
+    Exact one-sample Kolmogorov-Smirnov test
+
+data:  sample_data_large
+D = 0.077011, p-value = 0.906
+alternative hypothesis: two-sided</code></pre>
+<p>Interpretation: The KS test assesses whether the sample follows the
+specified distribution. A p-value less than 0.05 indicates a significant
+deviation from the normal distribution.</p>
+</div>
+<div id="visualising-univariate-data" class="section level3">
+<h3>4. Visualising Univariate Data:</h3>
+<p>Visualizing univariate data helps us understand the distribution and
+patterns within a single variable. Below, we’ll cover visualization
+techniques for both categorical and numeric data.</p>
+<p>Example Data:</p>
+<pre class="r"><code>set.seed(42)  # For reproducibility
+
+# Numeric data
+numeric_data &lt;- rnorm(100, mean = 50, sd = 10)
+
+# Categorical data
+categorical_data &lt;- sample(c(&quot;Category A&quot;, &quot;Category B&quot;, &quot;Category C&quot;), 100, replace = TRUE)</code></pre>
+<ol style="list-style-type: lower-alpha">
+<li>Visualising <strong>Numeric</strong> Data:</li>
+</ol>
+<p>A histogram shows the distribution of numeric data by dividing it
+into bins and counting the frequency of data points in each bin.</p>
+<pre class="r"><code>library(ggplot2)
+# Histogram
+ggplot(data.frame(numeric_data), aes(x = numeric_data)) +
+  geom_histogram(binwidth = 2.5, aes(y = ..density..), fill = &quot;skyblue&quot;, color = &quot;white&quot;, alpha = 0.7) +
+  geom_density(color = &quot;darkblue&quot;, size = 1) +  # Added a density line
+  labs(title = &quot;Histogram&quot;,x = &quot;Value&quot;, y = &quot;Density&quot;) +
+  theme_classic(base_size = 15) +
+  theme(plot.title = element_text(hjust = 0.5, face = &quot;bold&quot;))</code></pre>
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+generated.</code></pre>
+<pre><code>Warning: The dot-dot notation (`..density..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(density)` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+generated.</code></pre>
+<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-30-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>A <strong>boxplot</strong> provides a summary of the numeric data
+distribution, highlighting the median, quartiles, and potential
+outliers.</p>
+<pre class="r"><code># Boxplot
+ggplot(data.frame(numeric_data), aes(x = &quot;&quot;, y = numeric_data)) +
+  geom_boxplot(fill = &quot;lightgreen&quot;, color = &quot;darkgreen&quot;, outlier.shape = NA) +
+  geom_jitter(width = 0.2, alpha = 0.5, color = &quot;darkgreen&quot;, aes(x = &quot;&quot;)) +  
+  labs(title = &quot;Boxplot&quot;,y = &quot;Value&quot;) +
+  theme_classic(base_size = 15) +
+  theme(plot.title = element_text(hjust = 0.5, face = &quot;bold&quot;))</code></pre>
+<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-31-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>A <strong>density</strong> plot shows the distribution of numeric
+data as a continuous probability density function.</p>
+<pre class="r"><code># Density Plot
+ggplot(data.frame(numeric_data), aes(x = numeric_data)) +
+  geom_density(fill = &quot;purple&quot;, color = &quot;black&quot;, alpha = 0.5, size = 1) +  
+  labs( title = &quot;Density Plot&quot;,x = &quot;Value&quot;, y = &quot;Density&quot;) +
+  theme_minimal(base_size = 15) +  # Increase base font size
+  theme(
+    plot.title = element_text(hjust = 0.5, face = &quot;bold&quot;, size = 16),
+    axis.title.x = element_text(size = 14),
+    axis.title.y = element_text(size = 14),
+    axis.text = element_text(size = 12),
+    panel.border = element_rect(color = &quot;black&quot;, fill = NA, linewidth = 1)
+  )</code></pre>
+<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-32-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Visualizing <strong>Categorical</strong> Data:</li>
+</ol>
+<p>For categorical data, common visualizations include bar charts and
+pie charts.</p>
+<p>A <strong>bar chart</strong> displays the frequency or count of each
+category in a categorical variable.</p>
+<pre class="r"><code># Bar Chart
+ggplot(data.frame(categorical_data), aes(x = categorical_data)) +
+  geom_bar(fill = &quot;coral&quot;, color = &quot;black&quot;, width = 0.7) +
+  geom_text(stat = &#39;count&#39;, aes(label = ..count..), vjust = -0.5, color = &quot;black&quot;, size = 5) +  # Add labels on bars
+  labs( x = &quot;Category&quot;, y = &quot;Count&quot;) +
+  theme_classic(base_size = 15) +
+  theme(plot.title = element_text(hjust = 0.5, face = &quot;bold&quot;))</code></pre>
+<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-33-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>A <strong>pie chart</strong> represents the proportion of each
+category in the dataset.</p>
+<pre class="r"><code># Pie Chart
+library(dplyr)
+library(ggplot2)
+
+pie_data &lt;- as.data.frame(table(categorical_data)) %&gt;%
+  rename(Category = categorical_data, Count = Freq) %&gt;%
+  mutate(Proportion = Count / sum(Count),
+         label = scales::percent(Proportion)) 
+
+ggplot(pie_data, aes(x = &quot;&quot;, y = Proportion, fill = Category)) +
+  geom_bar(stat = &quot;identity&quot;, width = 1) +
+  coord_polar(theta = &quot;y&quot;) +
+  labs(title = &quot;Pie Chart&quot;) +
+  theme_void() +
+  scale_fill_brewer(palette = &quot;Pastel1&quot;) +  
+  theme(legend.title = element_blank(),
+        plot.title = element_text(hjust = 0.5, face = &quot;bold&quot;)) +
+  geom_text(aes(label = label), position = position_stack(vjust = 0.5))</code></pre>
+<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="correlation" class="section level3">
+<h3>5. Correlation:</h3>
+<p>Correlation analysis is used to investigate the association between
+two or more variables.</p>
+<div id="step-1-choose-a-correlation-method" class="section level4">
+<h4>Step 1: Choose a Correlation Method</h4>
+<p><strong><em>Pearson Correlation</em></strong> measures the linear
+relationship between two continuous variables. It assumes both variables
+follow a normal distribution.</p>
+<p><strong><em>Spearman and Kendall Correlation</em></strong> are
+non-parametric and measure the strength and direction of the association
+between two ranked variables.</p>
+</div>
+<div id="step-2-preliminary-checks" class="section level4">
+<h4>Step 2: Preliminary Checks</h4>
+<p>Before applying Pearson’s correlation, check the assumptions:</p>
+<ol style="list-style-type: lower-roman">
+<li>Normality Check –&gt; Use the Shapiro-Wilk test to assess if the
+variables are normally distributed.</li>
+</ol>
+<ul>
+<li><p>Null hypothesis: the data = normally distributed</p></li>
+<li><p>Alternative hypothesis: the data = not normally
+distributed</p></li>
+<li><p>If the p-value is less than 0.05, the null hypothesis is
+rejected</p></li>
+</ul>
+<pre class="r"><code># Shapiro-Wilk test for normality
+shapiro.test(mtcars$mpg)</code></pre>
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  mtcars$mpg
+W = 0.94756, p-value = 0.1229</code></pre>
+<pre class="r"><code>shapiro.test(mtcars$wt)</code></pre>
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  mtcars$wt
+W = 0.94326, p-value = 0.09265</code></pre>
+<details>
+<summary>
+<em>Does from data of each of the 2 variables (mpg, wt) follow a normal
+distribution?</em>:
+</summary>
+<p><code>mpg</code>: The p-value is 0.1229, which is greater than 0.05.
+Therefore, we do not reject the null hypothesis. This suggests that the
+mpg variable does not significantly deviate from a normal
+distribution.</p>
+<p><code>wt</code>: The p-value is 0.09265, which is also greater than
+0.05. Thus, we do not reject the null hypothesis. This indicates that
+the wt variable does not significantly deviate from a normal
+distribution.</p>
+<div id="section" class="section level6">
+<h6></h6>
+<ol start="2" style="list-style-type: lower-roman">
+<li>Visualize Normality –&gt; Use Q-Q plots to visually inspect
+normality.</li>
+</ol>
+<pre class="r"><code>library(ggpubr)
+par(mfrow=c(1,2))
+ggqqplot(mtcars$mpg, ylab = &quot;MPG&quot;)</code></pre>
+<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-36-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggqqplot(mtcars$wt, ylab = &quot;Weight&quot;)</code></pre>
+<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-36-2.png" width="672" style="display: block; margin: auto;" /></p>
+<details>
+<summary>
+<em>Is the covariation linear?</em>:
+</summary>
+<p>Yes, form the plot above, the relationship is linear.</p>
+</div>
+<div id="section-1" class="section level6">
+<h6></h6>
+</div>
+</div>
+<div id="step-3-calculate-correlation" class="section level4">
+<h4>Step 3: Calculate Correlation</h4>
+<ol style="list-style-type: lower-roman">
+<li>Pearson Correlation</li>
+</ol>
+<pre class="r"><code># Pearson correlation test
+pearson_res &lt;- cor.test(mtcars$mpg, mtcars$wt, method = &quot;pearson&quot;)
+pearson_res</code></pre>
+<pre><code>
+    Pearson&#39;s product-moment correlation
+
+data:  mtcars$mpg and mtcars$wt
+t = -9.559, df = 30, p-value = 1.294e-10
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.9338264 -0.7440872
+sample estimates:
+       cor 
+-0.8676594 </code></pre>
+<ol start="2" style="list-style-type: lower-roman">
+<li>Spearman and Kendall Correlation</li>
+</ol>
+<pre class="r"><code># Spearman correlation test
+spearman_res &lt;- cor.test(mtcars$mpg, mtcars$wt, method = &quot;spearman&quot;)</code></pre>
+<pre><code>Warning in cor.test.default(mtcars$mpg, mtcars$wt, method = &quot;spearman&quot;): Cannot
+compute exact p-value with ties</code></pre>
+<pre class="r"><code>spearman_res</code></pre>
+<pre><code>
+    Spearman&#39;s rank correlation rho
+
+data:  mtcars$mpg and mtcars$wt
+S = 10292, p-value = 1.488e-11
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+-0.886422 </code></pre>
+<pre class="r"><code># Kendall correlation test
+kendall_res &lt;- cor.test(mtcars$mpg, mtcars$wt, method = &quot;kendall&quot;)</code></pre>
+<pre><code>Warning in cor.test.default(mtcars$mpg, mtcars$wt, method = &quot;kendall&quot;): Cannot
+compute exact p-value with ties</code></pre>
+<pre class="r"><code>kendall_res</code></pre>
+<pre><code>
+    Kendall&#39;s rank correlation tau
+
+data:  mtcars$mpg and mtcars$wt
+z = -5.7981, p-value = 6.706e-09
+alternative hypothesis: true tau is not equal to 0
+sample estimates:
+       tau 
+-0.7278321 </code></pre>
+</div>
+<div id="step-4-visualize-the-correlation" class="section level4">
+<h4>Step 4: Visualize the Correlation</h4>
+<pre class="r"><code># Scatter plot with Pearson correlation
+ggscatter(mtcars, x = &quot;mpg&quot;, y = &quot;wt&quot;, 
+          add = &quot;reg.line&quot;, conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = &quot;pearson&quot;,
+          xlab = &quot;Miles per Gallon&quot;, ylab = &quot;Weight (1000 lbs)&quot;)</code></pre>
+<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-39-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="step-5-interpretation" class="section level4">
+<h4><strong>Step 5: Interpretation</strong></h4>
+<p><strong>Correlation Coefficient:</strong></p>
+<ul>
+<li><p><code>-1</code>: Strong negative correlation (as one variable
+increases, the other decreases).</p></li>
+<li><p><code>0</code>: No correlation.</p></li>
+<li><p><code>1</code>: Strong positive correlation (both variables
+increase together).</p></li>
+</ul>
+<p><strong>P-Value:</strong></p>
+<ul>
+<li><code>p-value &lt; 0.05</code> indicates a statistically significant
+correlation.</li>
+</ul>
+<p><span
+style="color:red;"><strong><em>Exercise:</em></strong></span></p>
+<p>Perform a correlation analysis using the <code>mpg</code> and
+<code>qsec</code> variables from the <code>mtcars</code> to investigate
+the extent of correlation between the two variables. Provide an
+interpretation of the correlation coefficient and its p-value.</p>
+<details>
+<summary>
+<em>Example interpretation</em>:
+</summary>
+<ul>
+<li><p>The Pearson correlation coefficient is -0.8677, which points to a
+strong negative linear relationship between the variables.</p></li>
+<li><p>The p-value is significantly low (p &lt; 0.001), indicating that
+the correlation is statistically significant.</p></li>
+<li><p>The 95% confidence interval suggests that the true correlation
+lies between -0.9338 and -0.7441.</p></li>
+</ul>
+</div>
+<div id="compute-correlation-matrix-in-r" class="section level4">
+<h4>Compute correlation matrix in R</h4>
+<p>The R function cor() can be used to compute a correlation matrix.</p>
+<pre class="r"><code># We start by loading the mtcars dataset and selecting a subset of columns for our analysis.
+data(&quot;mtcars&quot;)
+my_data &lt;- mtcars[, c(1, 3, 4, 5, 6, 7)]
+# Display first few rows
+head(my_data)</code></pre>
+<pre><code>                   mpg disp  hp drat    wt  qsec
+Mazda RX4         21.0  160 110 3.90 2.620 16.46
+Mazda RX4 Wag     21.0  160 110 3.90 2.875 17.02
+Datsun 710        22.8  108  93 3.85 2.320 18.61
+Hornet 4 Drive    21.4  258 110 3.08 3.215 19.44
+Hornet Sportabout 18.7  360 175 3.15 3.440 17.02
+Valiant           18.1  225 105 2.76 3.460 20.22</code></pre>
+<div id="we-then-compute-the-correlation-matrix" class="section level5">
+<h5>We then compute the correlation matrix:</h5>
+<pre class="r"><code>rescm &lt;- cor(my_data)
+# Round the results to 2 decimal places for easier interpretation
+round(rescm, 2)</code></pre>
+<pre><code>       mpg  disp    hp  drat    wt  qsec
+mpg   1.00 -0.85 -0.78  0.68 -0.87  0.42
+disp -0.85  1.00  0.79 -0.71  0.89 -0.43
+hp   -0.78  0.79  1.00 -0.45  0.66 -0.71
+drat  0.68 -0.71 -0.45  1.00 -0.71  0.09
+wt   -0.87  0.89  0.66 -0.71  1.00 -0.17
+qsec  0.42 -0.43 -0.71  0.09 -0.17  1.00</code></pre>
+<p><em>Interpretation:</em> - Values close to 1 or -1 indicate strong
+positive or negative correlations, respectively.</p>
+<ul>
+<li>Values close to 0 suggest little to no linear relationship.</li>
+</ul>
+</div>
+<div id="visualising-the-correlation-matrix" class="section level5">
+<h5>Visualising the Correlation Matrix:</h5>
+<pre class="r"><code>library(corrplot)
+corrplot(rescm,tl.col = &quot;black&quot;, addCoef.col = &quot;black&quot;)</code></pre>
+<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-42-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+</div>
+<div id="simple-linear-regression" class="section level3">
+<h3>6. Simple Linear Regression:</h3>
+<pre class="r"><code>x &lt;- mtcars$mpg
+y &lt;- mtcars$wt
+
+model = lm(y ~ x)
+summary(model)</code></pre>
+<pre><code>
+Call:
+lm(formula = y ~ x)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.6516 -0.3490 -0.1381  0.3190  1.3684 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  6.04726    0.30869  19.590  &lt; 2e-16 ***
+x           -0.14086    0.01474  -9.559 1.29e-10 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.4945 on 30 degrees of freedom
+Multiple R-squared:  0.7528,    Adjusted R-squared:  0.7446 
+F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10</code></pre>
+<pre class="r"><code>par(mfrow = c(2, 2))
+plot(model)</code></pre>
+<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-44-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="checking-assumptions" class="section level4">
+<h4><em>Checking Assumptions</em>:</h4>
+<div
+id="assumption-1-linearity-check-if-the-relationship-between-variables-is-linear."
+class="section level5">
+<h5><strong>Assumption 1: Linearity</strong> –&gt; Check if the
+relationship between variables is linear.</h5>
+<p>Plot of <code>x</code> vs <code>y</code>: This scatter plot displays
+the relationship between the predictor <code>x</code> and the response
+<code>y</code>.</p>
+<p>Abline (Regression Line): The <code>abline(model)</code> adds the
+fitted regression line to the plot.</p>
+<pre class="r"><code>plot(x, y)
+abline(model)</code></pre>
+<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-45-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><em>What to Look For</em>:</p>
+<p><strong>Linear Relationship</strong>: The data points should roughly
+form a straight line if the linearity assumption is satisfied. The
+fitted regression line should capture the trend of the data points
+well.</p>
+<p><strong>Non-Linearity</strong>: If the data points show a clear
+curvature or systematic pattern not captured by the straight line, this
+suggests that the linearity assumption is violated. In such cases,
+consider polynomial regression or other non-linear models.</p>
+</div>
+<div
+id="assumption-2-homoscedasticity-ensure-that-the-residuals-are-evenly-distributed."
+class="section level5">
+<h5><strong>Assumption 2: Homoscedasticity</strong> –&gt; Ensure that
+the residuals are evenly distributed.</h5>
+<p><em>Plot of Residuals</em>: This plot shows the residuals from the
+model. Residuals are the differences between the observed values and the
+values predicted by the model.</p>
+<pre class="r"><code>plot(model$residuals)</code></pre>
+<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-46-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><em>What to Look For</em>:</p>
+<p><strong>Even Spread</strong>: Ideally, the residuals should be
+randomly scattered around zero and should not display any clear pattern.
+This indicates homoscedasticity (constant variance of residuals).</p>
+<p><strong>Patterns</strong>: If you observe a pattern, such as a funnel
+shape (residuals increasing or decreasing as <code>x</code> increases),
+it suggests heteroscedasticity (non-constant variance). In such cases,
+consider transforming the dependent variable or using robust regression
+techniques.</p>
+</div>
+<div
+id="assumption-3-normality-of-residuals-use-q-q-plots-to-check-the-normality-of-residuals."
+class="section level5">
+<h5><strong>Assumption 3: Normality of Residuals</strong> –&gt; Use Q-Q
+plots to check the normality of residuals.</h5>
+<p>Q-Q Plot: The Q-Q plot (quantile-quantile plot) compares the
+quantiles of the residuals with the quantiles of a normal
+distribution.</p>
+<pre class="r"><code>qqnorm(model$residuals)
+qqline(model$residuals)</code></pre>
+<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-47-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><em>What to Look For</em>:</p>
+<p><strong>Straight Line</strong>: If the residuals are normally
+distributed, the points should closely follow the straight line
+(<code>qqline</code>). This suggests that the normality assumption is
+reasonable.</p>
+<p><strong>Deviations</strong>: Significant deviations from the line
+indicate that the residuals are not normally distributed. This could
+mean the presence of outliers or skewness in the residuals. If the
+normality assumption is violated, consider transforming the response
+variable or using non-parametric methods.</p>
+</div>
+<div id="summary-of-interpretation" class="section level5">
+<h5><strong><em>Summary of Interpretation</em></strong>:</h5>
+<ul>
+<li><p><strong>Linearity</strong>: The plot of x vs. y with the
+regression line should show a clear linear relationship.</p></li>
+<li><p><strong>Homoscedasticity</strong>: The plot of residuals should
+display no obvious patterns or systematic structures.</p></li>
+<li><p><strong>Normality of Residuals</strong>: The Q-Q plot should show
+residuals following the diagonal line if they are normally
+distributed.</p></li>
+</ul>
+<p>These plots help you validate the assumptions underlying your
+regression model, ensuring that your results are reliable and
+interpretable.</p>
+<p><span style="color:red;"><strong><em>Simple Linear Regression
+Exercise:</em></strong></span></p>
+<p>You were asked to analyze the following dataset, mtcars, where mpg
+(miles per gallon) is used as the predictor variable and wt (weight) as
+the response variable. You have fitted a linear regression model and
+checked the assumptions.</p>
+<p>Now, perform simple linear regression on two variables of your
+choosing from the mtcars data set and answer the following
+questions:</p>
+<ol style="list-style-type: decimal">
+<li><p>Describe the relationship between mpg and wt. Does the plot
+suggest a linear relationship?</p></li>
+<li><p>Describe the spread of the residuals. Is there any noticeable
+pattern that might suggest a violation of the homoscedasticity
+assumption?</p></li>
+<li><p>Assess whether the residuals appear to follow a normal
+distribution based on the Q-Q plot. Are there any significant deviations
+from the diagonal line?</p></li>
+</ol>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.3.3 (2024-02-29)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.5
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: Africa/Johannesburg
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] corrplot_0.92   ggpubr_0.6.0    dplyr_1.1.4     ggplot2_3.5.1  
+[5] workflowr_1.7.1
+
+loaded via a namespace (and not attached):
+ [1] gtable_0.3.5       xfun_0.46          bslib_0.8.0        processx_3.8.4    
+ [5] rstatix_0.7.2      lattice_0.22-6     callr_3.7.6        vctrs_0.6.5       
+ [9] tools_4.3.3        ps_1.7.7           generics_0.1.3     tibble_3.2.1      
+[13] fansi_1.0.6        highr_0.11         pkgconfig_2.0.3    Matrix_1.6-5      
+[17] RColorBrewer_1.1-3 lifecycle_1.0.4    compiler_4.3.3     farver_2.1.2      
+[21] stringr_1.5.1      git2r_0.33.0       munsell_0.5.1      getPass_0.2-4     
+[25] carData_3.0-5      httpuv_1.6.15      htmltools_0.5.8.1  sass_0.4.9        
+[29] yaml_2.3.10        later_1.3.2        pillar_1.9.0       car_3.1-2         
+[33] crayon_1.5.3       jquerylib_0.1.4    whisker_0.4.1      tidyr_1.3.1       
+[37] cachem_1.1.0       abind_1.4-5        nlme_3.1-165       tidyselect_1.2.1  
+[41] digest_0.6.36      stringi_1.8.4      purrr_1.0.2        labeling_0.4.3    
+[45] splines_4.3.3      rprojroot_2.0.4    fastmap_1.2.0      grid_4.3.3        
+[49] colorspace_2.1-1   cli_3.6.3          magrittr_2.0.3     utf8_1.2.4        
+[53] broom_1.0.6        withr_3.0.1        scales_1.3.0       promises_1.3.0    
+[57] backports_1.5.0    rmarkdown_2.27     httr_1.4.7         ggsignif_0.6.4    
+[61] evaluate_0.24.0    knitr_1.48         mgcv_1.9-1         rlang_1.1.4       
+[65] Rcpp_1.0.13        glue_1.7.0         rstudioapi_0.16.0  jsonlite_1.8.8    
+[69] R6_2.5.1           fs_1.6.4          </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
