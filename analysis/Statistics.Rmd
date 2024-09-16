@@ -644,3 +644,43 @@ abline(model)
 **Non-Linearity**: If the data points show a clear curvature or systematic pattern not captured by the straight line, this suggests that the linearity assumption is violated. In such cases, consider polynomial regression or other non-linear models.
 
 
+
+## 8. Performing the statistics easy:
+
+Use the following commands to install KODAMA from GitHub using the devtools package
+Once installed, load the KODAMA package into your R session.
+```{r, warning=FALSE, message=FALSE}
+if (!require(devtools)) {
+  install.packages("devtools")
+}
+devtools::install_github("tkcaccia/KODAMA")
+library(KODAMA)
+
+```
+
+A short example for the analysis of metadata
+
+```{r}
+data(clinical)
+
+hosp=clinical[,"Hospital"]
+gender=clinical[,"Gender"]
+GS=clinical[,"Gleason score"]
+BMI=clinical[,"BMI"]
+age=clinical[,"Age"]
+
+A=categorical.test("Gender",gender,hosp)
+B=categorical.test("Gleason score",GS,hosp)
+
+C=continuous.test("BMI",BMI,hosp,digits=2)
+D=continuous.test("Age",age,hosp,digits=1)
+
+da=rbind(A,B,C,D)
+da
+write.csv(da,"output/Table.csv")
+```
+
+When you have to repeat the same test several times...
+```{r}
+multi_analysis(clinical[,c("BMI","Age")],clinical[,"Hospital"],FUN="continuous.test")
+```

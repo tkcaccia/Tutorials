@@ -44,13 +44,16 @@ head(starwars)
 
 # cleaning the dataset to remove NA values for height & mass 
 starwars_QC <- starwars %>%
-  filter(!is.na(height)&!is.na(mass))
+  filter(!is.na(height) & !is.na(mass))
 
 # filtering the dataset to remove outliers
 starwars_QC1 <- starwars_QC %>%
   filter(height < 300 & mass < 500)
 
-# Create scatter plot
+# Create scatter plot (plot)
+plot(starwars_QC1$height,starwars_QC1$mass)
+
+# Create scatter plot (ggplot)
 ggplot(starwars_QC1, aes(x = height, y = mass)) +
   geom_point() +
   labs(title = "Relationship between Mass and Height", x = "Height(cm)", y = "Mass(kg)") +
