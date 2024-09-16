@@ -554,15 +554,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree8b0b07aea50228ab49a3660e7b1327cb440a37c1targetblank8b0b07aa">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreedff6a04355ffd83b249f5c019a422bbc66a22717targetblankdff6a04a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/tkcaccia/Tutorials/tree/8b0b07aea50228ab49a3660e7b1327cb440a37c1" target="_blank">8b0b07a</a>
+<a href="https://github.com/tkcaccia/Tutorials/tree/dff6a04355ffd83b249f5c019a422bbc66a22717" target="_blank">dff6a04</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree8b0b07aea50228ab49a3660e7b1327cb440a37c1targetblank8b0b07aa"
+id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreedff6a04355ffd83b249f5c019a422bbc66a22717targetblankdff6a04a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -572,7 +572,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/tkcaccia/Tutorials/tree/8b0b07aea50228ab49a3660e7b1327cb440a37c1" target="_blank">8b0b07a</a>.
+<a href="https://github.com/tkcaccia/Tutorials/tree/dff6a04355ffd83b249f5c019a422bbc66a22717" target="_blank">dff6a04</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -595,6 +595,7 @@ Untracked files:
     Untracked:  data/COADREAD.rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.data.txt
     Untracked:  data/Rstudio.png
     Untracked:  data/tumor_size_patient_survival.csv
+    Untracked:  output/Table.csv
     Untracked:  output/data.csv
     Untracked:  test.R
 
@@ -651,6 +652,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/dff6a04355ffd83b249f5c019a422bbc66a22717/analysis/Visualisation.Rmd" target="_blank">dff6a04</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+<td>
+Start my new project
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/tkcaccia/Tutorials/6d23cdb74595a082fc1d86dd7d29bc5ce65703f1/docs/Visualisation.html" target="_blank">6d23cdb</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -798,17 +833,14 @@ head(starwars)</code></pre>
 
 # cleaning the dataset to remove NA values for height &amp; mass 
 starwars_QC &lt;- starwars %&gt;%
-  filter(!is.na(height)&amp;!is.na(mass))
+  filter(!is.na(height) &amp; !is.na(mass))
 
 # filtering the dataset to remove outliers
 starwars_QC1 &lt;- starwars_QC %&gt;%
   filter(height &lt; 300 &amp; mass &lt; 500)
 
-# Create scatter plot
-ggplot(starwars_QC1, aes(x = height, y = mass)) +
-  geom_point() +
-  labs(title = &quot;Relationship between Mass and Height&quot;, x = &quot;Height(cm)&quot;, y = &quot;Mass(kg)&quot;) +
-  theme_minimal()</code></pre>
+# Create scatter plot (plot)
+plot(starwars_QC1$height,starwars_QC1$mass)</code></pre>
 <p><img src="figure/Visualisation.Rmd/scatter-plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-scatter-plot-1">
@@ -847,6 +879,12 @@ tkcaccia
 </table>
 </div>
 </div>
+<pre class="r"><code># Create scatter plot (ggplot)
+ggplot(starwars_QC1, aes(x = height, y = mass)) +
+  geom_point() +
+  labs(title = &quot;Relationship between Mass and Height&quot;, x = &quot;Height(cm)&quot;, y = &quot;Mass(kg)&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="figure/Visualisation.Rmd/scatter-plot-2.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="correlation-coefficient." class="section level4">
 <h4>Correlation coefficient.</h4>
 <p>The correlation between 2 variables is found with the
@@ -1240,10 +1278,10 @@ Replacement repositories:
   &#39;caTools&#39;, &#39;clock&#39;, &#39;corrplot&#39;, &#39;cpp11&#39;, &#39;curl&#39;, &#39;data.table&#39;, &#39;Deriv&#39;,
   &#39;DescTools&#39;, &#39;digest&#39;, &#39;emmeans&#39;, &#39;EnvStats&#39;, &#39;expm&#39;, &#39;fastDummies&#39;, &#39;gert&#39;,
   &#39;ggrepel&#39;, &#39;golem&#39;, &#39;hardhat&#39;, &#39;harmony&#39;, &#39;httr2&#39;, &#39;lpSolve&#39;, &#39;matrixStats&#39;,
-  &#39;microbenchmark&#39;, &#39;minqa&#39;, &#39;mvtnorm&#39;, &#39;nlme&#39;, &#39;openssl&#39;, &#39;ps&#39;, &#39;ragg&#39;,
-  &#39;RANN&#39;, &#39;RcppArmadillo&#39;, &#39;RcppEigen&#39;, &#39;recipes&#39;, &#39;reticulate&#39;, &#39;rmarkdown&#39;,
-  &#39;sf&#39;, &#39;sfsmisc&#39;, &#39;Signac&#39;, &#39;spatstat.explore&#39;, &#39;spatstat.univar&#39;,
-  &#39;spatstat.utils&#39;, &#39;spData&#39;, &#39;spdep&#39;, &#39;tinytex&#39;, &#39;waldo&#39;, &#39;wk&#39;, &#39;xfun&#39;</code></pre>
+  &#39;microbenchmark&#39;, &#39;minqa&#39;, &#39;mvtnorm&#39;, &#39;nlme&#39;, &#39;ps&#39;, &#39;ragg&#39;, &#39;RANN&#39;,
+  &#39;recipes&#39;, &#39;rmarkdown&#39;, &#39;sf&#39;, &#39;sfsmisc&#39;, &#39;Signac&#39;, &#39;spatstat.explore&#39;,
+  &#39;spatstat.univar&#39;, &#39;spatstat.utils&#39;, &#39;spData&#39;, &#39;spdep&#39;, &#39;tinytex&#39;, &#39;waldo&#39;,
+  &#39;wk&#39;, &#39;xfun&#39;</code></pre>
 <pre class="r"><code>library(survminer)
 library(RTCGA.clinical)</code></pre>
 <pre><code>Loading required package: RTCGA</code></pre>
