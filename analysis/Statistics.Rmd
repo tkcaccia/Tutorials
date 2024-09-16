@@ -31,7 +31,7 @@ The idea of univariate analysis is to first understand the variables individuall
 - Simple Regression analysis
 
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 # Installation of packages (usually needed)
 # install.packages("ggplot2")
 # install.packages("dplyr")
@@ -128,11 +128,6 @@ freq_table
 
 ```
 
-```{r}
-# Qualitative Variables:
-freq_table_numeric <- table(data$value)
-freq_table_numeric 
-```
 
 **Note:** the frequency table is CASE-SENSITIVE so the frequencies of the variables corresponds to how many times that specific number of string appears.
 
@@ -374,206 +369,6 @@ numeric_data <- rnorm(100, mean = 50, sd = 10)
 categorical_data <- sample(c("Category A", "Category B", "Category C"), 100, replace = TRUE)
 ```
 
-# Data Pre-Proccessing
-
-```{r,message=FALSE}
-library(dplyr)
-library(ggplot2)
-data("airquality")
-data("mtcars")
-```
-
-## Step 1: Data Collection
-
-Firstly, in order to conduct your analysis you need to have your data.
-
-The source of data depends on your research question and project requirements.
-
-You need to ensure that the data you obtain is of high-quality and of relevance to your problem.
-
-## Step 2: Data Cleaning
-
-#### a. Isolate and deal with **missing values**:
-
-There are multiple methods for dealing with missing data.
-
-If the missing values are random within your data set and don't seem to follow a pattern (i.e., there seem to be certain columns with high missingness when compared with others), one could replace these missing values with the mean or median of the column.
-
-In most cases, rows with high missingness could introduce bias. Therefore, it would be more accurate to remove these samples to avoid biasing your analysis.
-
-```{r}
-# For the below we will be using the dataset: "airquality" as this data has missing values to remove.
-
-# Check for missing values
-missing_values <- sapply(airquality, function(x) sum(is.na(x)))
-
-# Print the count of missing values in each column
-print(missing_values)
-```
-
-```{r}
-# Create a copy of the dataset for cleaning
-airquality_clean <- airquality
-
-# Calculate the median for each column (ignoring NA values)
-medians <- sapply(airquality_clean, function(x) median(x, na.rm = TRUE))
-
-# Replace NA values with the corresponding column medians
-for (col in names(airquality_clean)) {
-  airquality_clean[is.na(airquality_clean[[col]]), col] <- medians[col]
-}
-
-```
-
-```{r}
-# Alternatively, remove rows with any missing values (if applicable)
-airquality_clean_2 <- na.omit(airquality)
-
-# Now we check for cleaned data missing values:
-missing_values <- sapply(airquality_clean, function(x) sum(is.na(x)))
-
-missing_values_2 <- sapply(airquality_clean_2, function(x) sum(is.na(x)))
-
-cat("The number of missing values from 1st dataset:", sum(missing_values),  
-    "and from the 2nd dataset:", sum(missing_values_2), "\n")
-```
-
-#### b. Look for **outliers** and inconsistencies within your data
-
-Outliers in a dataset are values that deviate from the rest of your data and if included could skew your analysis and decrease the accuracy of your analysis.
-
-One can identify outliers using `z-score normalisation` to calculate how many SD's your value is from the mean (i.e., evaluates how unsual a data point is).
-
-```{r}
-# Calculate z-scores for each feature
-z_scores <- scale(airquality_clean_2)
-
-# Identify outliers using a z-score threshold (e.g., 3 standard deviations)
-outlier_threshold <- 2
-outliers <- apply(z_scores, 2, function(x) sum(abs(x) > outlier_threshold))
-
-# Print the number of outliers in each column
-print(outliers)
-```
-
-Once you have identified outliers you can either remove them or use a cut-off threshold to only exclude values above/below a certain score.
-
-```{r}
-# Remove outliers based on the threshold
-# Keep rows where all feature z-scores are within the threshold
-airquality_no_outliers <- airquality_clean_2[apply(z_scores, 1, function(x) all(abs(x) <= outlier_threshold)), ]
-
-# Recalculate z-scores for the dataset without outliers
-z_scores_no_outliers <- scale(airquality_no_outliers)
-
-# Identify remaining outliers
-outliers_no_outliers <- apply(z_scores_no_outliers, 2, function(x) sum(abs(x) > outlier_threshold))
-
-# Print the number of outliers in each column after removal
-print(outliers_no_outliers)
-```
-
-## Step 3: Data Transformation
-
-#### Variables might have different units (cm/m/km) and therefore would have different scales and distributions. This introduces unnecessary dificulties for your algorithm.
-
-##### **MIN-MAX NORMALISATION**
-
--   Applying min-max normalization will define the values within a fixed range, commonly [0, 1].
-
--   Typically used when you want to ensure all features are within the same range for certain machine learning algorithms (like neural networks) which are sensitive to the magnitude of the input value.
-
-```{r}
-data("mtcars")
-
-# Min-max normalize the mpg variable
-mtcars$mpg_mm <- scale(mtcars$mpg, 
-                       center = min(mtcars$mpg), 
-                       scale = max(mtcars$mpg) - min(mtcars$mpg))
-
-# Now we can check what minimum and maximum of the normalized mpg variable is:
-cat("The minimum of the normalized mpg variable is:", min(mtcars$mpg_mm),  
-    "and the maximum is:", max(mtcars$mpg_mm), "\n")
-```
-
-#### Large scale variables (generally) lead to large coefficients and could result in unstable and incorrect models. Therefore our data needs to be `standardized` and `re-scaled` in these scenarios.
-
-##### **Z-SCORE NORMALISATION**
-
--   Standardizes the data such that the mean of the values becomes 0 and the standard deviation becomes 1.
-
--   There is no fixed range after standardization and the values are rescaled relative to their SD
-
-```{r}
-data("mtcars")
-
-# Standardize the 'mpg' feature manually
-mpg_standardized <- (mtcars$mpg - mean(mtcars$mpg)) / sd(mtcars$mpg)
-
-# Alternatively, use the scale function to standardize multiple columns
-data_standardized <- as.data.frame(scale(mtcars))
-```
-
-Standardized 'mpg' values:
-
-```{r, echo=FALSE}
-print(summary(mpg_standardized))
-```
-
-## Step 4: Data Reduction
-
-Data reduction is a crucial step when working with high-dimensional data sets. Reducing the number of variables (features) or the size of your dataset helps reduce the risk of having an overfitting model in downstream analyses. These methods can improve the accuracy and performance of your model. By decreasing the size of your dataset one can also decrease the comutational burden.
-
-#### Types of Data Reduction Techniques:
-
-1.  Principal Component Analysis (PCA): PCA is a commonly used technique for dimensionality reduction. It transforms the data into a new coordinate system where the greatest variance lies on the first principal components.
-
-2.  Feature Selection: This involves selecting a subset of relevant features based on certain criteria such as correlation or variance.
-
-3.  Sampling: Instead of using the entire dataset, you can sample a representative portion of the data for training.
-
-4.  Aggregation: Aggregating data points into groups (e.g., by averaging or summing) to reduce the number of instances while retaining key characteristics.
-
-#### **PCA:**
-
-```{r}
-
-# Standardize the dataset (scale to mean 0 and standard deviation 1)
-mtcars_scaled <- as.data.frame(scale(mtcars))
-
-# Perform PCA to reduce the dataset to two principal components
-pca_result <- prcomp(mtcars_scaled, center = TRUE, scale. = TRUE)
-
-# Get summary of PCA to show variance explained by each component
-summary(pca_result)
-
-# Create a biplot to visualize PCA (first two principal components)**** make better
-biplot(pca_result, scale = 0)
-```
-
-#### **Feature Selection:**
-
-`mtcars` prior to feature selection:
-
-```{r}
-str(mtcars)
-
-# Step 1: Calculate the variance for each feature (column)
-feature_variances <- apply(mtcars, 2, var)
-
-# Step 2: Set a threshold for filtering low variance features (e.g., use the 25th percentile of the variance)
-threshold <- quantile(feature_variances, 0.25) 
-
-# Step 3: Retain only the features with variance above the threshold
-filtered_data <- mtcars[, feature_variances > threshold]
-```
-
-`mtcars` after feature selection:
-
-```{r}
-str(filtered_data)
-```
-
 # Hypothesis Testing:
 
 ## 1. T-Test:
@@ -591,8 +386,14 @@ A T-test is used to determine if there is a significant difference between the m
 method_A <- c(85, 88, 90, 92, 87)
 method_B <- c(78, 82, 80, 85, 79)
 
-# Perform T-test
+# Perform independent T-test
 t_test_result <- t.test(method_A, method_B)
+
+# Print results
+print(t_test_result)
+
+# Perform independent T-test
+t_test_result <- t.test(method_A, method_B, paired = TRUE)
 
 # Print results
 print(t_test_result)
@@ -601,32 +402,37 @@ print(t_test_result)
 
 *Interpretation:* `p-value < 0.05` = there is a significant difference between the paired samples.
 
-## 2. ANOVA:
+## 2. Wilcoxon Test:
 
-ANOVA is used to determine if there are any statistically significant differences between the means of three or more independent groups.
+Mann–Whitney U test (also called the Mann–Whitney–Wilcoxon (MWW/MWU), Wilcoxon rank-sum test, or Wilcoxon–Mann–Whitney test) is a nonparametric statistical test to compare two independent groups.
+
+The Wilcoxon Signed-Rank Test is a non-parametric test used to compare two related samples or paired observations to determine if their population mean ranks differ.
 
 *When to use?*
 
-- When comparing means among three or more groups.
+- When the data is paired and does not meet the assumptions required for a T-test (e.g., non-normality).
 
 ```{r}
 # Example Data
-scores <- data.frame(
-  score = c(85, 88, 90, 92, 87, 78, 82, 80, 85, 79, 95, 97, 92, 91, 96),
-  method = factor(rep(c("A", "B", "C"), each = 5))
-)
+before <- c(5, 7, 8, 6, 9)
+after <- c(6, 8, 7, 7, 10)
 
-# Perform ANOVA
-anova_result <- aov(score ~ method, data = scores)
+# Perform Wilcoxon rank-sum test Test
+wilcox_test_result <- wilcox.test(before, after)
 
-# Print summary of results
-summary(anova_result)
+# Print results
+print(wilcox_test_result)
 
+
+# Perform Wilcoxon Signed-Rank Test
+wilcox_test_result <- wilcox.test(before, after, paired = TRUE)
+
+# Print results
+print(wilcox_test_result)
 ```
 
-*Interpretation:* `p-value < 0.05` = there is a significant difference between the group means. 
+*Interpretation:* `p-value < 0.05` = there is a significant difference between the paired samples.
 
-- Post-hoc tests (e.g., Tukey’s HSD) can be used to determine which specific groups differ.
 
 ## 3. Shapiro-Wilk Test for Normality:
 
@@ -655,9 +461,72 @@ print(shapiro_test_result)
 
 - p-value ≤ 0.05: Reject the null hypothesis; data significantly deviates from a normal distribution.
 
-## 4. Chi-Squared Test:
 
-The Chi-squared test is used to determine if there is a significant association between two categorical variables.
+
+## 4. Multiple comparisons:
+
+ANOVA and Kruskal-Wallis Rank Sum Test are used to determine if there are any statistically significant differences between the means of three or more independent groups.
+
+*When to use?*
+
+- When comparing means among three or more groups.
+
+```{r}
+# Example Data
+scores <- data.frame(
+  score = c(85, 88, 90, 92, 87, 78, 82, 80, 85, 79, 95, 97, 92, 91, 96),
+  method = factor(rep(c("A", "B", "C"), each = 5))
+)
+
+# Perform ANOVA
+anova_result <- aov(score ~ method, data = scores)
+
+# Print summary of results
+summary(anova_result)
+
+# Perform Kruskal-Wallis Rank Sum Test
+kruskal.test(score ~ method, data = scores)
+
+```
+
+*Interpretation:* `p-value < 0.05` = there is a significant difference between the group means. 
+
+- Post-hoc tests (e.g., Tukey’s HSD) can be used to determine which specific groups differ.
+
+
+
+
+## 5. two-way ANOVA:
+
+
+A two-way ANOVA (Analysis of Variance) is used when you want to examine the effect of two independent variables (also called factors) on a dependent variable, and to determine whether there is an interaction between these two factors. It is typically used in situations where:
+
+Two independent variables: You have two categorical variables (factors) and one continuous dependent variable. For example, you might examine how both "teaching method" (Factor 1) and "gender" (Factor 2) affect student test scores (dependent variable).
+
+Main effects: It tests for the individual (main) effects of each independent variable on the dependent variable. For instance, the main effect of "teaching method" and the main effect of "gender" on test scores.
+
+Interaction effect: It examines whether the effect of one independent variable depends on the level of the other variable. For example, if the effect of a teaching method on test scores differs based on gender.
+
+Two-way ANOVA is commonly used in experiments where you need to analyze the effect of two factors and their potential interaction on an outcome. It's more efficient than performing two separate one-way ANOVAs for each factor.
+
+```{r}
+# Example Data
+head(npk)
+
+# Perform two-way ANOVA
+npk.aov <- aov(yield ~  N*K, npk)
+summary(npk.aov)
+```
+
+*Interpretation:* `p-value < 0.05` = there is a significant difference between the group means. 
+
+- Post-hoc tests (e.g., Tukey’s HSD) can be used to determine which specific groups differ.
+
+
+
+## 6. Fisher Test:
+
+The Fisher test is used to determine if there is a significant association between two categorical variables.
 
 *When to use?*
 
@@ -669,35 +538,109 @@ study_method <- matrix(c(20, 15, 30, 25), nrow = 2, byrow = TRUE)
 rownames(study_method) <- c("Passed", "Failed")
 colnames(study_method) <- c("Method A", "Method B")
 
-# Perform Chi-squared test
-chi_sq_result <- chisq.test(study_method)
+# Perform Fisher test
+fisher_result <- fisher.test(study_method)
 
 # Print results
-print(chi_sq_result)
+print(fisher_result)
 ```
 
 *Interpretation:* `p-value < 0.05` there is a significant association between the study method and the passing rate.
 
-## 5. Wilcoxon Signed-Rank Test:
 
-The Wilcoxon Signed-Rank Test is a non-parametric test used to compare two related samples or paired observations to determine if their population mean ranks differ.
+## 7. Correlation:
 
-*When to use?*
+Correlation analysis is used to investigate the association between two or more variables.
 
-- When the data is paired and does not meet the assumptions required for a T-test (e.g., non-normality).
+### Step 1: Choose a Correlation Method
+
+***Pearson Correlation*** measures the linear relationship between two continuous variables. It assumes both variables follow a normal distribution.
+
+***Spearman and Kendall Correlation*** are non-parametric and measure the strength and direction of the association between two ranked variables.
+
+### Step 2: Calculate Correlation
+
+i. Pearson Correlation
 
 ```{r}
-# Example Data
-before <- c(5, 7, 8, 6, 9)
-after <- c(6, 8, 7, 7, 10)
-
-# Perform Wilcoxon Signed-Rank Test
-wilcox_test_result <- wilcox.test(before, after, paired = TRUE)
-
-# Print results
-print(wilcox_test_result)
+# Pearson correlation test
+pearson_res <- cor.test(mtcars$mpg, mtcars$wt, method = "pearson")
+pearson_res
 ```
 
-*Interpretation:* `p-value < 0.05` = there is a significant difference between the paired samples.
 
-#### **Now your data is ready for downstream analyses!**
+ii. Spearman and Kendall Correlation
+
+```{r, warning=FALSE}
+# Spearman correlation test
+spearman_res <- cor.test(mtcars$mpg, mtcars$wt, method = "spearman")
+spearman_res
+
+# Kendall correlation test
+kendall_res <- cor.test(mtcars$mpg, mtcars$wt, method = "kendall")
+kendall_res
+```
+
+### Step 3: Interpretation
+
+Correlation Coefficient:
+
+- `-1`: Strong negative correlation (as one variable increases, the other decreases).
+
+- `0`: No correlation.
+
+- `1`: Strong positive correlation (both variables increase together).
+
+P-Value:
+
+- `p-value < 0.05` indicates a statistically significant correlation.
+
+[***Exercise:***]{style="color:red;"}
+
+Perform a correlation analysis using the `mpg` and `qsec` variables from the `mtcars` to investigate the extent of correlation between the two variables. Provide an interpretation of the correlation coefficient and its p-value. 
+
+<details>
+
+<summary>*Example interpretation*:</summary>
+
+- The Pearson correlation coefficient is -0.8677, which points to a strong negative linear relationship between the variables. 
+
+- The p-value is significantly low (p < 0.001), indicating that the correlation is statistically significant. 
+
+- The 95% confidence interval suggests that the true correlation lies between -0.9338 and -0.7441.
+
+### 3. Simple Linear Regression:
+
+```{r}
+x <- mtcars$mpg
+y <- mtcars$wt
+
+model = lm(y ~ x)
+summary(model)
+```
+
+```{r}
+par(mfrow = c(2, 2))
+plot(model)
+```
+
+#### *Checking Assumptions*:
+
+##### **Assumption 1: Linearity** --> Check if the relationship between variables is linear.
+
+Plot of `x` vs `y`: This scatter plot displays the relationship between the predictor `x` and the response `y`.
+
+Abline (Regression Line): The `abline(model)` adds the fitted regression line to the plot.
+
+```{r}
+plot(x, y)
+abline(model)
+```
+
+*What to Look For*:
+
+**Linear Relationship**: The data points should roughly form a straight line if the linearity assumption is satisfied. The fitted regression line should capture the trend of the data points well.
+
+**Non-Linearity**: If the data points show a clear curvature or systematic pattern not captured by the straight line, this suggests that the linearity assumption is violated. In such cases, consider polynomial regression or other non-linear models.
+
+
