@@ -13,7 +13,7 @@
 
 <meta name="date" content="2024-09-16" />
 
-<title>Module 3: Univariate Analysis</title>
+<title>Module 1: Basics</title>
 
 <script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -395,7 +395,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Module 3: Univariate Analysis</h1>
+<h1 class="title toc-ignore">Module 1: Basics</h1>
 <h4 class="author">Stefano Cacciatore</h4>
 <h4 class="date">September 16, 2024</h4>
 
@@ -591,6 +591,7 @@ were generated:
 <pre><code>
 Ignored files:
     Ignored:    .DS_Store
+    Ignored:    analysis/figure/
     Ignored:    data/.DS_Store
 
 Untracked files:
@@ -622,12 +623,11 @@ have uncommitted changes.
 
 <p>
 These are the previous versions of the repository in which changes were
-made to the R Markdown
-(<code>analysis/Module_3_Univariate_Analysis.Rmd</code>) and HTML
-(<code>docs/Module_3_Univariate_Analysis.html</code>) files. If you’ve
-configured a remote Git repository (see <code>?wflow_git_remote</code>),
-click on the hyperlinks in the table below to view the files as they
-were in that past version.
+made to the R Markdown (<code>analysis/Introduction.Rmd</code>) and HTML
+(<code>docs/Introduction.html</code>) files. If you’ve configured a
+remote Git repository (see <code>?wflow_git_remote</code>), click on the
+hyperlinks in the table below to view the files as they were in that
+past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -656,7 +656,7 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/tkcaccia/Tutorials/blob/e9cf75197fecd2b17c49839ac8157b084819504e/analysis/Module_3_Univariate_Analysis.Rmd" target="_blank">e9cf751</a>
+<a href="https://github.com/tkcaccia/Tutorials/blob/e9cf75197fecd2b17c49839ac8157b084819504e/analysis/Introduction.Rmd" target="_blank">e9cf751</a>
 </td>
 <td>
 tkcaccia
@@ -668,40 +668,6 @@ tkcaccia
 Start my new project
 </td>
 </tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/tkcaccia/Tutorials/e54f6b5fed1a84256f2b9d383541d90fc6feae04/docs/Module_3_Univariate_Analysis.html" target="_blank">e54f6b5</a>
-</td>
-<td>
-tkcaccia
-</td>
-<td>
-2024-09-05
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/tkcaccia/Tutorials/blob/8486be7d2014ccd12d74778795578c68ab79519c/analysis/Module_3_Univariate_Analysis.Rmd" target="_blank">8486be7</a>
-</td>
-<td>
-tkcaccia
-</td>
-<td>
-2024-09-05
-</td>
-<td>
-update
-</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -709,321 +675,342 @@ update
 </div>
 </div>
 </div>
-<div id="univariate-analysis" class="section level2">
-<h2>Univariate Analysis</h2>
-<p><em>What is univariate analysis ?</em></p>
-<p>The idea of univariate analysis is to first understand the variables
-individually. It is typically the first step in understanding a data
-set. A variable in UA is a condition or subset that your data falls
-into. You can think of it as a “category” such as “age”, “weight” or
-“length”. However, UA does not look at &gt; than 1 variable at a time
-(this would be a bivariate analysis)</p>
-<div id="learning-objectives" class="section level4">
-<h4>Learning Objectives:</h4>
+<div id="basics-in-r" class="section level1">
+<h1>Basics in R</h1>
+<blockquote>
+<p><strong><em>Open RStudio and take a few minutes to explore each pane
+and its functionality.</em></strong></p>
+</blockquote>
+<div id="familiarize-with-the-rstudio-interface" class="section level3">
+<h3>1. Familiarize with the RStudio Interface</h3>
+<p>In this section, we’ll get to know the RStudio interface and
+understand its different components:</p>
 <ul>
-<li><p>Summarising Data</p></li>
-<li><p>Frequency Tables</p></li>
-<li><p>Univariate Hypothesis Testing</p></li>
-<li><p>Visualising Univariate Data</p></li>
-<li><p>Correlation</p></li>
-<li><p>Simple Regression analysis</p></li>
+<li><p><strong>Layout</strong>: The RStudio interface consists of
+several panes that help you manage your workflow efficiently.</p></li>
+<li><p><strong>Panes</strong>: These include the Source Pane, Console,
+Environment/History Pane, and the Files/Plots/Packages/Help/Viewer
+Pane.</p></li>
+<li><p><strong>Console</strong>: The Console is where you can directly
+execute R commands.</p></li>
+<li><p><strong>Script Editor</strong>: The Script Editor is used for
+writing and editing scripts, which can be executed in parts or as a
+whole.</p></li>
+<li><p><strong>Environment</strong>: The Environment Pane shows all the
+objects (data, functions, etc.) that you’ve created during your
+session.</p></li>
 </ul>
-<pre class="r"><code># Installation of packages (usually needed)
-# install.packages(&quot;ggplot2&quot;)
-# install.packages(&quot;dplyr&quot;)
-# install.packages(&quot;ggpubr&quot;)
-# install.packages(&quot;corrplot&quot;)
+<p><br />
+<br />
+</p>
+<p><img src="../data/Rstudio.png" /></p>
+<p><br />
+<br />
+</p>
+</div>
+<div id="basic-r-operations" class="section level3">
+<h3>2. Basic R Operations</h3>
+<p><em>Let’s start by performing some basic operations in R:</em></p>
+<p><strong>Arithmetic:</strong></p>
+<ul>
+<li>addition, subtraction, multiplication, division etc.</li>
+</ul>
+<pre class="r"><code># Basic Arithmetic
+5 + 3 # Sum</code></pre>
+<pre><code>[1] 8</code></pre>
+<pre class="r"><code>5 - 3 # Difference</code></pre>
+<pre><code>[1] 2</code></pre>
+<pre class="r"><code>5 * 3 # Product</code></pre>
+<pre><code>[1] 15</code></pre>
+<pre class="r"><code>5 / 3 # Quotient</code></pre>
+<pre><code>[1] 1.666667</code></pre>
+<pre class="r"><code>5 ^ 3 # Exponent</code></pre>
+<pre><code>[1] 125</code></pre>
+<pre class="r"><code>5 %% 3 # Remainder from division</code></pre>
+<pre><code>[1] 2</code></pre>
+<p><strong>Variable Assignment:</strong></p>
+<ul>
+<li>You can assign values to variables for reuse.</li>
+</ul>
+<pre class="r"><code># Variable Assignment
+x &lt;- 10 
+y &lt;- 20
+z &lt;- x + y # x and y are now saved in your environment for reuse
+z</code></pre>
+<pre><code>[1] 30</code></pre>
+<p><strong>Data Types:</strong> - Numeric, Character, Boolean, Integer,
+and Double</p>
+<pre class="r"><code># 6 = numeric
+# &quot;c&quot; = character
+# -5 = integer
+# TRUE = boolean</code></pre>
+<p><strong>Data Formats:</strong></p>
+<ul>
+<li><p>vectors,</p></li>
+<li><p>lists,</p></li>
+<li><p>data frames</p></li>
+</ul>
+<pre class="r"><code># Vectors = arrays of data elements each of the SAME TYPE.
+vec &lt;- c(1, 2, 3, 4, 5)
+vec</code></pre>
+<pre><code>[1] 1 2 3 4 5</code></pre>
+<pre class="r"><code># Lists = can contain many items that (can have different types of data like numbers characters and also could contain stored vectors or data frames.)
+lst &lt;- list(name = &quot;John&quot;, age = 25)
+lst</code></pre>
+<pre><code>$name
+[1] &quot;John&quot;
 
-# Loading of packages
-library(ggplot2)
+$age
+[1] 25</code></pre>
+<pre class="r"><code># Data Frames = tabular (2-dimensional) data structure that can store values of any data type.
+df &lt;- data.frame(Name = c(&quot;Alice&quot;, &quot;Bob&quot;), Age = c(25, 30))
+df</code></pre>
+<pre><code>   Name Age
+1 Alice  25
+2   Bob  30</code></pre>
+</div>
+<div id="functions-in-r" class="section level3">
+<h3>3. Functions in R</h3>
+<p>Understanding and creating functions is fundamental in R:</p>
+<ul>
+<li>Functions are reusable blocks of code that perform a specific
+task.</li>
+</ul>
+<p>Creating Simple Functions: Here’s how you can create a simple
+function in R.</p>
+<pre class="r"><code># Creating a Function
+add_numbers &lt;- function(a, b) {  
+  return(a + b)  # takes two arguments (a and b) and returns their sum.
+}
+
+# Using the Function: Here we are calling the function &#39;add_numbers&#39; with 10 and 15 as inputs.
+add_numbers(10, 15)</code></pre>
+<pre><code>[1] 25</code></pre>
+</div>
+<div id="installing-and-loading-packages" class="section level3">
+<h3>4. Installing and loading Packages:</h3>
+<ul>
+<li><p>R packages are collections of functions and datasets developed by
+the R community:</p></li>
+<li><p>There are pre-loaded packages in Rstudio that can be used and
+called without installation (e.g., dplyr)</p></li>
+<li><p>CRAN: CRAN (Comprehensive R Archive Network) is the main
+repository for R packages.</p></li>
+</ul>
+<p>Installing and Loading Packages: To use additional functions, you
+might need to install and load packages.</p>
+<pre class="r"><code># Installing a Package (Uncomment the line below if the package has been loaded previously)
+install.packages(&quot;ggplot2&quot;)</code></pre>
+<pre><code>
+The downloaded binary packages are in
+    /var/folders/p9/7vjxs6dd7p70vybzdhy_0hw00000gn/T//RtmpiomRgw/downloaded_packages</code></pre>
+<pre class="r"><code># Loading the package &quot;ggplot&quot; a data visualtion package we will use later in the course:
+library(ggplot2) # no quotations needed when loading a package from your library</code></pre>
+</div>
+<div id="saving" class="section level3">
+<h3>5. Saving</h3>
+<ul>
+<li>I have stored a data frame (with example data not shown) named
+“df”</li>
+</ul>
+<pre class="r"><code># Can store columns of different data types
+
+city &lt;- c(&quot;Cairo&quot;, &quot;Kinshasa&quot;, &quot;Lagos&quot;, &quot;Luanda&quot;, &quot;Dar es Salaam&quot;, &quot;Khartoum&quot;,
+          &quot;Johannesburg&quot;, &quot;Abidjan&quot;, &quot;Addis Ababa&quot;, &quot;Nairobi&quot;, &quot;Yaoundé&quot;, 
+          &quot;Casablanca&quot;, &quot;Antananarivo&quot;, &quot;Kampala&quot;, &quot;Kumasi&quot; , &quot;Dakar&quot;, 
+          &quot;Ouagadougou&quot;, &quot;Lusaka&quot;, &quot;Algiers&quot;, &quot;Bamako&quot;, &quot;Brazzaville&quot;,
+          &quot;Mogadishu&quot;, &quot;Tunis&quot;, &quot;Conakry&quot;, &quot;Lomé&quot;, &quot;Matola&quot;, &quot;Monrovia&quot;,
+          &quot;Harare&quot;, &quot;N&#39;Djamena&quot;, &quot;Nouakchott&quot;, &quot;Niamey&quot;, &quot;Freetown&quot;, 
+          &quot;Lilongwe&quot;, &quot;Kigali&quot;, &quot;Abomey-Calavi&quot;, &quot;Tripoli&quot;, &quot;Bujumbura&quot;,
+          &quot;Asmara&quot;, &quot;Bangui&quot;, &quot;Libreville&quot;)
+
+abb &lt;- c(&quot;CA&quot;, &quot;KI&quot;, &quot;LA&quot;, &quot;LU&quot;, &quot;DS&quot;, &quot;KH&quot;, &quot;JO&quot;, &quot;AB&quot;, &quot;AD&quot;, &quot;NA&quot;, &quot;YA&quot;,
+         &quot;CB&quot;, &quot;AN&quot;, &quot;KA&quot;, &quot;KU&quot;, &quot;DA&quot;, &quot;OU&quot;, &quot;LS&quot;, &quot;AL&quot;, &quot;BA&quot;, &quot;BR&quot;, &quot;MO&quot;,
+         &quot;TU&quot;, &quot;CO&quot;, &quot;LO&quot;, &quot;MA&quot;, &quot;MN&quot;, &quot;HA&quot;, &quot;ND&quot;, &quot;NO&quot;, &quot;NI&quot;, &quot;FR&quot;, &quot;LI&quot;, 
+         &quot;KG&quot;, &quot;AC&quot;, &quot;TR&quot;, &quot;BU&quot;, &quot;AS&quot;, &quot;BG&quot;, &quot;LB&quot;)
+
+region &lt;- c(&quot;North&quot;, &quot;Central&quot;, &quot;Central&quot;, &quot;South&quot;, &quot;South&quot;, &quot;North&quot;,
+            &quot;South&quot;, &quot;Central&quot;, &quot;Central&quot;, &quot;Central&quot;, &quot;Central&quot;,
+            &quot;North&quot;, &quot;South&quot;, &quot;Central&quot;, &quot;Central&quot;, &quot;Central&quot;,
+            &quot;Central&quot;, &quot;South&quot;, &quot;North&quot;, &quot;North&quot;, &quot;South&quot;,
+            &quot;Central&quot;, &quot;North&quot;, &quot;Central&quot;, &quot;Central&quot;, &quot;South&quot;,
+            &quot;Central&quot;, &quot;South&quot;, &quot;North&quot;, &quot;North&quot;, &quot;North&quot;,
+            &quot;Central&quot;, &quot;South&quot;, &quot;Central&quot;, &quot;Central&quot;, &quot;North&quot;,
+            &quot;South&quot;, &quot;Central&quot;, &quot;Central&quot;, &quot;Central&quot;)
+
+region &lt;- factor(region, levels = c(&quot;North&quot;, &quot;Central&quot; , &quot;South&quot;))
+
+population &lt;- c(22183200, 16315534, 15387639, 8952496, 7404689, 
+         6160327, 6065354, 5515790, 5227794, 5118844, 
+         4336670, 3840396, 3699900, 3651919, 3630326, 
+         3326001, 3055788, 3041789, 2853959, 2816943, 
+         2552813, 2497463, 2435961, 2048525, 1925517, 
+         1796872, 1622582, 1557740, 1532588, 1431539, 
+         1383909, 1272145, 1222325, 1208296, 1188736, 
+         1175830, 1139265, 1034872, 933176, 856854)
+
+total &lt;- c(125700, 80500, 66900, 51700, 36400, 45700, 31000, 
+           37600, 41300, 28600, 24600, 25000, 9300, 11800,
+           14200, 23200, 21900, 32100, 29300, 9700, 5300,
+           6500, 13500, 20700, 35100, 11600, 3600, 11100,
+           9700, 2100, 12000, 9300, 6300, 2200, 8400, 
+           6700, 2700, 3200,1200, 700)</code></pre>
+<pre class="r"><code>df &lt;- data.frame(city, abb, region, population, total)
+head(df) # shows the first &#39;n&#39; rows</code></pre>
+<pre><code>           city abb  region population  total
+1         Cairo  CA   North   22183200 125700
+2      Kinshasa  KI Central   16315534  80500
+3         Lagos  LA Central   15387639  66900
+4        Luanda  LU   South    8952496  51700
+5 Dar es Salaam  DS   South    7404689  36400
+6      Khartoum  KH   North    6160327  45700</code></pre>
+<pre class="r"><code>write.csv(df,&quot;output/data.csv&quot;)</code></pre>
+</div>
+<div id="importing-external-data" class="section level3">
+<h3>6. Importing External Data:</h3>
+<ul>
+<li><p>Data analysis often involves importing data from external
+files:</p></li>
+<li><p>R can read data from various formats like CSV, Excel,
+etc.</p></li>
+<li><p>It is important to pay attention to the extension the file uses
+(e.g., csv = comman seperated values)</p></li>
+</ul>
+<pre class="r"><code># Reading CSV Files:
+df &lt;- read.csv(&quot;output/data.csv&quot;)
+
+# Reading Excel Files (requires the readxl package)
+install.packages(&quot;readxl&quot;)</code></pre>
+<pre><code>
+The downloaded binary packages are in
+    /var/folders/p9/7vjxs6dd7p70vybzdhy_0hw00000gn/T//RtmpiomRgw/downloaded_packages</code></pre>
+<pre class="r"><code>library(readxl)
+# df_excel &lt;- read_excel(&quot;path/to/your/file.xlsx&quot;)</code></pre>
+</div>
+<div id="indexing" class="section level3">
+<h3>7. Indexing:</h3>
+<ul>
+<li>Indexing is the process of selecting elements using their indices
+(i.e., positions in the data format)</li>
+</ul>
+<p><em>Indexing ROWS and COLUMNS by POSITION:</em></p>
+<pre class="r"><code># Select 1st Row:
+first_row &lt;- df[1, ]  # Selects the entire first row
+
+# Select 2nd column:
+second_column &lt;- df[, 2]  # Selects the entire second column (&#39;abb&#39;)
+
+# Select the element in the 3rd row and 4th column:
+specific_element &lt;- df[3, 4]  # Selects the population of the third city (&#39;Lagos&#39;)</code></pre>
+<p><em>Indexing Using COLUMN Names:</em></p>
+<pre class="r"><code># Select the &#39;city&#39; column:
+city_column &lt;- df$city  # Selects the &#39;city&#39; column
+
+# Select the first row using column names:
+first_row_city_pop &lt;- df[1, c(&quot;city&quot;, &quot;population&quot;)]  # Selects the &#39;city&#39; and &#39;pop&#39; columns for the first row
+
+# Logical Indexing:
+large_cities &lt;- df[df$pop &gt; 10000000, ]  # Returns all rows where &#39;pop&#39; is greater than 10 million</code></pre>
+<p><em>Indexing with <code>dplyr</code>:</em></p>
+<pre class="r"><code># Using dplyr you can perform similar operations with clearer syntax:
 library(dplyr)
-library(ggpubr)
-library(corrplot)
-library(stats)</code></pre>
-</div>
-<div id="summarising-data" class="section level3">
-<h3>1. Summarising Data</h3>
-<pre class="r"><code>data(&quot;iris&quot;)
-# We need to create an array of our variable for Sepal.Length:
-x &lt;- iris$Sepal.Length</code></pre>
-<p>Looking at the <strong>CENTRAL TENDENCY</strong> of the data:</p>
-<ul>
-<li><p><code>mean(x)</code></p></li>
-<li><p><code>median(x)</code></p></li>
-<li><p><code>mode(x)</code></p></li>
-</ul>
-<p>Looking at the <strong>DISPERSION</strong> of the data:</p>
-<ul>
-<li><p><code>min(x)</code></p></li>
-<li><p><code>max(x)</code></p></li>
-<li><p><code>range(x)</code> - Range of the data</p></li>
-<li><p><code>IQR(x)</code>- Inter-quantile range</p></li>
-<li><p><code>var(x)</code> - Variance</p></li>
-<li><p><code>sd(x)</code> - Standard Deviation</p></li>
-</ul>
-<p>TIP: you can use the function <code>summary</code> for a quick look
-at your data</p>
-<pre class="r"><code>summary(iris)</code></pre>
-<pre><code>  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
- Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
- 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
- Median :5.800   Median :3.000   Median :4.350   Median :1.300  
- Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
- 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
- Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
-       Species  
- setosa    :50  
- versicolor:50  
- virginica :50  
-                
-                
-                </code></pre>
-<div id="frequency-tables" class="section level4">
-<h4>Frequency Tables:</h4>
-<ul>
-<li><p>The frequency of an observation tells you the number of times the
-observation occurs in the data.</p></li>
-<li><p>A frequency table is a collection of these observations and their
-frequencies.</p></li>
-<li><p>A frequency table can be shown either graphically (bar
-chart/histogram) or as a frequency distribution table.</p></li>
-<li><p>These tables can show qualitative (categorical) or quantitative
-(numeric) variables.</p></li>
-</ul>
-<pre class="r"><code># Frequency table for the categorical variable
-freq_table &lt;- table(iris$Species)
-freq_table</code></pre>
-<pre><code>
-    setosa versicolor  virginica 
-        50         50         50 </code></pre>
-<p><strong>Note:</strong> the frequency table is CASE-SENSITIVE so the
-frequencies of the variables corresponds to how many times that specific
-number of string appears.</p>
-</div>
-</div>
-<div id="correlation" class="section level3">
-<h3>2. Correlation:</h3>
-<p>Correlation analysis is used to investigate the association between
-two or more variables.</p>
-<div id="step-1-choose-a-correlation-method" class="section level4">
-<h4>Step 1: Choose a Correlation Method</h4>
-<p><strong><em>Pearson Correlation</em></strong> measures the linear
-relationship between two continuous variables. It assumes both variables
-follow a normal distribution.</p>
-<p><strong><em>Spearman and Kendall Correlation</em></strong> are
-non-parametric and measure the strength and direction of the association
-between two ranked variables.</p>
-</div>
-<div id="step-2-calculate-correlation" class="section level4">
-<h4>Step 2: Calculate Correlation</h4>
-<ol style="list-style-type: lower-roman">
-<li>Pearson Correlation</li>
-</ol>
-<pre class="r"><code># Pearson correlation test
-pearson_res &lt;- cor.test(mtcars$mpg, mtcars$wt, method = &quot;pearson&quot;)
-pearson_res</code></pre>
-<pre><code>
-    Pearson&#39;s product-moment correlation
 
-data:  mtcars$mpg and mtcars$wt
-t = -9.559, df = 30, p-value = 1.294e-10
-alternative hypothesis: true correlation is not equal to 0
-95 percent confidence interval:
- -0.9338264 -0.7440872
-sample estimates:
-       cor 
--0.8676594 </code></pre>
-<ol start="2" style="list-style-type: lower-roman">
-<li>Spearman and Kendall Correlation</li>
-</ol>
-<pre class="r"><code># Spearman correlation test
-spearman_res &lt;- cor.test(mtcars$mpg, mtcars$wt, method = &quot;spearman&quot;)
-spearman_res</code></pre>
-<pre><code>
-    Spearman&#39;s rank correlation rho
+# Select specific columns
+selected_df &lt;- df %&gt;%
+  select(city, population)  # Selects &#39;city&#39; and &#39;pop&#39; columns
 
-data:  mtcars$mpg and mtcars$wt
-S = 10292, p-value = 1.488e-11
-alternative hypothesis: true rho is not equal to 0
-sample estimates:
-      rho 
--0.886422 </code></pre>
-<pre class="r"><code># Kendall correlation test
-kendall_res &lt;- cor.test(mtcars$mpg, mtcars$wt, method = &quot;kendall&quot;)
-kendall_res</code></pre>
-<pre><code>
-    Kendall&#39;s rank correlation tau
-
-data:  mtcars$mpg and mtcars$wt
-z = -5.7981, p-value = 6.706e-09
-alternative hypothesis: true tau is not equal to 0
-sample estimates:
-       tau 
--0.7278321 </code></pre>
+# Filter rows based on a condition
+filtered_df &lt;- df %&gt;%
+  filter(population &gt; 10000000)  # Filters for cities with population greater than 10 million</code></pre>
 </div>
-<div id="step-3-interpretation" class="section level4">
-<h4>Step 3: Interpretation</h4>
-<p>Correlation Coefficient:</p>
+<div id="data-manipulation-basics" class="section level3">
+<h3>8. Data Manipulation Basics</h3>
+<p>Basic data manipulation is key to preparing data for analysis.</p>
+<p><strong><em>Overview of Data Classes: Learn about data frames,
+matrices, and lists.</em></strong></p>
 <ul>
-<li><p><code>-1</code>: Strong negative correlation (as one variable
-increases, the other decreases).</p></li>
-<li><p><code>0</code>: No correlation.</p></li>
-<li><p><code>1</code>: Strong positive correlation (both variables
-increase together).</p></li>
+<li><p>Data Frames: Rectangular tables with rows and columns, where
+columns can be of different types.</p></li>
+<li><p>Matrices: Rectangular tables with rows and columns, where all
+elements must be of the same type.</p></li>
+<li><p>Lists: Collections of elements that can be of different types,
+including other lists.</p></li>
 </ul>
-<p>P-Value:</p>
+<pre class="r"><code># Creating a Matrix
+matrix_example &lt;- matrix(1:9, nrow = 3, byrow = TRUE)
+
+# Creating a List
+list_example &lt;- list(
+  numbers = 1:5,
+  text = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;),
+  data_frame = df
+)</code></pre>
 <ul>
-<li><code>p-value &lt; 0.05</code> indicates a statistically significant
-correlation.</li>
+<li>Subsetting Data: Extract subsets of data based on conditions.</li>
 </ul>
-<p><span
-style="color:red;"><strong><em>Exercise:</em></strong></span></p>
-<p>Perform a correlation analysis using the <code>mpg</code> and
-<code>qsec</code> variables from the <code>mtcars</code> to investigate
-the extent of correlation between the two variables. Provide an
-interpretation of the correlation coefficient and its p-value.</p>
+<pre class="r"><code># Extract cities with population greater than 10 million
+large_cities &lt;- df[df$population &gt; 10000000, ]
+
+# Extract cities in the &#39;South&#39; region
+south_cities &lt;- df[df$region == &quot;South&quot;, ]
+
+# Select Specific Columns
+city_population &lt;- df[, c(&quot;city&quot;, &quot;population&quot;)]</code></pre>
+<ul>
+<li>Basic Transformations: Perform simple data transformations such as
+adding new columns.</li>
+</ul>
+<pre class="r"><code># Add a New Column: City Area (dummy data)
+df$area &lt;- c(606, 851, 1171, 300, 400)  # Example areas in square kilometers
+
+# Modify Existing Column: Increase Population by 10%
+df$population &lt;- df$population * 1.10
+
+# Using dplyr for Data Manipulation:
+
+# Add a New Column: City Area
+df &lt;- df %&gt;%
+  mutate(rank = 1:40)
+
+# Modify Existing Column: Increase Population by 10%
+df &lt;- df %&gt;%
+  mutate(population = population * 1.10)
+
+# Filter: Cities in the &#39;South&#39; Region
+south_cities_dplyr &lt;- df %&gt;%
+  filter(region == &quot;South&quot;)
+
+# Select Specific Columns
+city_population_dplyr &lt;- df %&gt;%
+  select(city, population)</code></pre>
+<p><span style="color:red;"><strong><em>Exercise:
+</em></strong>:<span></p>
+<p><span style="color:red;">a. Data Classes: Extract the population of
+the 3rd city from the df data frame.<span></p>
+<p><span style="color:red;">b. Subsetting Data -&gt; Extract the
+elements from matrix_example that are greater than 5.<span></p>
+<p><span style="color:red;">c. Basic Transformations: Add a new column
+area to df with values 500, 600, 700, 800, 900.<span></p>
 <details>
 <summary>
-<em>Example interpretation</em>:
+Answer
 </summary>
-<ul>
-<li><p>The Pearson correlation coefficient is -0.8677, which points to a
-strong negative linear relationship between the variables.</p></li>
-<li><p>The p-value is significantly low (p &lt; 0.001), indicating that
-the correlation is statistically significant.</p></li>
-<li><p>The 95% confidence interval suggests that the true correlation
-lies between -0.9338 and -0.7441.</p></li>
-</ul>
-</div>
-</div>
-<div id="simple-linear-regression" class="section level3">
-<h3>3. Simple Linear Regression:</h3>
-<pre class="r"><code>x &lt;- mtcars$mpg
-y &lt;- mtcars$wt
-
-model = lm(y ~ x)
-summary(model)</code></pre>
-<pre><code>
-Call:
-lm(formula = y ~ x)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--0.6516 -0.3490 -0.1381  0.3190  1.3684 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  6.04726    0.30869  19.590  &lt; 2e-16 ***
-x           -0.14086    0.01474  -9.559 1.29e-10 ***
----
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-
-Residual standard error: 0.4945 on 30 degrees of freedom
-Multiple R-squared:  0.7528,    Adjusted R-squared:  0.7446 
-F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10</code></pre>
-<pre class="r"><code>par(mfrow = c(2, 2))
-plot(model)</code></pre>
-<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div id="checking-assumptions" class="section level4">
-<h4><em>Checking Assumptions</em>:</h4>
-<div
-id="assumption-1-linearity-check-if-the-relationship-between-variables-is-linear."
-class="section level5">
-<h5><strong>Assumption 1: Linearity</strong> –&gt; Check if the
-relationship between variables is linear.</h5>
-<p>Plot of <code>x</code> vs <code>y</code>: This scatter plot displays
-the relationship between the predictor <code>x</code> and the response
-<code>y</code>.</p>
-<p>Abline (Regression Line): The <code>abline(model)</code> adds the
-fitted regression line to the plot.</p>
-<pre class="r"><code>plot(x, y)
-abline(model)</code></pre>
-<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p><em>What to Look For</em>:</p>
-<p><strong>Linear Relationship</strong>: The data points should roughly
-form a straight line if the linearity assumption is satisfied. The
-fitted regression line should capture the trend of the data points
-well.</p>
-<p><strong>Non-Linearity</strong>: If the data points show a clear
-curvature or systematic pattern not captured by the straight line, this
-suggests that the linearity assumption is violated. In such cases,
-consider polynomial regression or other non-linear models.</p>
-</div>
-<div
-id="assumption-2-homoscedasticity-ensure-that-the-residuals-are-evenly-distributed."
-class="section level5">
-<h5><strong>Assumption 2: Homoscedasticity</strong> –&gt; Ensure that
-the residuals are evenly distributed.</h5>
-<p><em>Plot of Residuals</em>: This plot shows the residuals from the
-model. Residuals are the differences between the observed values and the
-values predicted by the model.</p>
-<pre class="r"><code>plot(model$residuals)</code></pre>
-<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p><em>What to Look For</em>:</p>
-<p><strong>Even Spread</strong>: Ideally, the residuals should be
-randomly scattered around zero and should not display any clear pattern.
-This indicates homoscedasticity (constant variance of residuals).</p>
-<p><strong>Patterns</strong>: If you observe a pattern, such as a funnel
-shape (residuals increasing or decreasing as <code>x</code> increases),
-it suggests heteroscedasticity (non-constant variance). In such cases,
-consider transforming the dependent variable or using robust regression
-techniques.</p>
-</div>
-<div
-id="assumption-3-normality-of-residuals-use-q-q-plots-to-check-the-normality-of-residuals."
-class="section level5">
-<h5><strong>Assumption 3: Normality of Residuals</strong> –&gt; Use Q-Q
-plots to check the normality of residuals.</h5>
-<p>Q-Q Plot: The Q-Q plot (quantile-quantile plot) compares the
-quantiles of the residuals with the quantiles of a normal
-distribution.</p>
-<pre class="r"><code>qqnorm(model$residuals)
-qqline(model$residuals)</code></pre>
-<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p><em>What to Look For</em>:</p>
-<p><strong>Straight Line</strong>: If the residuals are normally
-distributed, the points should closely follow the straight line
-(<code>qqline</code>). This suggests that the normality assumption is
-reasonable.</p>
-<p><strong>Deviations</strong>: Significant deviations from the line
-indicate that the residuals are not normally distributed. This could
-mean the presence of outliers or skewness in the residuals. If the
-normality assumption is violated, consider transforming the response
-variable or using non-parametric methods.</p>
-</div>
-<div id="summary-of-interpretation" class="section level5">
-<h5><strong><em>Summary of Interpretation</em></strong>:</h5>
-<ul>
-<li><p><strong>Linearity</strong>: The plot of x vs. y with the
-regression line should show a clear linear relationship.</p></li>
-<li><p><strong>Homoscedasticity</strong>: The plot of residuals should
-display no obvious patterns or systematic structures.</p></li>
-<li><p><strong>Normality of Residuals</strong>: The Q-Q plot should show
-residuals following the diagonal line if they are normally
-distributed.</p></li>
-</ul>
-<p>These plots help you validate the assumptions underlying your
-regression model, ensuring that your results are reliable and
-interpretable.</p>
-<p><span style="color:red;"><strong><em>Simple Linear Regression
-Exercise:</em></strong></span></p>
-<p>You were asked to analyze the following dataset, mtcars, where mpg
-(miles per gallon) is used as the predictor variable and wt (weight) as
-the response variable. You have fitted a linear regression model and
-checked the assumptions.</p>
-<p>Now, perform simple linear regression on two variables of your
-choosing from the mtcars data set and answer the following
-questions:</p>
-<ol style="list-style-type: decimal">
-<li><p>Describe the relationship between mpg and wt. Does the plot
-suggest a linear relationship?</p></li>
-<li><p>Describe the spread of the residuals. Is there any noticeable
-pattern that might suggest a violation of the homoscedasticity
-assumption?</p></li>
-<li><p>Assess whether the residuals appear to follow a normal
-distribution based on the Q-Q plot. Are there any significant deviations
-from the diagonal line?</p></li>
-</ol>
+<pre class="r"><code># 7a:
+df[3, &quot;population&quot;]</code></pre>
+<pre><code>[1] 18619043</code></pre>
+<pre class="r"><code># 7b:
+matrix_example[matrix_example &gt; 5]</code></pre>
+<pre><code>[1] 7 8 6 9</code></pre>
+<pre class="r"><code># 7c:
+df$area &lt;- c(500, 600, 700, 800, 900)
+head(df)</code></pre>
+<pre><code>  X          city abb  region population  total area rank
+1 1         Cairo  CA   North   26841672 125700  500    1
+2 2      Kinshasa  KI Central   19741796  80500  600    2
+3 3         Lagos  LA Central   18619043  66900  700    3
+4 4        Luanda  LU   South   10832520  51700  800    4
+5 5 Dar es Salaam  DS   South    8959674  36400  900    5
+6 6      Khartoum  KH   North    7453996  45700  500    6</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1051,28 +1038,22 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] corrplot_0.92   ggpubr_0.6.0    dplyr_1.1.4     ggplot2_3.5.1  
-[5] workflowr_1.7.1
+[1] dplyr_1.1.4     readxl_1.4.3    ggplot2_3.5.1   workflowr_1.7.1
 
 loaded via a namespace (and not attached):
- [1] tidyr_1.3.1       sass_0.4.9        utf8_1.2.4        generics_0.1.3   
- [5] rstatix_0.7.2     stringi_1.8.4     digest_0.6.36     magrittr_2.0.3   
- [9] evaluate_0.24.0   grid_4.3.3        fastmap_1.2.0     rprojroot_2.0.4  
-[13] jsonlite_1.8.8    processx_3.8.4    whisker_0.4.1     backports_1.5.0  
-[17] ps_1.7.7          promises_1.3.0    httr_1.4.7        purrr_1.0.2      
-[21] fansi_1.0.6       scales_1.3.0      jquerylib_0.1.4   abind_1.4-5      
-[25] cli_3.6.3         rlang_1.1.4       munsell_0.5.1     withr_3.0.1      
-[29] cachem_1.1.0      yaml_2.3.10       tools_4.3.3       ggsignif_0.6.4   
-[33] colorspace_2.1-1  httpuv_1.6.15     broom_1.0.6       vctrs_0.6.5      
-[37] R6_2.5.1          lifecycle_1.0.4   git2r_0.33.0      stringr_1.5.1    
-[41] car_3.1-2         fs_1.6.4          pkgconfig_2.0.3   callr_3.7.6      
-[45] pillar_1.9.0      bslib_0.8.0       later_1.3.2       gtable_0.3.5     
-[49] glue_1.7.0        Rcpp_1.0.13       highr_0.11        xfun_0.46        
-[53] tibble_3.2.1      tidyselect_1.2.1  rstudioapi_0.16.0 knitr_1.48       
-[57] htmltools_0.5.8.1 carData_3.0-5     rmarkdown_2.27    compiler_4.3.3   
-[61] getPass_0.2-4    </code></pre>
-</div>
-</div>
+ [1] gtable_0.3.5      jsonlite_1.8.8    compiler_4.3.3    promises_1.3.0   
+ [5] tidyselect_1.2.1  Rcpp_1.0.13       stringr_1.5.1     git2r_0.33.0     
+ [9] callr_3.7.6       later_1.3.2       jquerylib_0.1.4   scales_1.3.0     
+[13] yaml_2.3.10       fastmap_1.2.0     R6_2.5.1          generics_0.1.3   
+[17] knitr_1.48        tibble_3.2.1      munsell_0.5.1     rprojroot_2.0.4  
+[21] bslib_0.8.0       pillar_1.9.0      rlang_1.1.4       utf8_1.2.4       
+[25] cachem_1.1.0      stringi_1.8.4     httpuv_1.6.15     xfun_0.46        
+[29] getPass_0.2-4     fs_1.6.4          sass_0.4.9        cli_3.6.3        
+[33] withr_3.0.1       magrittr_2.0.3    ps_1.7.7          grid_4.3.3       
+[37] digest_0.6.36     processx_3.8.4    rstudioapi_0.16.0 lifecycle_1.0.4  
+[41] vctrs_0.6.5       evaluate_0.24.0   glue_1.7.0        cellranger_1.1.0 
+[45] whisker_0.4.1     colorspace_2.1-1  fansi_1.0.6       rmarkdown_2.27   
+[49] httr_1.4.7        tools_4.3.3       pkgconfig_2.0.3   htmltools_0.5.8.1</code></pre>
 </div>
 </div>
 </div>

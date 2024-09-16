@@ -16,7 +16,7 @@
 <script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -32,6 +32,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
@@ -258,12 +260,54 @@ $(document).ready(function () {
 <li>
   <a href="about.html">About</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Basic
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Introduction.html">Introduction to R and RStudio</a>
+    </li>
+    <li>
+      <a href="Statistics">Statistics</a>
+    </li>
+    <li>
+      <a href="Visualisation.html">Data Visualisation</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Module 2
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="supervised_learning_final.html">Supervised Learning</a>
+    </li>
+    <li>
+      <a href="Module_5_Unsupervised_Learning.html">Unsupervised Learning</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="EXAMPLE.html">miRseq Analysis</a>
+</li>
 <li>
   <a href="license.html">License</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/oliverdesousa/R_Tutorials">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -302,7 +346,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-09-05
+<strong>Last updated:</strong> 2024-09-16
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -349,15 +393,15 @@ results.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreedbbf64a13dd39b3b9d61c9ef937c76fa8b968481targetblankdbbf64aa">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreee9cf75197fecd2b17c49839ac8157b084819504etargetblanke9cf751a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/tkcaccia/Tutorials/tree/dbbf64a13dd39b3b9d61c9ef937c76fa8b968481" target="_blank">dbbf64a</a>
+<a href="https://github.com/tkcaccia/Tutorials/tree/e9cf75197fecd2b17c49839ac8157b084819504e" target="_blank">e9cf751</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreedbbf64a13dd39b3b9d61c9ef937c76fa8b968481targetblankdbbf64aa"
+id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreee9cf75197fecd2b17c49839ac8157b084819504etargetblanke9cf751a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -367,7 +411,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/tkcaccia/Tutorials/tree/dbbf64a13dd39b3b9d61c9ef937c76fa8b968481" target="_blank">dbbf64a</a>.
+<a href="https://github.com/tkcaccia/Tutorials/tree/e9cf75197fecd2b17c49839ac8157b084819504e" target="_blank">e9cf751</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -383,6 +427,20 @@ were generated:
 <pre><code>
 Ignored files:
     Ignored:    .DS_Store
+    Ignored:    data/.DS_Store
+
+Untracked files:
+    Untracked:  data/COADREAD.clin.merged.picked.txt
+    Untracked:  data/COADREAD.rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.data.txt
+    Untracked:  data/Rstudio.png
+    Untracked:  data/tumor_size_patient_survival.csv
+    Untracked:  output/data.csv
+    Untracked:  test.R
+
+Unstaged changes:
+    Modified:   analysis/.DS_Store
+    Deleted:    analysis/Module_1_Basics.Rmd
+    Deleted:    analysis/Module_2_Visualisation.Rmd
 
 </code></pre>
 <p>
@@ -433,6 +491,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/15be19fc4d02db1429a2f5749cb5f736ff08f446/analysis/license.Rmd" target="_blank">15be19f</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-15
+</td>
+<td>
+Start workflowr project.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/tkcaccia/Tutorials/e54f6b5fed1a84256f2b9d383541d90fc6feae04/docs/license.html" target="_blank">e54f6b5</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-05
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/tkcaccia/Tutorials/blob/8486be7d2014ccd12d74778795578c68ab79519c/analysis/license.Rmd" target="_blank">8486be7</a>
 </td>
 <td>
@@ -452,17 +544,9 @@ update
 </div>
 </div>
 </div>
-<p>What license are you using for your code? See <a
-href="https://choosealicense.com/">choosealicense.com</a> for help
-deciding. It’s a convention to save a file <code>LICENSE</code> in the
-root of your Git repo that contains the license text.</p>
-<p>What license are you using for the written content on your site? It
-is traditional to choose a <a
-href="https://creativecommons.org/choose/">Creative Commons</a> license
-for this type of content.</p>
-<p>How should others cite your work? It’s a convention to save a file
-<code>CITATION</code> in the root of your Git repo that contains the
-citation information.</p>
+<p>This tutorial is covered by the <a
+href="https://cran.r-project.org/web/licenses/GPL-3">GPL-3</a>
+license.</p>
 
 
 <!-- Adjust MathJax settings so that all math formulae are shown using

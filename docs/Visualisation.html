@@ -13,7 +13,7 @@
 
 <meta name="date" content="2024-09-16" />
 
-<title>Module 3: Univariate Analysis</title>
+<title>Module 3: Visualisation</title>
 
 <script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -395,7 +395,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Module 3: Univariate Analysis</h1>
+<h1 class="title toc-ignore">Module 3: Visualisation</h1>
 <h4 class="author">Stefano Cacciatore</h4>
 <h4 class="date">September 16, 2024</h4>
 
@@ -622,12 +622,11 @@ have uncommitted changes.
 
 <p>
 These are the previous versions of the repository in which changes were
-made to the R Markdown
-(<code>analysis/Module_3_Univariate_Analysis.Rmd</code>) and HTML
-(<code>docs/Module_3_Univariate_Analysis.html</code>) files. If you’ve
-configured a remote Git repository (see <code>?wflow_git_remote</code>),
-click on the hyperlinks in the table below to view the files as they
-were in that past version.
+made to the R Markdown (<code>analysis/Visualisation.Rmd</code>) and
+HTML (<code>docs/Visualisation.html</code>) files. If you’ve configured
+a remote Git repository (see <code>?wflow_git_remote</code>), click on
+the hyperlinks in the table below to view the files as they were in that
+past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -656,7 +655,7 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/tkcaccia/Tutorials/blob/e9cf75197fecd2b17c49839ac8157b084819504e/analysis/Module_3_Univariate_Analysis.Rmd" target="_blank">e9cf751</a>
+<a href="https://github.com/tkcaccia/Tutorials/blob/e9cf75197fecd2b17c49839ac8157b084819504e/analysis/Visualisation.Rmd" target="_blank">e9cf751</a>
 </td>
 <td>
 tkcaccia
@@ -668,40 +667,6 @@ tkcaccia
 Start my new project
 </td>
 </tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/tkcaccia/Tutorials/e54f6b5fed1a84256f2b9d383541d90fc6feae04/docs/Module_3_Univariate_Analysis.html" target="_blank">e54f6b5</a>
-</td>
-<td>
-tkcaccia
-</td>
-<td>
-2024-09-05
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/tkcaccia/Tutorials/blob/8486be7d2014ccd12d74778795578c68ab79519c/analysis/Module_3_Univariate_Analysis.Rmd" target="_blank">8486be7</a>
-</td>
-<td>
-tkcaccia
-</td>
-<td>
-2024-09-05
-</td>
-<td>
-update
-</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -709,321 +674,306 @@ update
 </div>
 </div>
 </div>
-<div id="univariate-analysis" class="section level2">
-<h2>Univariate Analysis</h2>
-<p><em>What is univariate analysis ?</em></p>
-<p>The idea of univariate analysis is to first understand the variables
-individually. It is typically the first step in understanding a data
-set. A variable in UA is a condition or subset that your data falls
-into. You can think of it as a “category” such as “age”, “weight” or
-“length”. However, UA does not look at &gt; than 1 variable at a time
-(this would be a bivariate analysis)</p>
-<div id="learning-objectives" class="section level4">
-<h4>Learning Objectives:</h4>
+<div id="visualisation" class="section level1">
+<h1>Visualisation</h1>
+<p>Data visualisation helps to tell stories about the data in a form
+that is appealing and easy to understand and draw conclusions. It is
+said that “a picture is worth a thousand words”</p>
+<p>R is equipped with powerful predefined visualisation features() and
+more add-on features used to create complex but aesthetically pleasing
+graphs</p>
+<p><strong>Learning Objectives:</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>Understand and Apply Scatter Plots</p></li>
+<li><p>Analyze and Interpret Box Plots</p></li>
+<li><p>Create and Customize Heatmaps</p></li>
+<li><p>Conduct and Visualize Survival Analysis</p></li>
+</ol>
+<div id="tidyverse-packages" class="section level4">
+<h4>Tidyverse packages</h4>
+<p>Tidyverse is a collection of packages designed for data analysis and
+includes:</p>
 <ul>
-<li><p>Summarising Data</p></li>
-<li><p>Frequency Tables</p></li>
-<li><p>Univariate Hypothesis Testing</p></li>
-<li><p>Visualising Univariate Data</p></li>
-<li><p>Correlation</p></li>
-<li><p>Simple Regression analysis</p></li>
+<li><p><code>dplyr</code> for data frames manipulations</p></li>
+<li><p><code>purrr</code> for functional programming</p></li>
+<li><p><code>ggplot2</code> for data visualizations</p></li>
+<li><p><code>readr</code> for reading various types of data
+files</p></li>
 </ul>
-<pre class="r"><code># Installation of packages (usually needed)
-# install.packages(&quot;ggplot2&quot;)
-# install.packages(&quot;dplyr&quot;)
-# install.packages(&quot;ggpubr&quot;)
-# install.packages(&quot;corrplot&quot;)
-
-# Loading of packages
-library(ggplot2)
+<p>installing the tidyverse package and loading the library</p>
+<pre><code>#install.packages(&quot;tidyverse&quot;)
+library(tidyverse)</code></pre>
+</div>
+<div id="scatter-plots" class="section level2">
+<h2>1. Scatter Plots</h2>
+<p>Scatter plots are useful for visualizing the relationship between two
+continuous variables.</p>
+<pre class="r"><code>library(ggplot2)
 library(dplyr)
-library(ggpubr)
-library(corrplot)
-library(stats)</code></pre>
-</div>
-<div id="summarising-data" class="section level3">
-<h3>1. Summarising Data</h3>
-<pre class="r"><code>data(&quot;iris&quot;)
-# We need to create an array of our variable for Sepal.Length:
-x &lt;- iris$Sepal.Length</code></pre>
-<p>Looking at the <strong>CENTRAL TENDENCY</strong> of the data:</p>
-<ul>
-<li><p><code>mean(x)</code></p></li>
-<li><p><code>median(x)</code></p></li>
-<li><p><code>mode(x)</code></p></li>
-</ul>
-<p>Looking at the <strong>DISPERSION</strong> of the data:</p>
-<ul>
-<li><p><code>min(x)</code></p></li>
-<li><p><code>max(x)</code></p></li>
-<li><p><code>range(x)</code> - Range of the data</p></li>
-<li><p><code>IQR(x)</code>- Inter-quantile range</p></li>
-<li><p><code>var(x)</code> - Variance</p></li>
-<li><p><code>sd(x)</code> - Standard Deviation</p></li>
-</ul>
-<p>TIP: you can use the function <code>summary</code> for a quick look
-at your data</p>
-<pre class="r"><code>summary(iris)</code></pre>
-<pre><code>  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
- Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
- 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
- Median :5.800   Median :3.000   Median :4.350   Median :1.300  
- Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
- 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
- Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
-       Species  
- setosa    :50  
- versicolor:50  
- virginica :50  
-                
-                
-                </code></pre>
-<div id="frequency-tables" class="section level4">
-<h4>Frequency Tables:</h4>
-<ul>
-<li><p>The frequency of an observation tells you the number of times the
-observation occurs in the data.</p></li>
-<li><p>A frequency table is a collection of these observations and their
-frequencies.</p></li>
-<li><p>A frequency table can be shown either graphically (bar
-chart/histogram) or as a frequency distribution table.</p></li>
-<li><p>These tables can show qualitative (categorical) or quantitative
-(numeric) variables.</p></li>
-</ul>
-<pre class="r"><code># Frequency table for the categorical variable
-freq_table &lt;- table(iris$Species)
-freq_table</code></pre>
-<pre><code>
-    setosa versicolor  virginica 
-        50         50         50 </code></pre>
-<p><strong>Note:</strong> the frequency table is CASE-SENSITIVE so the
-frequencies of the variables corresponds to how many times that specific
-number of string appears.</p>
-</div>
-</div>
-<div id="correlation" class="section level3">
-<h3>2. Correlation:</h3>
-<p>Correlation analysis is used to investigate the association between
-two or more variables.</p>
-<div id="step-1-choose-a-correlation-method" class="section level4">
-<h4>Step 1: Choose a Correlation Method</h4>
-<p><strong><em>Pearson Correlation</em></strong> measures the linear
-relationship between two continuous variables. It assumes both variables
-follow a normal distribution.</p>
-<p><strong><em>Spearman and Kendall Correlation</em></strong> are
-non-parametric and measure the strength and direction of the association
-between two ranked variables.</p>
-</div>
-<div id="step-2-calculate-correlation" class="section level4">
-<h4>Step 2: Calculate Correlation</h4>
-<ol style="list-style-type: lower-roman">
-<li>Pearson Correlation</li>
-</ol>
-<pre class="r"><code># Pearson correlation test
-pearson_res &lt;- cor.test(mtcars$mpg, mtcars$wt, method = &quot;pearson&quot;)
-pearson_res</code></pre>
-<pre><code>
-    Pearson&#39;s product-moment correlation
 
-data:  mtcars$mpg and mtcars$wt
-t = -9.559, df = 30, p-value = 1.294e-10
-alternative hypothesis: true correlation is not equal to 0
-95 percent confidence interval:
- -0.9338264 -0.7440872
-sample estimates:
-       cor 
--0.8676594 </code></pre>
-<ol start="2" style="list-style-type: lower-roman">
-<li>Spearman and Kendall Correlation</li>
-</ol>
-<pre class="r"><code># Spearman correlation test
-spearman_res &lt;- cor.test(mtcars$mpg, mtcars$wt, method = &quot;spearman&quot;)
-spearman_res</code></pre>
-<pre><code>
-    Spearman&#39;s rank correlation rho
+head(starwars)</code></pre>
+<pre><code># A tibble: 6 × 14
+  name      height  mass hair_color skin_color eye_color birth_year sex   gender
+  &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+1 Luke Sky…    172    77 blond      fair       blue            19   male  mascu…
+2 C-3PO        167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
+3 R2-D2         96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
+4 Darth Va…    202   136 none       white      yellow          41.9 male  mascu…
+5 Leia Org…    150    49 brown      light      brown           19   fema… femin…
+6 Owen Lars    178   120 brown, gr… light      blue            52   male  mascu…
+# ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
+#   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+<pre class="r"><code>#summary(starwars)
 
-data:  mtcars$mpg and mtcars$wt
-S = 10292, p-value = 1.488e-11
-alternative hypothesis: true rho is not equal to 0
-sample estimates:
-      rho 
--0.886422 </code></pre>
-<pre class="r"><code># Kendall correlation test
-kendall_res &lt;- cor.test(mtcars$mpg, mtcars$wt, method = &quot;kendall&quot;)
-kendall_res</code></pre>
-<pre><code>
-    Kendall&#39;s rank correlation tau
+# cleaning the dataset to remove NA values for height &amp; mass 
+starwars_QC &lt;- starwars %&gt;%
+  filter(!is.na(height)&amp;!is.na(mass))
 
-data:  mtcars$mpg and mtcars$wt
-z = -5.7981, p-value = 6.706e-09
-alternative hypothesis: true tau is not equal to 0
-sample estimates:
-       tau 
--0.7278321 </code></pre>
-</div>
-<div id="step-3-interpretation" class="section level4">
-<h4>Step 3: Interpretation</h4>
-<p>Correlation Coefficient:</p>
-<ul>
-<li><p><code>-1</code>: Strong negative correlation (as one variable
-increases, the other decreases).</p></li>
-<li><p><code>0</code>: No correlation.</p></li>
-<li><p><code>1</code>: Strong positive correlation (both variables
-increase together).</p></li>
-</ul>
-<p>P-Value:</p>
-<ul>
-<li><code>p-value &lt; 0.05</code> indicates a statistically significant
-correlation.</li>
-</ul>
-<p><span
-style="color:red;"><strong><em>Exercise:</em></strong></span></p>
-<p>Perform a correlation analysis using the <code>mpg</code> and
-<code>qsec</code> variables from the <code>mtcars</code> to investigate
-the extent of correlation between the two variables. Provide an
-interpretation of the correlation coefficient and its p-value.</p>
-<details>
-<summary>
-<em>Example interpretation</em>:
-</summary>
-<ul>
-<li><p>The Pearson correlation coefficient is -0.8677, which points to a
-strong negative linear relationship between the variables.</p></li>
-<li><p>The p-value is significantly low (p &lt; 0.001), indicating that
-the correlation is statistically significant.</p></li>
-<li><p>The 95% confidence interval suggests that the true correlation
-lies between -0.9338 and -0.7441.</p></li>
-</ul>
-</div>
-</div>
-<div id="simple-linear-regression" class="section level3">
-<h3>3. Simple Linear Regression:</h3>
-<pre class="r"><code>x &lt;- mtcars$mpg
-y &lt;- mtcars$wt
+# filtering the dataset to remove outliers
+starwars_QC1 &lt;- starwars_QC %&gt;%
+  filter(height &lt; 300 &amp; mass &lt; 500)
 
-model = lm(y ~ x)
+# Create scatter plot
+ggplot(starwars_QC1, aes(x = height, y = mass)) +
+  geom_point() +
+  labs(title = &quot;Relationship between Mass and Height&quot;, x = &quot;Height(cm)&quot;, y = &quot;Mass(kg)&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="figure/Visualisation.Rmd/scatter-plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="correlation-coefficient." class="section level4">
+<h4>Correlation coefficient.</h4>
+<p>The correlation between 2 variables is found with the
+<code>cor()</code> function.</p>
+<p>Suppose we want to compute the correlation between height and mass in
+the <code>starwars_QC1</code> dataset:</p>
+<pre class="r"><code># Calculate correlation
+correlation &lt;- cor(starwars_QC1$height, starwars_QC1$mass, use = &quot;complete.obs&quot;)
+print(paste(&quot;Correlation coefficient between height and mass:&quot;, round(correlation, 2)))</code></pre>
+<pre><code>[1] &quot;Correlation coefficient between height and mass: 0.75&quot;</code></pre>
+<p>The <code>Pearson</code> correlation is computed by default with the
+cor() function. If you want to compute the <code>Spearman</code> or
+<code>Kendall's tau-b</code> correlation, add the argument
+<code>method = "spearman"</code></p>
+<pre class="r"><code># Fit linear model
+model &lt;- lm(mass ~ height, data = starwars_QC1)
+
+# Print model summary
 summary(model)</code></pre>
 <pre><code>
 Call:
-lm(formula = y ~ x)
+lm(formula = mass ~ height, data = starwars_QC1)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--0.6516 -0.3490 -0.1381  0.3190  1.3684 
+-39.006  -7.804   0.508   4.007  57.901 
 
 Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  6.04726    0.30869  19.590  &lt; 2e-16 ***
-x           -0.14086    0.01474  -9.559 1.29e-10 ***
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -31.25047   12.81488  -2.439   0.0179 *  
+height        0.61273    0.07202   8.508 1.14e-11 ***
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
-Residual standard error: 0.4945 on 30 degrees of freedom
-Multiple R-squared:  0.7528,    Adjusted R-squared:  0.7446 
-F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10</code></pre>
-<pre class="r"><code>par(mfrow = c(2, 2))
+Residual standard error: 19.49 on 56 degrees of freedom
+Multiple R-squared:  0.5638,    Adjusted R-squared:  0.556 
+F-statistic: 72.38 on 1 and 56 DF,  p-value: 1.138e-11</code></pre>
+<p>Plotting the regression line for the relationship</p>
+<pre class="r"><code>ggplot(starwars_QC1, aes(x = height, y = mass)) +
+  geom_point() +
+  geom_smooth(method = &quot;lm&quot;, color = &quot;blue&quot;, se = FALSE) +
+  labs(title = &quot;Relationship between Height and Mass&quot;,
+       x = &quot;Height (cm)&quot;,
+       y = &quot;Mass (kg)&quot;) +
+  theme_minimal()</code></pre>
+<pre><code>`geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<p><img src="figure/Visualisation.Rmd/regression_plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Regression diagnostics
+par(mfrow = c(2, 2))  # Set up plotting area for 4 plots
 plot(model)</code></pre>
-<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div id="checking-assumptions" class="section level4">
-<h4><em>Checking Assumptions</em>:</h4>
-<div
-id="assumption-1-linearity-check-if-the-relationship-between-variables-is-linear."
-class="section level5">
-<h5><strong>Assumption 1: Linearity</strong> –&gt; Check if the
-relationship between variables is linear.</h5>
-<p>Plot of <code>x</code> vs <code>y</code>: This scatter plot displays
-the relationship between the predictor <code>x</code> and the response
-<code>y</code>.</p>
-<p>Abline (Regression Line): The <code>abline(model)</code> adds the
-fitted regression line to the plot.</p>
-<pre class="r"><code>plot(x, y)
-abline(model)</code></pre>
-<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p><em>What to Look For</em>:</p>
-<p><strong>Linear Relationship</strong>: The data points should roughly
-form a straight line if the linearity assumption is satisfied. The
-fitted regression line should capture the trend of the data points
-well.</p>
-<p><strong>Non-Linearity</strong>: If the data points show a clear
-curvature or systematic pattern not captured by the straight line, this
-suggests that the linearity assumption is violated. In such cases,
-consider polynomial regression or other non-linear models.</p>
+<p><img src="figure/Visualisation.Rmd/regresion_diagnostics-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div
-id="assumption-2-homoscedasticity-ensure-that-the-residuals-are-evenly-distributed."
-class="section level5">
-<h5><strong>Assumption 2: Homoscedasticity</strong> –&gt; Ensure that
-the residuals are evenly distributed.</h5>
-<p><em>Plot of Residuals</em>: This plot shows the residuals from the
-model. Residuals are the differences between the observed values and the
-values predicted by the model.</p>
-<pre class="r"><code>plot(model$residuals)</code></pre>
-<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p><em>What to Look For</em>:</p>
-<p><strong>Even Spread</strong>: Ideally, the residuals should be
-randomly scattered around zero and should not display any clear pattern.
-This indicates homoscedasticity (constant variance of residuals).</p>
-<p><strong>Patterns</strong>: If you observe a pattern, such as a funnel
-shape (residuals increasing or decreasing as <code>x</code> increases),
-it suggests heteroscedasticity (non-constant variance). In such cases,
-consider transforming the dependent variable or using robust regression
-techniques.</p>
 </div>
-<div
-id="assumption-3-normality-of-residuals-use-q-q-plots-to-check-the-normality-of-residuals."
-class="section level5">
-<h5><strong>Assumption 3: Normality of Residuals</strong> –&gt; Use Q-Q
-plots to check the normality of residuals.</h5>
-<p>Q-Q Plot: The Q-Q plot (quantile-quantile plot) compares the
-quantiles of the residuals with the quantiles of a normal
-distribution.</p>
-<pre class="r"><code>qqnorm(model$residuals)
-qqline(model$residuals)</code></pre>
-<p><img src="figure/Module_3_Univariate_Analysis.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p><em>What to Look For</em>:</p>
-<p><strong>Straight Line</strong>: If the residuals are normally
-distributed, the points should closely follow the straight line
-(<code>qqline</code>). This suggests that the normality assumption is
-reasonable.</p>
-<p><strong>Deviations</strong>: Significant deviations from the line
-indicate that the residuals are not normally distributed. This could
-mean the presence of outliers or skewness in the residuals. If the
-normality assumption is violated, consider transforming the response
-variable or using non-parametric methods.</p>
+<div id="box-plots" class="section level2">
+<h2>2. Box plots</h2>
+<p>A boxplot or a box-and-whisker plot is a standard method used to
+display the distribution of a dataset based on its five-number summary
+of data points; <code>minimum</code>, <code>first quartile[Q1]</code>,
+<code>median</code>, <code>third quartile[Q3]</code>, and
+<code>maximum</code>.</p>
+<p>A box plot can tell you that your data is symmetrical, has outliers
+or skewed</p>
+<pre class="r"><code>data(&quot;iris&quot;)
+head(iris)</code></pre>
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa</code></pre>
+<p>Create a box plot of Sepal Length by Species using the iris
+dataset</p>
+<pre class="r"><code>ggplot(iris, aes(x = Species, y = Sepal.Length, fill = Species)) +
+  geom_boxplot() +
+  labs(title = &quot;Box Plot of Sepal Length by Species&quot;,
+       x = &quot;Species&quot;,
+       y = &quot;Sepal Length (cm)&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="figure/Visualisation.Rmd/simple_boxplot-1.png" width="672" style="display: block; margin: auto;" />
+We can compare the species list</p>
+<pre class="r"><code>#install.packages(&quot;ggpubr&quot;)
+library(ggpubr)
+library(ggplot2)
+
+# Define the colors for the boxplot
+cols &lt;- c(&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;)
+
+
+# Prepare the dataset (using Sepal.Length as the continuous variable)
+df &lt;- data.frame(Sepal.Length = iris$Sepal.Length, Species = iris$Species)
+
+# Define comparisons for pairwise Wilcoxon test
+my_comparisons &lt;- list(c(&quot;setosa&quot;, &quot;versicolor&quot;), c(&quot;setosa&quot;, &quot;virginica&quot;), c(&quot;versicolor&quot;, &quot;virginica&quot;))
+
+# Create the boxplot
+ggboxplot(df, x = &quot;Species&quot;, y = &quot;Sepal.Length&quot;, width = 0.8, palette = cols,
+          fill = &quot;Species&quot;, add = &quot;jitter&quot;, ylim = c(4, 9.5),  # Increase ylim to provide space for labels
+          add.params = list(size = 0.5, jitter = 0.2, fill = &quot;Species&quot;),
+          shape = 21) +
+  labs(y= &quot;Sepal Length&quot;, x = &quot;Species&quot;, title = &quot;Box plot sepal length by species&quot;) +
+  stat_compare_means(method = &quot;kruskal.test&quot;) +  # Overall comparison using Kruskal-Wallis test
+  stat_compare_means(comparisons = my_comparisons, 
+                     method = &quot;wilcox.test&quot;, 
+                     label = &quot;p.signif&quot;, 
+                     label.y = c(8.5, 9.2, 8.7)) +  # Manually adjust the position of significance labels
+  theme(legend.position = &quot;none&quot;, plot.margin = unit(c(2, 1, 1, 1), &quot;cm&quot;))</code></pre>
+<p><img src="figure/Visualisation.Rmd/ggboxplot-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="summary-of-interpretation" class="section level5">
-<h5><strong><em>Summary of Interpretation</em></strong>:</h5>
+<div id="heatmaps" class="section level2">
+<h2>3. Heatmaps</h2>
+<p>Heat maps or heatmaps allow us to simultaneously visualize clusters
+of samples and features.</p>
+<p>There are multiple R packages and functions for drawing interactive
+and static heatmaps, including:</p>
 <ul>
-<li><p><strong>Linearity</strong>: The plot of x vs. y with the
-regression line should show a clear linear relationship.</p></li>
-<li><p><strong>Homoscedasticity</strong>: The plot of residuals should
-display no obvious patterns or systematic structures.</p></li>
-<li><p><strong>Normality of Residuals</strong>: The Q-Q plot should show
-residuals following the diagonal line if they are normally
-distributed.</p></li>
+<li><p><code>heatmap()</code> [R base function, stats package]: Draws a
+simple heatmap</p></li>
+<li><p><code>heatmap.2()</code> [gplots R package]: Draws an enhanced
+heatmap compared to the R base function.</p></li>
+<li><p><code>pheatmap()</code> [pheatmap R package]: Draws pretty
+heatmaps and provides more control to change the appearance of
+heatmaps.</p></li>
+<li><p><code>d3heatmap()</code> [d3heatmap R package]: Draws an
+interactive/clickable heatmap</p></li>
+<li><p><code>Heatmap()</code> [ComplexHeatmap R/Bioconductor package]:
+Draws, annotates and arranges complex heatmaps (very useful for genomic
+data analysis)</p></li>
 </ul>
-<p>These plots help you validate the assumptions underlying your
-regression model, ensuring that your results are reliable and
-interpretable.</p>
-<p><span style="color:red;"><strong><em>Simple Linear Regression
-Exercise:</em></strong></span></p>
-<p>You were asked to analyze the following dataset, mtcars, where mpg
-(miles per gallon) is used as the predictor variable and wt (weight) as
-the response variable. You have fitted a linear regression model and
-checked the assumptions.</p>
-<p>Now, perform simple linear regression on two variables of your
-choosing from the mtcars data set and answer the following
-questions:</p>
-<ol style="list-style-type: decimal">
-<li><p>Describe the relationship between mpg and wt. Does the plot
-suggest a linear relationship?</p></li>
-<li><p>Describe the spread of the residuals. Is there any noticeable
-pattern that might suggest a violation of the homoscedasticity
-assumption?</p></li>
-<li><p>Assess whether the residuals appear to follow a normal
-distribution based on the Q-Q plot. Are there any significant deviations
-from the diagonal line?</p></li>
-</ol>
+<p>We shall use the <code>mtcars</code> dataset.</p>
+<pre class="r"><code>#standardising the data to make variables comparable
+df &lt;- scale(mtcars)
+# Default plot
+heatmap(df, scale = &quot;none&quot;)</code></pre>
+<p><img src="figure/Visualisation.Rmd/heatmap-1.png" width="672" style="display: block; margin: auto;" />
+We can customise by using the <code>RColorBrewer</code> color palette to
+change the appearance. The arguments <code>RowSideColors</code> and
+<code>ColSideColors</code> are used to annotate rows and columns
+respectively.</p>
+<pre class="r"><code>library(&quot;RColorBrewer&quot;)
+col &lt;- colorRampPalette(brewer.pal(10, &quot;RdYlBu&quot;))(256)
+heatmap(df, scale = &quot;none&quot;, col =  col, 
+        RowSideColors = rep(c(&quot;blue&quot;, &quot;pink&quot;), each = 16),
+        ColSideColors = c(rep(&quot;purple&quot;, 5), rep(&quot;orange&quot;, 6)))</code></pre>
+<p><img src="figure/Visualisation.Rmd/heatmap_custom-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="survival-plots" class="section level2">
+<h2>4. Survival plots</h2>
+<p>Survival analysis involves a set of statistical approaches used to
+investigate the time it takes for an event of interest to occur.</p>
+<p>In cancer studies, survival analysis is used for patients survival
+time analyses with typical research questions like;</p>
+<ul>
+<li><p>What is the impact of certain clinical characteristics on
+patient’s survival?</p></li>
+<li><p>What is the probability that an individual survives after 3
+years?</p></li>
+<li><p>Are there differences in survival between groups of
+patients?</p></li>
+</ul>
+<pre class="r"><code>#install.packages(&#39;survminer&#39;)
+BiocManager::install(&quot;RTCGA.clinical&quot;) # data for examples</code></pre>
+<pre><code>&#39;getOption(&quot;repos&quot;)&#39; replaces Bioconductor standard repositories, see
+&#39;help(&quot;repositories&quot;, package = &quot;BiocManager&quot;)&#39; for details.
+Replacement repositories:
+    CRAN: https://cran.rstudio.com/</code></pre>
+<pre><code>Bioconductor version 3.18 (BiocManager 1.30.23), R 4.3.3 (2024-02-29)</code></pre>
+<pre><code>Old packages: &#39;abind&#39;, &#39;arrow&#39;, &#39;BiocManager&#39;, &#39;boot&#39;, &#39;broom.helpers&#39;,
+  &#39;caTools&#39;, &#39;clock&#39;, &#39;corrplot&#39;, &#39;cpp11&#39;, &#39;curl&#39;, &#39;data.table&#39;, &#39;Deriv&#39;,
+  &#39;DescTools&#39;, &#39;digest&#39;, &#39;emmeans&#39;, &#39;EnvStats&#39;, &#39;expm&#39;, &#39;fastDummies&#39;, &#39;gert&#39;,
+  &#39;ggrepel&#39;, &#39;golem&#39;, &#39;hardhat&#39;, &#39;harmony&#39;, &#39;httr2&#39;, &#39;lpSolve&#39;, &#39;matrixStats&#39;,
+  &#39;microbenchmark&#39;, &#39;minqa&#39;, &#39;mvtnorm&#39;, &#39;nlme&#39;, &#39;openssl&#39;, &#39;ps&#39;, &#39;ragg&#39;,
+  &#39;RANN&#39;, &#39;RcppArmadillo&#39;, &#39;RcppEigen&#39;, &#39;recipes&#39;, &#39;reticulate&#39;, &#39;rmarkdown&#39;,
+  &#39;sf&#39;, &#39;sfsmisc&#39;, &#39;Signac&#39;, &#39;spatstat.explore&#39;, &#39;spatstat.univar&#39;,
+  &#39;spatstat.utils&#39;, &#39;spData&#39;, &#39;spdep&#39;, &#39;tinytex&#39;, &#39;waldo&#39;, &#39;wk&#39;, &#39;xfun&#39;</code></pre>
+<pre class="r"><code>library(survminer)
+library(RTCGA.clinical)</code></pre>
+<pre><code>Loading required package: RTCGA</code></pre>
+<pre><code>Welcome to the RTCGA (version: 1.32.0). Read more about the project under https://rtcga.github.io/RTCGA/</code></pre>
+<pre class="r"><code>survivalTCGA(BRCA.clinical, OV.clinical,
+             extract.cols = &quot;admin.disease_code&quot;) -&gt; BRCAOV.survInfo
+
+library(survival)</code></pre>
+<pre><code>
+Attaching package: &#39;survival&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:survminer&#39;:
+
+    myeloma</code></pre>
+<pre class="r"><code>fit &lt;- survfit(Surv(times, patient.vital_status) ~ admin.disease_code,
+               data = BRCAOV.survInfo)
+
+# Visualize with survminer
+ggsurvplot(fit, data = BRCAOV.survInfo, risk.table = TRUE)</code></pre>
+<p><img src="figure/Visualisation.Rmd/survival-1.png" width="672" style="display: block; margin: auto;" />
+The simple plot above shows an estimate of survival probability
+depending on days from cancer diagnostics grouped by cancer types.
+Additionally an informative risk set table which shows the number of
+patients that were under observation in the specific period of time.</p>
+<p>One can create a powerful informative survival plot with such
+specification of the parameters</p>
+<pre class="r"><code>ggsurvplot(
+  fit,                     # survfit object with calculated statistics.
+  data = BRCAOV.survInfo,  # data used to fit survival curves. 
+  risk.table = TRUE,       # show risk table.
+  pval = TRUE,             # show p-value of log-rank test.
+  conf.int = TRUE,         # show confidence intervals for point estimates of survival curves.
+  xlim = c(0,2000),        # present narrower X axis, but not affect survival estimates.
+  break.time.by = 500,     # break X axis in time intervals by 500.
+  ggtheme = theme_minimal(), # customize plot and risk table with a theme.
+  risk.table.y.text.col = T, # colour risk table text annotations.
+  risk.table.y.text = FALSE # show bars instead of names in text annotations in legend of risk table
+)</code></pre>
+<p><img src="figure/Visualisation.Rmd/survival_plot_customised-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="pie-charts" class="section level2">
+<h2>5. Pie Charts:</h2>
+<p>A pie chart represents the proportion of each species in the
+dataset.</p>
+<pre class="r"><code># Load necessary libraries
+library(dplyr)
+library(ggplot2)
+
+# Create a data frame with counts of Species
+x &lt;- as.data.frame(table(iris$Species))
+
+# Create a pie chart using ggplot2
+ggplot(x, aes(x = &quot;&quot;, y = Freq, fill = Var1)) +
+  geom_bar(stat = &quot;identity&quot;, width = 1) +
+  coord_polar(theta = &quot;y&quot;) +
+  labs(title = &quot;Pie Chart&quot;) +
+  theme_void() + 
+  scale_fill_brewer(palette = &quot;Pastel1&quot;) +  
+  theme(legend.title = element_blank(),
+        plot.title = element_text(hjust = 0.5, face = &quot;bold&quot;))</code></pre>
+<p><img src="figure/Visualisation.Rmd/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1051,28 +1001,43 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] corrplot_0.92   ggpubr_0.6.0    dplyr_1.1.4     ggplot2_3.5.1  
-[5] workflowr_1.7.1
+[1] survival_3.7-0               RTCGA.clinical_20151101.32.0
+[3] RTCGA_1.32.0                 survminer_0.4.9             
+[5] RColorBrewer_1.1-3           ggpubr_0.6.0                
+[7] dplyr_1.1.4                  ggplot2_3.5.1               
+[9] workflowr_1.7.1             
 
 loaded via a namespace (and not attached):
- [1] tidyr_1.3.1       sass_0.4.9        utf8_1.2.4        generics_0.1.3   
- [5] rstatix_0.7.2     stringi_1.8.4     digest_0.6.36     magrittr_2.0.3   
- [9] evaluate_0.24.0   grid_4.3.3        fastmap_1.2.0     rprojroot_2.0.4  
-[13] jsonlite_1.8.8    processx_3.8.4    whisker_0.4.1     backports_1.5.0  
-[17] ps_1.7.7          promises_1.3.0    httr_1.4.7        purrr_1.0.2      
-[21] fansi_1.0.6       scales_1.3.0      jquerylib_0.1.4   abind_1.4-5      
-[25] cli_3.6.3         rlang_1.1.4       munsell_0.5.1     withr_3.0.1      
-[29] cachem_1.1.0      yaml_2.3.10       tools_4.3.3       ggsignif_0.6.4   
-[33] colorspace_2.1-1  httpuv_1.6.15     broom_1.0.6       vctrs_0.6.5      
-[37] R6_2.5.1          lifecycle_1.0.4   git2r_0.33.0      stringr_1.5.1    
-[41] car_3.1-2         fs_1.6.4          pkgconfig_2.0.3   callr_3.7.6      
-[45] pillar_1.9.0      bslib_0.8.0       later_1.3.2       gtable_0.3.5     
-[49] glue_1.7.0        Rcpp_1.0.13       highr_0.11        xfun_0.46        
-[53] tibble_3.2.1      tidyselect_1.2.1  rstudioapi_0.16.0 knitr_1.48       
-[57] htmltools_0.5.8.1 carData_3.0-5     rmarkdown_2.27    compiler_4.3.3   
-[61] getPass_0.2-4    </code></pre>
-</div>
-</div>
+ [1] tidyselect_1.2.1    viridisLite_0.4.2   farver_2.1.2       
+ [4] viridis_0.6.5       bitops_1.0-8        fastmap_1.2.0      
+ [7] RCurl_1.98-1.16     promises_1.3.0      XML_3.99-0.17      
+[10] digest_0.6.36       lifecycle_1.0.4     processx_3.8.4     
+[13] magrittr_2.0.3      compiler_4.3.3      rlang_1.1.4        
+[16] sass_0.4.9          tools_4.3.3         utf8_1.2.4         
+[19] yaml_2.3.10         data.table_1.15.4   knitr_1.48         
+[22] ggsignif_0.6.4      labeling_0.4.3      xml2_1.3.6         
+[25] abind_1.4-5         withr_3.0.1         purrr_1.0.2        
+[28] grid_4.3.3          fansi_1.0.6         git2r_0.33.0       
+[31] xtable_1.8-4        colorspace_2.1-1    scales_1.3.0       
+[34] cli_3.6.3           rmarkdown_2.27      generics_0.1.3     
+[37] rstudioapi_0.16.0   km.ci_0.5-6         httr_1.4.7         
+[40] commonmark_1.9.1    cachem_1.1.0        stringr_1.5.1      
+[43] splines_4.3.3       ggthemes_5.1.0      rvest_1.0.4        
+[46] assertthat_0.2.1    BiocManager_1.30.23 survMisc_0.5.6     
+[49] vctrs_0.6.5         Matrix_1.6-5        jsonlite_1.8.8     
+[52] carData_3.0-5       car_3.1-2           callr_3.7.6        
+[55] rstatix_0.7.2       tidyr_1.3.1         jquerylib_0.1.4    
+[58] glue_1.7.0          ps_1.7.7            ggtext_0.1.2       
+[61] stringi_1.8.4       gtable_0.3.5        later_1.3.2        
+[64] munsell_0.5.1       tibble_3.2.1        pillar_1.9.0       
+[67] htmltools_0.5.8.1   R6_2.5.1            KMsurv_0.1-5       
+[70] rprojroot_2.0.4     evaluate_0.24.0     lattice_0.22-6     
+[73] markdown_1.13       highr_0.11          backports_1.5.0    
+[76] gridtext_0.1.5      broom_1.0.6         httpuv_1.6.15      
+[79] bslib_0.8.0         Rcpp_1.0.13         gridExtra_2.3      
+[82] nlme_3.1-165        mgcv_1.9-1          whisker_0.4.1      
+[85] xfun_0.46           fs_1.6.4            zoo_1.8-12         
+[88] getPass_0.2-4       pkgconfig_2.0.3    </code></pre>
 </div>
 </div>
 </div>

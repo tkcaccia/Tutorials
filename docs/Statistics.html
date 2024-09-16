@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Stefano Cacciatore" />
+
+<meta name="date" content="2024-09-16" />
+
+<title>Module 2: Data Pre-Proccessing</title>
+
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">R Tutorial</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Basic
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Introduction.html">Introduction to R and RStudio</a>
+    </li>
+    <li>
+      <a href="Statistics">Statistics</a>
+    </li>
+    <li>
+      <a href="Visualisation.html">Data Visualisation</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Module 2
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="supervised_learning_final.html">Supervised Learning</a>
+    </li>
+    <li>
+      <a href="Module_5_Unsupervised_Learning.html">Unsupervised Learning</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="EXAMPLE.html">miRseq Analysis</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/oliverdesousa/R_Tutorials">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Module 2: Data Pre-Proccessing</h1>
+<h4 class="author">Stefano Cacciatore</h4>
+<h4 class="date">September 16, 2024</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2024-09-16
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>Tutorials/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.1). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20240905code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20240905)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20240905code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20240905)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreee9cf75197fecd2b17c49839ac8157b084819504etargetblanke9cf751a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/tkcaccia/Tutorials/tree/e9cf75197fecd2b17c49839ac8157b084819504e" target="_blank">e9cf751</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreee9cf75197fecd2b17c49839ac8157b084819504etargetblanke9cf751a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/tkcaccia/Tutorials/tree/e9cf75197fecd2b17c49839ac8157b084819504e" target="_blank">e9cf751</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    data/.DS_Store
+
+Untracked files:
+    Untracked:  data/COADREAD.clin.merged.picked.txt
+    Untracked:  data/COADREAD.rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.data.txt
+    Untracked:  data/Rstudio.png
+    Untracked:  data/tumor_size_patient_survival.csv
+    Untracked:  output/data.csv
+    Untracked:  test.R
+
+Unstaged changes:
+    Modified:   analysis/.DS_Store
+    Deleted:    analysis/Module_1_Basics.Rmd
+    Deleted:    analysis/Module_2_Visualisation.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/Statistics.Rmd</code>) and HTML
+(<code>docs/Statistics.html</code>) files. If you’ve configured a remote
+Git repository (see <code>?wflow_git_remote</code>), click on the
+hyperlinks in the table below to view the files as they were in that
+past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/e9cf75197fecd2b17c49839ac8157b084819504e/analysis/Statistics.Rmd" target="_blank">e9cf751</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+<td>
+Start my new project
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="univariate-analysis" class="section level2">
+<h2>Univariate Analysis</h2>
+<p><em>What is univariate analysis ?</em></p>
+<p>The idea of univariate analysis is to first understand the variables
+individually. It is typically the first step in understanding a data
+set. A variable in UA is a condition or subset that your data falls
+into. You can think of it as a “category” such as “age”, “weight” or
+“length”. However, UA does not look at &gt; than 1 variable at a time
+(this would be a bivariate analysis)</p>
+<div id="learning-objectives" class="section level4">
+<h4>Learning Objectives:</h4>
+<ul>
+<li><p>Summarising Data</p></li>
+<li><p>Frequency Tables</p></li>
+<li><p>Univariate Hypothesis Testing</p></li>
+<li><p>Visualising Univariate Data</p></li>
+<li><p>Correlation</p></li>
+<li><p>Simple Regression analysis</p></li>
+</ul>
+<pre class="r"><code># Installation of packages (usually needed)
+# install.packages(&quot;ggplot2&quot;)
+# install.packages(&quot;dplyr&quot;)
+# install.packages(&quot;ggpubr&quot;)
+# install.packages(&quot;corrplot&quot;)
+
+# Loading of packages
+library(ggplot2)
+library(dplyr)</code></pre>
+<pre><code>
+Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    filter, lag</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(ggpubr)
+library(corrplot)</code></pre>
+<pre><code>corrplot 0.92 loaded</code></pre>
+<pre class="r"><code>library(stats)</code></pre>
+</div>
+<div id="summarising-data" class="section level3">
+<h3>1. Summarising Data</h3>
+<pre class="r"><code># Using the data set stored in Rstudio called &quot;cars&quot;
+
+# We need to create an array of our single variable for UA:
+x &lt;- cars$speed</code></pre>
+<p>Looking at the <strong>CENTRAL TENDENCY</strong> of the data:</p>
+<pre class="r"><code>mean(x)</code></pre>
+<pre><code>[1] 15.4</code></pre>
+<pre class="r"><code>median(x)</code></pre>
+<pre><code>[1] 15</code></pre>
+<pre class="r"><code>mode(x)</code></pre>
+<pre><code>[1] &quot;numeric&quot;</code></pre>
+<p>Looking at the <strong>DISPERSION</strong> of the data:</p>
+<pre class="r"><code>min(x)</code></pre>
+<pre><code>[1] 4</code></pre>
+<pre class="r"><code>max(x)</code></pre>
+<pre><code>[1] 25</code></pre>
+<pre class="r"><code># Range of the data:
+range(x)</code></pre>
+<pre><code>[1]  4 25</code></pre>
+<pre class="r"><code># Inter-quantile range:
+IQR(x)</code></pre>
+<pre><code>[1] 7</code></pre>
+<pre class="r"><code># Variance --&gt;
+var(x)</code></pre>
+<pre><code>[1] 27.95918</code></pre>
+<pre class="r"><code># Standard Deviation:
+sd(x)</code></pre>
+<pre><code>[1] 5.287644</code></pre>
+<p><strong><em>TIP:</em></strong> you can use the function
+<code>summary</code> to produce result summaries of the results of
+various model fitting functions.</p>
+<pre class="r"><code>summary(x)</code></pre>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    4.0    12.0    15.0    15.4    19.0    25.0 </code></pre>
+</div>
+<div id="frequency-tables" class="section level3">
+<h3>2. Frequency Tables:</h3>
+<ul>
+<li><p>The frequency of an observation tells you the number of times the
+observation occurs in the data.</p></li>
+<li><p>A frequency table is a collection of these observations and their
+frequencies.</p></li>
+<li><p>A frequency table can be shown either graphically (bar
+chart/histogram) or as a frequency distribution table.</p></li>
+<li><p>These tables can show qualitative (categorical) or quantitative
+(numeric) variables.</p></li>
+</ul>
+<div id="example-data" class="section level4">
+<h4>Example Data</h4>
+<p>We will use a data frame with a categorical variable and a numerical
+variable to demonstrate each type of table.</p>
+<pre class="r"><code># Create example data
+set.seed(123)  # For reproducibility
+data &lt;- data.frame(
+  category = sample(c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;), 100, replace = TRUE),
+  value = rnorm(100, mean = 50, sd = 10)
+)
+head(data)</code></pre>
+<pre><code>  category    value
+1        C 52.53319
+2        C 49.71453
+3        C 49.57130
+4        B 63.68602
+5        C 47.74229
+6        B 65.16471</code></pre>
+<pre class="r"><code># Frequency table for the categorical variable
+freq_table &lt;- table(data$category)
+freq_table</code></pre>
+<pre><code>
+ A  B  C  D 
+28 26 29 17 </code></pre>
+<pre class="r"><code># Qualitative Variables:
+freq_table_numeric &lt;- table(data$value)
+freq_table_numeric </code></pre>
+<pre><code>
+26.9083112435919 29.4675277845948 33.3205806341186 33.8211729171084 
+               1                1                1                1 
+33.9846382642541 34.2785584085451 34.5124719576978 34.8533234621825 
+               1                1                1                1 
+ 35.382444150041 35.3935992907518  35.561068390282 37.1296952396482 
+               1                1                1                1 
+37.7928228774546 39.2820877352442 39.7357909969322 39.7587120939509 
+               1                1                1                1 
+39.8142461689291 40.3814336586987 40.4838143273498  40.525253858152 
+               1                1                1                1 
+41.5029565396642 42.1509553054292  42.895934363007 42.9079923741761 
+               1                1                1                1 
+43.1199138353264 43.4805009830454 43.5929399169462 43.7209392396063 
+               1                1                1                1 
+43.9974041285287 44.2465303739161  44.690934778297  44.976765468907 
+               1                1                1                1 
+45.0896883394346 45.0944255629933 45.7750316766038 46.1977347971224 
+               1                1                1                1 
+46.2933996820759 46.5245740060227 46.6679261633058 46.7406841446877 
+               1                1                1                1 
+47.1522699294899 47.3780251059753 47.4390780780175 47.5330812153763 
+               1                1                1                1 
+47.6429964089952 47.7422901434073 47.7951343818125 48.6110863756096 
+               1                1                1                1 
+ 49.286919138764 49.4443803447546 49.5497227519108 49.5712954270868 
+               1                1                1                1 
+ 49.714532446513 50.0576418589989 50.4123292199294  50.530042267305 
+               1                1                1                1 
+50.7796084956371 51.0567619414894 51.1764659710013 51.2385424384461 
+               1                1                1                1 
+51.8130347974915 52.1594156874397 52.3538657228486 52.3873173511144 
+               1                1                1                1 
+52.5331851399475 52.5688370915653 53.0115336216671 53.0352864140426 
+               1                1                1                1 
+ 53.317819639157 53.7963948275988 53.8528040112633  54.351814908338 
+               1                1                1                1 
+54.4820977862943 54.5150405307921 55.1940720394346 55.4839695950807 
+               1                1                1                1 
+55.8461374963607 56.0796432222503 56.4437654851883 56.8791677297583 
+               1                1                1                1 
+57.0178433537471 57.3994751087733 59.1899660906077 59.2226746787974 
+               1                1                1                1 
+59.9350385596212 60.0573852446226  60.255713696967 60.9683901314935 
+               1                1                1                1 
+61.3133721341418 61.4880761845109 63.6065244853001 63.6860228401446 
+               1                1                1                1 
+64.4455085842335 65.1647060442954 65.3261062618519 68.4386200523221 
+               1                1                1                1 
+69.0910356921748 70.5008468562714 71.0010894052567 71.8733299301658 
+               1                1                1                1 </code></pre>
+<p><strong>Note:</strong> the frequency table is CASE-SENSITIVE so the
+frequencies of the variables corresponds to how many times that specific
+number of string appears.</p>
+</div>
+<div id="grouped-tables" class="section level4">
+<h4>Grouped Tables:</h4>
+<p>Grouped tables aggregate the data into groups or bins.</p>
+<pre class="r"><code># 1st Step: Create BINS for the numerical data
+bins &lt;- cut(x, breaks = 5)
+freq_table_numeric &lt;- table(bins)
+freq_table_numeric</code></pre>
+<pre><code>bins
+ (3.98,8.2]  (8.2,12.4] (12.4,16.6] (16.6,20.8]   (20.8,25] 
+          5          10          13          15           7 </code></pre>
+<pre class="r"><code># Group data into bins and create a grouped table:
+grouped_table &lt;- table(cut(x, breaks = 5))
+grouped_table</code></pre>
+<pre><code>
+ (3.98,8.2]  (8.2,12.4] (12.4,16.6] (16.6,20.8]   (20.8,25] 
+          5          10          13          15           7 </code></pre>
+</div>
+<div id="percentage-proportion-tables" class="section level4">
+<h4>Percentage (Proportion) Tables</h4>
+<p>Percentage tables show the proportion of each unique value or group
+in the data.</p>
+<pre class="r"><code># Percentage table for the categorical variable
+percentage_table &lt;- prop.table(table(x)) * 100
+percentage_table</code></pre>
+<pre><code>x
+ 4  7  8  9 10 11 12 13 14 15 16 17 18 19 20 22 23 24 25 
+ 4  4  2  2  6  4  8  8  8  6  4  6  8  6 10  2  2  8  2 </code></pre>
+<pre class="r"><code># Percentage table for the grouped numerical data
+percentage_table_numeric &lt;- prop.table(table(cut(x, breaks = 5))) * 100
+percentage_table_numeric</code></pre>
+<pre><code>
+ (3.98,8.2]  (8.2,12.4] (12.4,16.6] (16.6,20.8]   (20.8,25] 
+         10          20          26          30          14 </code></pre>
+</div>
+<div id="cumulative-proportion-tables" class="section level4">
+<h4>Cumulative Proportion Tables</h4>
+<p>Cumulative proportion tables show the cumulative proportion of each
+unique value or group.</p>
+<pre class="r"><code># Cumulative proportion table for the categorical variable
+cumulative_prop &lt;- cumsum(prop.table(table(data$category)))
+cumulative_prop &lt;- cumulative_prop * 100
+cumulative_prop</code></pre>
+<pre><code>  A   B   C   D 
+ 28  54  83 100 </code></pre>
+<pre class="r"><code># Cumulative proportion table for the grouped numerical data
+cumulative_prop_numeric &lt;- cumsum(prop.table(table(cut(x, breaks = 5))))
+cumulative_prop_numeric &lt;- cumulative_prop_numeric * 100
+cumulative_prop_numeric</code></pre>
+<pre><code> (3.98,8.2]  (8.2,12.4] (12.4,16.6] (16.6,20.8]   (20.8,25] 
+         10          30          56          86         100 </code></pre>
+<p><span style="color:red;"><strong><em>Question
+1:</em></strong></span></p>
+<p>Using the <code>cars</code> datset:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Calculate the mean, median, and standard deviation of variable
+“speed”.</p></li>
+<li><p>Interpret what these statistics tell you about the speed
+data.</p></li>
+<li><p>Compute the range and interquartile range (IQR) of
+speed.</p></li>
+<li><p>What do these measures reveal about the dispersion of the speed
+data?</p></li>
+<li><p>Use the summary function to get a summary of x.</p></li>
+<li><p>Describe the central tendency and dispersion metrics provided by
+the summary output.</p></li>
+</ol>
+<p><span style="color:red;"><strong><em>Question
+2:</em></strong></span></p>
+<p><em>Using the below:</em></p>
+<pre class="r"><code>xy &lt;- data.frame(
+  category = sample(c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;), 100, replace = TRUE)
+)
+head(xy)</code></pre>
+<pre><code>  category
+1        B
+2        B
+3        A
+4        B
+5        A
+6        A</code></pre>
+<ol style="list-style-type: lower-alpha">
+<li><p>Create a frequency table for the category variable.</p></li>
+<li><p>What is the frequency of each category?</p></li>
+</ol>
+<p><em>Using the below:</em></p>
+<pre class="r"><code>data &lt;- data.frame(
+  value = rnorm(100, mean = 50, sd = 10)
+)</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li><p>Create a frequency table for the value variable.</p></li>
+<li><p>How many observations fall into each unique value?</p></li>
+</ol>
+<p><em>Using the below:</em></p>
+<pre class="r"><code>x &lt;- data$value
+bins &lt;- cut(x, breaks = 5)</code></pre>
+<ol start="5" style="list-style-type: lower-alpha">
+<li><p>Create a grouped frequency table for the value variable using 5
+bins.</p></li>
+<li><p>What are the frequencies for each bin?</p></li>
+</ol>
+<p><em>Using the below:</em></p>
+<pre class="r"><code>x &lt;- data$value
+bins &lt;- cut(x, breaks = 5)</code></pre>
+<ol start="7" style="list-style-type: lower-alpha">
+<li><p>Create a percentage (proportion) table for the grouped value
+data.</p></li>
+<li><p>What percentage of the observations fall into each bin?</p></li>
+</ol>
+<details>
+<summary>
+Answers:
+</summary>
+<pre class="r"><code># Question 1:
+# a. Calculate the mean, median, and standard deviation of variable &quot;speed&quot;
+mean_speed &lt;- mean(x)
+median_speed &lt;- median(x)
+sd_speed &lt;- sd(x)
+
+# c. Compute the range and interquartile range (IQR) of speed
+range_speed &lt;- range(x)
+iqr_speed &lt;- IQR(x)
+
+# e. Use the summary function to get a summary of x
+summary_speed &lt;- summary(x)
+
+# Question 2:
+# a. Create a frequency table for the category variable
+freq_table_category &lt;- table(xy$category)
+
+# c. Create a frequency table for the value variable
+freq_table_value &lt;- table(data$value)
+
+# e. Create a grouped frequency table for the value variable using 5 bins
+grouped_table &lt;- table(bins)
+
+# g. Create a percentage (proportion) table for the grouped value data
+percentage_table &lt;- prop.table(grouped_table) * 100</code></pre>
+</div>
+</div>
+<div id="univariate-hypothesis-testing" class="section level3">
+<h3>3. Univariate Hypothesis Testing:</h3>
+<p>Often, the data you are dealing with is a subset (sample) of the
+complete data (population). Thus, the common question here is:</p>
+<ul>
+<li><em>Can the findings of the sample be extrapolated to the
+population? i.e., Is the sample representative of the population, or has
+the population changed?</em></li>
+</ul>
+<p>Such questions are answered using specific hypothesis tests designed
+to deal with such univariate data-based problems.</p>
+<p>Example Dataframe:</p>
+<pre class="r"><code>set.seed(42)  # For reproducibility
+
+# Generate numerical data
+sample_data_large &lt;- rnorm(50, mean = 100, sd = 15)  # Sample size &gt; 30
+sample_data_small &lt;- rnorm(20, mean = 100, sd = 15)  # Sample size &lt; 30
+
+# Known population parameters
+population_mean &lt;- 100
+population_sd &lt;- 15
+
+# Generate categorical data
+category_data &lt;- sample(c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;), 100, replace = TRUE)
+ordinal_data &lt;- sample(c(&quot;Low&quot;, &quot;Medium&quot;, &quot;High&quot;), 100, replace = TRUE)</code></pre>
+<ol style="list-style-type: lower-alpha">
+<li><strong>Z Test:</strong> Used for numerical (quantitative) data
+where the sample size is greater than 30 and the population’s standard
+deviation is known.</li>
+</ol>
+<pre class="r"><code># Z Test: Test if sample mean is significantly different from population mean
+library(stats)
+
+# Perform Z Test
+z_score &lt;- (mean(sample_data_large) - population_mean) / (population_sd / sqrt(length(sample_data_large)))
+z_score</code></pre>
+<pre><code>[1] -0.2522376</code></pre>
+<pre class="r"><code>p_value_z &lt;- 2 * pnorm(-abs(z_score))  # Two-tailed test
+p_value_z</code></pre>
+<pre><code>[1] 0.8008574</code></pre>
+<p>Interpretation: If the p-value is less than the significance level
+(commonly 0.05), the sample mean is significantly different from the
+population mean.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li><strong>One-Sample t-Test:</strong> Used for numerical
+(quantitative) data where the sample size is less than 30 or the
+population’s standard deviation is unknown.</li>
+</ol>
+<pre class="r"><code># One-Sample t-Test: Test if sample mean is significantly different from population mean
+t_test_result &lt;- t.test(sample_data_small, mu = population_mean)
+t_test_result</code></pre>
+<pre><code>
+    One Sample t-test
+
+data:  sample_data_small
+t = 1.2497, df = 19, p-value = 0.2266
+alternative hypothesis: true mean is not equal to 100
+95 percent confidence interval:
+  97.17831 111.18375
+sample estimates:
+mean of x 
+  104.181 </code></pre>
+<p>Interpretation: The t-test result provides a p-value and confidence
+interval for the sample mean. A p-value less than 0.05 indicates a
+significant difference from the population mean.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li><strong>Chi-Square Test:</strong> Used with ordinal categorical
+data</li>
+</ol>
+<pre class="r"><code># Chi-Square Test: Test the distribution of categorical data
+observed_counts &lt;- table(category_data)
+expected_counts &lt;- rep(length(category_data) / length(observed_counts), length(observed_counts))
+
+chi_square_result &lt;- chisq.test(observed_counts, p = expected_counts / sum(expected_counts))
+chi_square_result</code></pre>
+<pre><code>
+    Chi-squared test for given probabilities
+
+data:  observed_counts
+X-squared = 2.18, df = 2, p-value = 0.3362</code></pre>
+<p>Interpretation: The Chi-Square test assesses whether the observed
+frequencies differ from the expected frequencies. A p-value less than
+0.05 suggests a significant difference.</p>
+<ol start="4" style="list-style-type: lower-alpha">
+<li><strong>Kolmogorov-Smirnov Test:</strong> Used with nominal
+categorical data</li>
+</ol>
+<pre class="r"><code># Kolmogorov-Smirnov Test: Compare sample distribution to a normal distribution
+ks_test_result &lt;- ks.test(sample_data_large, &quot;pnorm&quot;, mean = population_mean, sd = population_sd)
+ks_test_result</code></pre>
+<pre><code>
+    Exact one-sample Kolmogorov-Smirnov test
+
+data:  sample_data_large
+D = 0.077011, p-value = 0.906
+alternative hypothesis: two-sided</code></pre>
+<p>Interpretation: The KS test assesses whether the sample follows the
+specified distribution. A p-value less than 0.05 indicates a significant
+deviation from the normal distribution.</p>
+</div>
+<div id="visualising-univariate-data" class="section level3">
+<h3>4. Visualising Univariate Data:</h3>
+<p>Visualizing univariate data helps us understand the distribution and
+patterns within a single variable. Below, we’ll cover visualization
+techniques for both categorical and numeric data.</p>
+<p>Example Data:</p>
+<pre class="r"><code>set.seed(42)  # For reproducibility
+
+# Numeric data
+numeric_data &lt;- rnorm(100, mean = 50, sd = 10)
+
+# Categorical data
+categorical_data &lt;- sample(c(&quot;Category A&quot;, &quot;Category B&quot;, &quot;Category C&quot;), 100, replace = TRUE)</code></pre>
+</div>
+</div>
+<div id="data-pre-proccessing" class="section level1">
+<h1>Data Pre-Proccessing</h1>
+<pre class="r"><code>library(dplyr)
+library(ggplot2)
+data(&quot;airquality&quot;)
+data(&quot;mtcars&quot;)</code></pre>
+<div id="step-1-data-collection" class="section level2">
+<h2>Step 1: Data Collection</h2>
+<p>Firstly, in order to conduct your analysis you need to have your
+data.</p>
+<p>The source of data depends on your research question and project
+requirements.</p>
+<p>You need to ensure that the data you obtain is of high-quality and of
+relevance to your problem.</p>
+</div>
+<div id="step-2-data-cleaning" class="section level2">
+<h2>Step 2: Data Cleaning</h2>
+<div id="a.-isolate-and-deal-with-missing-values"
+class="section level4">
+<h4>a. Isolate and deal with <strong>missing values</strong>:</h4>
+<p>There are multiple methods for dealing with missing data.</p>
+<p>If the missing values are random within your data set and don’t seem
+to follow a pattern (i.e., there seem to be certain columns with high
+missingness when compared with others), one could replace these missing
+values with the mean or median of the column.</p>
+<p>In most cases, rows with high missingness could introduce bias.
+Therefore, it would be more accurate to remove these samples to avoid
+biasing your analysis.</p>
+<pre class="r"><code># For the below we will be using the dataset: &quot;airquality&quot; as this data has missing values to remove.
+
+# Check for missing values
+missing_values &lt;- sapply(airquality, function(x) sum(is.na(x)))
+
+# Print the count of missing values in each column
+print(missing_values)</code></pre>
+<pre><code>  Ozone Solar.R    Wind    Temp   Month     Day 
+     37       7       0       0       0       0 </code></pre>
+<pre class="r"><code># Create a copy of the dataset for cleaning
+airquality_clean &lt;- airquality
+
+# Calculate the median for each column (ignoring NA values)
+medians &lt;- sapply(airquality_clean, function(x) median(x, na.rm = TRUE))
+
+# Replace NA values with the corresponding column medians
+for (col in names(airquality_clean)) {
+  airquality_clean[is.na(airquality_clean[[col]]), col] &lt;- medians[col]
+}</code></pre>
+<pre class="r"><code># Alternatively, remove rows with any missing values (if applicable)
+airquality_clean_2 &lt;- na.omit(airquality)
+
+# Now we check for cleaned data missing values:
+missing_values &lt;- sapply(airquality_clean, function(x) sum(is.na(x)))
+
+missing_values_2 &lt;- sapply(airquality_clean_2, function(x) sum(is.na(x)))
+
+cat(&quot;The number of missing values from 1st dataset:&quot;, sum(missing_values),  
+    &quot;and from the 2nd dataset:&quot;, sum(missing_values_2), &quot;\n&quot;)</code></pre>
+<pre><code>The number of missing values from 1st dataset: 0 and from the 2nd dataset: 0 </code></pre>
+</div>
+<div id="b.-look-for-outliers-and-inconsistencies-within-your-data"
+class="section level4">
+<h4>b. Look for <strong>outliers</strong> and inconsistencies within
+your data</h4>
+<p>Outliers in a dataset are values that deviate from the rest of your
+data and if included could skew your analysis and decrease the accuracy
+of your analysis.</p>
+<p>One can identify outliers using <code>z-score normalisation</code> to
+calculate how many SD’s your value is from the mean (i.e., evaluates how
+unsual a data point is).</p>
+<pre class="r"><code># Calculate z-scores for each feature
+z_scores &lt;- scale(airquality_clean_2)
+
+# Identify outliers using a z-score threshold (e.g., 3 standard deviations)
+outlier_threshold &lt;- 2
+outliers &lt;- apply(z_scores, 2, function(x) sum(abs(x) &gt; outlier_threshold))
+
+# Print the number of outliers in each column
+print(outliers)</code></pre>
+<pre><code>  Ozone Solar.R    Wind    Temp   Month     Day 
+      6       0       5       3       0       0 </code></pre>
+<p>Once you have identified outliers you can either remove them or use a
+cut-off threshold to only exclude values above/below a certain
+score.</p>
+<pre class="r"><code># Remove outliers based on the threshold
+# Keep rows where all feature z-scores are within the threshold
+airquality_no_outliers &lt;- airquality_clean_2[apply(z_scores, 1, function(x) all(abs(x) &lt;= outlier_threshold)), ]
+
+# Recalculate z-scores for the dataset without outliers
+z_scores_no_outliers &lt;- scale(airquality_no_outliers)
+
+# Identify remaining outliers
+outliers_no_outliers &lt;- apply(z_scores_no_outliers, 2, function(x) sum(abs(x) &gt; outlier_threshold))
+
+# Print the number of outliers in each column after removal
+print(outliers_no_outliers)</code></pre>
+<pre><code>  Ozone Solar.R    Wind    Temp   Month     Day 
+      5       0       2       3       0       0 </code></pre>
+</div>
+</div>
+<div id="step-3-data-transformation" class="section level2">
+<h2>Step 3: Data Transformation</h2>
+<div
+id="variables-might-have-different-units-cmmkm-and-therefore-would-have-different-scales-and-distributions.-this-introduces-unnecessary-dificulties-for-your-algorithm."
+class="section level4">
+<h4>Variables might have different units (cm/m/km) and therefore would
+have different scales and distributions. This introduces unnecessary
+dificulties for your algorithm.</h4>
+<div id="min-max-normalisation" class="section level5">
+<h5><strong>MIN-MAX NORMALISATION</strong></h5>
+<ul>
+<li><p>Applying min-max normalization will define the values within a
+fixed range, commonly [0, 1].</p></li>
+<li><p>Typically used when you want to ensure all features are within
+the same range for certain machine learning algorithms (like neural
+networks) which are sensitive to the magnitude of the input
+value.</p></li>
+</ul>
+<pre class="r"><code>data(&quot;mtcars&quot;)
+
+# Min-max normalize the mpg variable
+mtcars$mpg_mm &lt;- scale(mtcars$mpg, 
+                       center = min(mtcars$mpg), 
+                       scale = max(mtcars$mpg) - min(mtcars$mpg))
+
+# Now we can check what minimum and maximum of the normalized mpg variable is:
+cat(&quot;The minimum of the normalized mpg variable is:&quot;, min(mtcars$mpg_mm),  
+    &quot;and the maximum is:&quot;, max(mtcars$mpg_mm), &quot;\n&quot;)</code></pre>
+<pre><code>The minimum of the normalized mpg variable is: 0 and the maximum is: 1 </code></pre>
+</div>
+</div>
+<div
+id="large-scale-variables-generally-lead-to-large-coefficients-and-could-result-in-unstable-and-incorrect-models.-therefore-our-data-needs-to-be-standardized-and-re-scaled-in-these-scenarios."
+class="section level4">
+<h4>Large scale variables (generally) lead to large coefficients and
+could result in unstable and incorrect models. Therefore our data needs
+to be <code>standardized</code> and <code>re-scaled</code> in these
+scenarios.</h4>
+<div id="z-score-normalisation" class="section level5">
+<h5><strong>Z-SCORE NORMALISATION</strong></h5>
+<ul>
+<li><p>Standardizes the data such that the mean of the values becomes 0
+and the standard deviation becomes 1.</p></li>
+<li><p>There is no fixed range after standardization and the values are
+rescaled relative to their SD</p></li>
+</ul>
+<pre class="r"><code>data(&quot;mtcars&quot;)
+
+# Standardize the &#39;mpg&#39; feature manually
+mpg_standardized &lt;- (mtcars$mpg - mean(mtcars$mpg)) / sd(mtcars$mpg)
+
+# Alternatively, use the scale function to standardize multiple columns
+data_standardized &lt;- as.data.frame(scale(mtcars))</code></pre>
+<p>Standardized ‘mpg’ values:</p>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+-1.6079 -0.7741 -0.1478  0.0000  0.4495  2.2913 </code></pre>
+</div>
+</div>
+</div>
+<div id="step-4-data-reduction" class="section level2">
+<h2>Step 4: Data Reduction</h2>
+<p>Data reduction is a crucial step when working with high-dimensional
+data sets. Reducing the number of variables (features) or the size of
+your dataset helps reduce the risk of having an overfitting model in
+downstream analyses. These methods can improve the accuracy and
+performance of your model. By decreasing the size of your dataset one
+can also decrease the comutational burden.</p>
+<div id="types-of-data-reduction-techniques" class="section level4">
+<h4>Types of Data Reduction Techniques:</h4>
+<ol style="list-style-type: decimal">
+<li><p>Principal Component Analysis (PCA): PCA is a commonly used
+technique for dimensionality reduction. It transforms the data into a
+new coordinate system where the greatest variance lies on the first
+principal components.</p></li>
+<li><p>Feature Selection: This involves selecting a subset of relevant
+features based on certain criteria such as correlation or
+variance.</p></li>
+<li><p>Sampling: Instead of using the entire dataset, you can sample a
+representative portion of the data for training.</p></li>
+<li><p>Aggregation: Aggregating data points into groups (e.g., by
+averaging or summing) to reduce the number of instances while retaining
+key characteristics.</p></li>
+</ol>
+</div>
+<div id="pca" class="section level4">
+<h4><strong>PCA:</strong></h4>
+<pre class="r"><code># Standardize the dataset (scale to mean 0 and standard deviation 1)
+mtcars_scaled &lt;- as.data.frame(scale(mtcars))
+
+# Perform PCA to reduce the dataset to two principal components
+pca_result &lt;- prcomp(mtcars_scaled, center = TRUE, scale. = TRUE)
+
+# Get summary of PCA to show variance explained by each component
+summary(pca_result)</code></pre>
+<pre><code>Importance of components:
+                          PC1    PC2     PC3     PC4     PC5     PC6    PC7
+Standard deviation     2.5707 1.6280 0.79196 0.51923 0.47271 0.46000 0.3678
+Proportion of Variance 0.6008 0.2409 0.05702 0.02451 0.02031 0.01924 0.0123
+Cumulative Proportion  0.6008 0.8417 0.89873 0.92324 0.94356 0.96279 0.9751
+                           PC8    PC9    PC10   PC11
+Standard deviation     0.35057 0.2776 0.22811 0.1485
+Proportion of Variance 0.01117 0.0070 0.00473 0.0020
+Cumulative Proportion  0.98626 0.9933 0.99800 1.0000</code></pre>
+<pre class="r"><code># Create a biplot to visualize PCA (first two principal components)**** make better
+biplot(pca_result, scale = 0)</code></pre>
+<p><img src="figure/Statistics.Rmd/unnamed-chunk-39-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="feature-selection" class="section level4">
+<h4><strong>Feature Selection:</strong></h4>
+<p><code>mtcars</code> prior to feature selection:</p>
+<pre class="r"><code>str(mtcars)</code></pre>
+<pre><code>&#39;data.frame&#39;:   32 obs. of  11 variables:
+ $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+ $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+ $ disp: num  160 160 108 258 360 ...
+ $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+ $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+ $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+ $ qsec: num  16.5 17 18.6 19.4 17 ...
+ $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+ $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+ $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+ $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
+<pre class="r"><code># Step 1: Calculate the variance for each feature (column)
+feature_variances &lt;- apply(mtcars, 2, var)
+
+# Step 2: Set a threshold for filtering low variance features (e.g., use the 25th percentile of the variance)
+threshold &lt;- quantile(feature_variances, 0.25) 
+
+# Step 3: Retain only the features with variance above the threshold
+filtered_data &lt;- mtcars[, feature_variances &gt; threshold]</code></pre>
+<p><code>mtcars</code> after feature selection:</p>
+<pre class="r"><code>str(filtered_data)</code></pre>
+<pre><code>&#39;data.frame&#39;:   32 obs. of  8 variables:
+ $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+ $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+ $ disp: num  160 160 108 258 360 ...
+ $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+ $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+ $ qsec: num  16.5 17 18.6 19.4 17 ...
+ $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+ $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
+</div>
+</div>
+</div>
+<div id="hypothesis-testing" class="section level1">
+<h1>Hypothesis Testing:</h1>
+<div id="t-test" class="section level2">
+<h2>1. T-Test:</h2>
+<p>A T-test is used to determine if there is a significant difference
+between the means of two groups. It is typically used when comparing the
+means of two groups to see if they are statistically different from each
+other.</p>
+<p><em>When to use?</em></p>
+<ul>
+<li><p>When comparing the means of two independent groups (Independent
+T-test).</p></li>
+<li><p>When comparing the means of two related groups or paired samples
+(Paired T-test).</p></li>
+</ul>
+<pre class="r"><code># Example Data
+method_A &lt;- c(85, 88, 90, 92, 87)
+method_B &lt;- c(78, 82, 80, 85, 79)
+
+# Perform T-test
+t_test_result &lt;- t.test(method_A, method_B)
+
+# Print results
+print(t_test_result)</code></pre>
+<pre><code>
+    Welch Two Sample t-test
+
+data:  method_A and method_B
+t = 4.3879, df = 7.9943, p-value = 0.002328
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+  3.605389 11.594611
+sample estimates:
+mean of x mean of y 
+     88.4      80.8 </code></pre>
+<p><em>Interpretation:</em> <code>p-value &lt; 0.05</code> = there is a
+significant difference between the paired samples.</p>
+</div>
+<div id="anova" class="section level2">
+<h2>2. ANOVA:</h2>
+<p>ANOVA is used to determine if there are any statistically significant
+differences between the means of three or more independent groups.</p>
+<p><em>When to use?</em></p>
+<ul>
+<li>When comparing means among three or more groups.</li>
+</ul>
+<pre class="r"><code># Example Data
+scores &lt;- data.frame(
+  score = c(85, 88, 90, 92, 87, 78, 82, 80, 85, 79, 95, 97, 92, 91, 96),
+  method = factor(rep(c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;), each = 5))
+)
+
+# Perform ANOVA
+anova_result &lt;- aov(score ~ method, data = scores)
+
+# Print summary of results
+summary(anova_result)</code></pre>
+<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+method       2  451.6  225.80   31.22 1.76e-05 ***
+Residuals   12   86.8    7.23                     
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p><em>Interpretation:</em> <code>p-value &lt; 0.05</code> = there is a
+significant difference between the group means.</p>
+<ul>
+<li>Post-hoc tests (e.g., Tukey’s HSD) can be used to determine which
+specific groups differ.</li>
+</ul>
+</div>
+<div id="shapiro-wilk-test-for-normality" class="section level2">
+<h2>3. Shapiro-Wilk Test for Normality:</h2>
+<p>The Shapiro-Wilk test assesses whether a sample comes from a normally
+distributed population. It is particularly useful for checking the
+normality assumption in parametric tests like the T-test and ANOVA.</p>
+<p><em>When to use?</em></p>
+<ul>
+<li><p>When you need to check if your data is normally distributed
+before performing parametric tests.</p></li>
+<li><p>To validate the assumptions of normality for statistical tests
+that assume data is normally distributed.</p></li>
+</ul>
+<pre class="r"><code># Example Data
+sample_data &lt;- c(5.2, 6.1, 5.8, 7.2, 6.5, 5.9, 6.8, 6.0, 6.7, 5.7)
+
+# Perform Shapiro-Wilk test
+shapiro_test_result &lt;- shapiro.test(sample_data)
+
+# Print results
+print(shapiro_test_result)</code></pre>
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  sample_data
+W = 0.97508, p-value = 0.9335</code></pre>
+<p><em>Interpretation:</em> The Shapiro-Wilk test returns a p-value that
+indicates whether the sample deviates from a normal distribution.</p>
+<ul>
+<li><p>p-value &gt; 0.05: Fail to reject the null hypothesis; data is
+not significantly different from a normal distribution.</p></li>
+<li><p>p-value ≤ 0.05: Reject the null hypothesis; data significantly
+deviates from a normal distribution.</p></li>
+</ul>
+</div>
+<div id="chi-squared-test" class="section level2">
+<h2>4. Chi-Squared Test:</h2>
+<p>The Chi-squared test is used to determine if there is a significant
+association between two categorical variables.</p>
+<p><em>When to use?</em></p>
+<ul>
+<li>When testing the independence of two categorical variables in a
+contingency table.</li>
+</ul>
+<pre class="r"><code># Example Data
+study_method &lt;- matrix(c(20, 15, 30, 25), nrow = 2, byrow = TRUE)
+rownames(study_method) &lt;- c(&quot;Passed&quot;, &quot;Failed&quot;)
+colnames(study_method) &lt;- c(&quot;Method A&quot;, &quot;Method B&quot;)
+
+# Perform Chi-squared test
+chi_sq_result &lt;- chisq.test(study_method)
+
+# Print results
+print(chi_sq_result)</code></pre>
+<pre><code>
+    Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
+
+data:  study_method
+X-squared = 0.00058442, df = 1, p-value = 0.9807</code></pre>
+<p><em>Interpretation:</em> <code>p-value &lt; 0.05</code> there is a
+significant association between the study method and the passing
+rate.</p>
+</div>
+<div id="wilcoxon-signed-rank-test" class="section level2">
+<h2>5. Wilcoxon Signed-Rank Test:</h2>
+<p>The Wilcoxon Signed-Rank Test is a non-parametric test used to
+compare two related samples or paired observations to determine if their
+population mean ranks differ.</p>
+<p><em>When to use?</em></p>
+<ul>
+<li>When the data is paired and does not meet the assumptions required
+for a T-test (e.g., non-normality).</li>
+</ul>
+<pre class="r"><code># Example Data
+before &lt;- c(5, 7, 8, 6, 9)
+after &lt;- c(6, 8, 7, 7, 10)
+
+# Perform Wilcoxon Signed-Rank Test
+wilcox_test_result &lt;- wilcox.test(before, after, paired = TRUE)</code></pre>
+<pre><code>Warning in wilcox.test.default(before, after, paired = TRUE): cannot compute
+exact p-value with ties</code></pre>
+<pre class="r"><code># Print results
+print(wilcox_test_result)</code></pre>
+<pre><code>
+    Wilcoxon signed rank test with continuity correction
+
+data:  before and after
+V = 3, p-value = 0.233
+alternative hypothesis: true location shift is not equal to 0</code></pre>
+<p><em>Interpretation:</em> <code>p-value &lt; 0.05</code> = there is a
+significant difference between the paired samples.</p>
+<div id="now-your-data-is-ready-for-downstream-analyses"
+class="section level4">
+<h4><strong>Now your data is ready for downstream
+analyses!</strong></h4>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.3.3 (2024-02-29)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.5
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Bogota
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] corrplot_0.92   ggpubr_0.6.0    dplyr_1.1.4     ggplot2_3.5.1  
+[5] workflowr_1.7.1
+
+loaded via a namespace (and not attached):
+ [1] tidyr_1.3.1       sass_0.4.9        utf8_1.2.4        generics_0.1.3   
+ [5] rstatix_0.7.2     stringi_1.8.4     digest_0.6.36     magrittr_2.0.3   
+ [9] evaluate_0.24.0   grid_4.3.3        fastmap_1.2.0     rprojroot_2.0.4  
+[13] jsonlite_1.8.8    processx_3.8.4    whisker_0.4.1     backports_1.5.0  
+[17] ps_1.7.7          promises_1.3.0    httr_1.4.7        purrr_1.0.2      
+[21] fansi_1.0.6       scales_1.3.0      jquerylib_0.1.4   abind_1.4-5      
+[25] cli_3.6.3         rlang_1.1.4       munsell_0.5.1     withr_3.0.1      
+[29] cachem_1.1.0      yaml_2.3.10       tools_4.3.3       ggsignif_0.6.4   
+[33] colorspace_2.1-1  httpuv_1.6.15     broom_1.0.6       vctrs_0.6.5      
+[37] R6_2.5.1          lifecycle_1.0.4   git2r_0.33.0      stringr_1.5.1    
+[41] car_3.1-2         fs_1.6.4          pkgconfig_2.0.3   callr_3.7.6      
+[45] pillar_1.9.0      bslib_0.8.0       later_1.3.2       gtable_0.3.5     
+[49] glue_1.7.0        Rcpp_1.0.13       highr_0.11        xfun_0.46        
+[53] tibble_3.2.1      tidyselect_1.2.1  rstudioapi_0.16.0 knitr_1.48       
+[57] htmltools_0.5.8.1 carData_3.0-5     rmarkdown_2.27    compiler_4.3.3   
+[61] getPass_0.2-4    </code></pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
