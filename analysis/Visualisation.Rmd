@@ -1,5 +1,5 @@
 ---
-title: "Module 3: Visualisation"
+title: "Visualisation"
 author: "Stefano Cacciatore"
 output: 
   html_document:
@@ -24,24 +24,6 @@ R is equipped with powerful predefined visualisation features() and more add-on 
 
 4. Conduct and Visualize Survival Analysis
 
-#### Tidyverse packages
-
-Tidyverse is a collection of packages designed for data analysis and includes:
-
-- `dplyr` for data frames manipulations
-
-- `purrr` for functional programming
-
-- `ggplot2` for data visualizations
-
-- `readr` for reading various types of data files
-
-installing the tidyverse package and loading the library
-
-```
-#install.packages("tidyverse")
-library(tidyverse)
-```
 
 
 ```{r setup, include=FALSE}

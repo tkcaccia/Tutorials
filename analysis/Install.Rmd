@@ -1,0 +1,84 @@
+---
+title: "Install R and Rstudio"
+output:
+  workflowr::wflow_html:
+    toc: false
+    theme: united
+editor_options:
+  chunk_output_type: console
+---
+
+
+# Introduction
+
+R is a powerful language and environment for statistical computing and graphics. RStudio is a popular integrated development environment (IDE) for R that makes R easier to use. In this guide, you will learn how to install both R and RStudio.
+
+## Step 1: Installing R
+
+### Windows
+
+1. Go to the [Comprehensive R Archive Network (CRAN) website](https://cran.r-project.org/).
+2. Click on the **Download R for Windows** link.
+3. On the next page, click **base** to download the latest version of R.
+4. Once the file has downloaded, open it and follow the on-screen instructions to complete the installation.
+
+### macOS
+
+1. Go to the [CRAN website](https://cran.r-project.org/).
+2. Click on the **Download R for macOS** link.
+3. Choose the appropriate version of R based on your macOS version.
+4. Download the `.pkg` file and open it to begin installation.
+5. Follow the on-screen instructions to complete the installation.
+
+### Linux
+
+For Linux users, R can be installed via the terminal.
+
+#### Ubuntu/Debian:
+
+```bash
+sudo apt update
+sudo apt install r-base
+```
+
+## Step 2: Installing Rstudio
+
+## Prerequisite: Install R
+
+Before installing RStudio, you need to have R installed on your machine. 
+Once R is installed, you can proceed with installing RStudio.
+
+## Step 1: Downloading RStudio
+
+1. Go to the official [RStudio website](https://rstudio.com/).
+2. In the top menu, click on **Products**, and then select **RStudio**.
+3. Scroll down to the **RStudio Desktop** section and click **Download RStudio**.
+4. Under the **Installers** section, you will find the download links for the free version of RStudio Desktop. Click the **Download** button that matches your operating system:
+
+   - **Windows**: Select the `.exe` installer.
+   - **macOS**: Select the `.dmg` installer.
+   - **Linux**: Select the `.deb` or `.rpm` installer, depending on your Linux distribution.
+
+## Step 2: Installing RStudio
+
+### Windows
+
+1. Once the `.exe` file is downloaded, open the installer by double-clicking on it.
+2. Follow the on-screen instructions to complete the installation.
+3. After the installation is complete, you can find RStudio in your Start Menu or Desktop and launch it.
+
+### macOS
+
+1. Open the downloaded `.dmg` file by double-clicking on it.
+2. Drag the RStudio icon into the Applications folder.
+3. Once installed, open RStudio from the Applications folder or Launchpad.
+
+### Linux
+
+For Linux users, the installation varies depending on the distribution:
+
+#### Ubuntu/Debian
+
+1. Open a terminal and use the following command to install the `.deb` package:
+   ```bash
+   sudo dpkg -i rstudio-<version>.deb

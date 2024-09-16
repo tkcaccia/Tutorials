@@ -5,8 +5,8 @@ navbar:
   left:
     - text: "Home"
       href: "index.html"
-    - text: "About"
-      href: "about.html"
+    - text: "R install"
+      href: "Install.html"
     - text: "Basic"
       menu:
       - text: "Introduction to R and RStudio"
@@ -21,8 +21,6 @@ navbar:
         href: "Supervised_learning.html"
       - text: "Unsupervised Learning"
         href: "Unsupervised_Learning.html"
-    - text: "miRseq Analysis"
-      href: "EXAMPLE.html"
     - text: "License"
       href: "license.html"
   right:

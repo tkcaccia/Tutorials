@@ -1,5 +1,5 @@
 ---
-title: "Module 2: Data Pre-Proccessing"
+title: "Statistics"
 author: "Stefano Cacciatore"
 output: 
   html_document:
