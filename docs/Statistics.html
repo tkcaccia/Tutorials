@@ -557,15 +557,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree9a91f513ba75f8fd450a133bae23dfff825fc9e0targetblank9a91f51a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree0119c71fa040a7bbc8c03690458109f12a47b9actargetblank0119c71a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/tkcaccia/Tutorials/tree/9a91f513ba75f8fd450a133bae23dfff825fc9e0" target="_blank">9a91f51</a>
+<a href="https://github.com/tkcaccia/Tutorials/tree/0119c71fa040a7bbc8c03690458109f12a47b9ac" target="_blank">0119c71</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree9a91f513ba75f8fd450a133bae23dfff825fc9e0targetblank9a91f51a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree0119c71fa040a7bbc8c03690458109f12a47b9actargetblank0119c71a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -575,7 +575,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/tkcaccia/Tutorials/tree/9a91f513ba75f8fd450a133bae23dfff825fc9e0" target="_blank">9a91f51</a>.
+<a href="https://github.com/tkcaccia/Tutorials/tree/0119c71fa040a7bbc8c03690458109f12a47b9ac" target="_blank">0119c71</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -605,6 +605,7 @@ Unstaged changes:
     Modified:   analysis/.DS_Store
     Deleted:    analysis/Module_1_Basics.Rmd
     Deleted:    analysis/Module_2_Visualisation.Rmd
+    Deleted:    analysis/Module_3_Univariate_Analysis.Rmd
     Deleted:    analysis/Module_5_Unsupervised_Learning.Rmd
     Deleted:    analysis/supervised_learning_final.Rmd
 
@@ -652,6 +653,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/0119c71fa040a7bbc8c03690458109f12a47b9ac/analysis/Statistics.Rmd" target="_blank">0119c71</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+<td>
+Start my new project
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/tkcaccia/Tutorials/897778af75990c4268c8b31f4717b5182769c81b/docs/Statistics.html" target="_blank">897778a</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -737,19 +772,10 @@ into. You can think of it as a “category” such as “age”, “weight” or
 
 # Loading of packages
 library(ggplot2)
-library(dplyr)</code></pre>
-<pre><code>
-Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:stats&#39;:
-
-    filter, lag</code></pre>
-<pre><code>The following objects are masked from &#39;package:base&#39;:
-
-    intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code>library(ggpubr)
-library(corrplot)</code></pre>
-<pre><code>corrplot 0.92 loaded</code></pre>
-<pre class="r"><code>library(stats)</code></pre>
+library(dplyr)
+library(ggpubr)
+library(corrplot)
+library(stats)</code></pre>
 </div>
 <div id="summarising-data" class="section level3">
 <h3>1. Summarising Data</h3>
@@ -824,60 +850,6 @@ freq_table</code></pre>
 <pre><code>
  A  B  C  D 
 28 26 29 17 </code></pre>
-<pre class="r"><code># Qualitative Variables:
-freq_table_numeric &lt;- table(data$value)
-freq_table_numeric </code></pre>
-<pre><code>
-26.9083112435919 29.4675277845948 33.3205806341186 33.8211729171084 
-               1                1                1                1 
-33.9846382642541 34.2785584085451 34.5124719576978 34.8533234621825 
-               1                1                1                1 
- 35.382444150041 35.3935992907518  35.561068390282 37.1296952396482 
-               1                1                1                1 
-37.7928228774546 39.2820877352442 39.7357909969322 39.7587120939509 
-               1                1                1                1 
-39.8142461689291 40.3814336586987 40.4838143273498  40.525253858152 
-               1                1                1                1 
-41.5029565396642 42.1509553054292  42.895934363007 42.9079923741761 
-               1                1                1                1 
-43.1199138353264 43.4805009830454 43.5929399169462 43.7209392396063 
-               1                1                1                1 
-43.9974041285287 44.2465303739161  44.690934778297  44.976765468907 
-               1                1                1                1 
-45.0896883394346 45.0944255629933 45.7750316766038 46.1977347971224 
-               1                1                1                1 
-46.2933996820759 46.5245740060227 46.6679261633058 46.7406841446877 
-               1                1                1                1 
-47.1522699294899 47.3780251059753 47.4390780780175 47.5330812153763 
-               1                1                1                1 
-47.6429964089952 47.7422901434073 47.7951343818125 48.6110863756096 
-               1                1                1                1 
- 49.286919138764 49.4443803447546 49.5497227519108 49.5712954270868 
-               1                1                1                1 
- 49.714532446513 50.0576418589989 50.4123292199294  50.530042267305 
-               1                1                1                1 
-50.7796084956371 51.0567619414894 51.1764659710013 51.2385424384461 
-               1                1                1                1 
-51.8130347974915 52.1594156874397 52.3538657228486 52.3873173511144 
-               1                1                1                1 
-52.5331851399475 52.5688370915653 53.0115336216671 53.0352864140426 
-               1                1                1                1 
- 53.317819639157 53.7963948275988 53.8528040112633  54.351814908338 
-               1                1                1                1 
-54.4820977862943 54.5150405307921 55.1940720394346 55.4839695950807 
-               1                1                1                1 
-55.8461374963607 56.0796432222503 56.4437654851883 56.8791677297583 
-               1                1                1                1 
-57.0178433537471 57.3994751087733 59.1899660906077 59.2226746787974 
-               1                1                1                1 
-59.9350385596212 60.0573852446226  60.255713696967 60.9683901314935 
-               1                1                1                1 
-61.3133721341418 61.4880761845109 63.6065244853001 63.6860228401446 
-               1                1                1                1 
-64.4455085842335 65.1647060442954 65.3261062618519 68.4386200523221 
-               1                1                1                1 
-69.0910356921748 70.5008468562714 71.0010894052567 71.8733299301658 
-               1                1                1                1 </code></pre>
 <p><strong>Note:</strong> the frequency table is CASE-SENSITIVE so the
 frequencies of the variables corresponds to how many times that specific
 number of string appears.</p>
@@ -1136,210 +1108,394 @@ numeric_data &lt;- rnorm(100, mean = 50, sd = 10)
 categorical_data &lt;- sample(c(&quot;Category A&quot;, &quot;Category B&quot;, &quot;Category C&quot;), 100, replace = TRUE)</code></pre>
 </div>
 </div>
-<div id="data-pre-proccessing" class="section level1">
-<h1>Data Pre-Proccessing</h1>
-<pre class="r"><code>library(dplyr)
-library(ggplot2)
-data(&quot;airquality&quot;)
-data(&quot;mtcars&quot;)</code></pre>
-<div id="step-1-data-collection" class="section level2">
-<h2>Step 1: Data Collection</h2>
-<p>Firstly, in order to conduct your analysis you need to have your
-data.</p>
-<p>The source of data depends on your research question and project
-requirements.</p>
-<p>You need to ensure that the data you obtain is of high-quality and of
-relevance to your problem.</p>
-</div>
-<div id="step-2-data-cleaning" class="section level2">
-<h2>Step 2: Data Cleaning</h2>
-<div id="a.-isolate-and-deal-with-missing-values"
-class="section level4">
-<h4>a. Isolate and deal with <strong>missing values</strong>:</h4>
-<p>There are multiple methods for dealing with missing data.</p>
-<p>If the missing values are random within your data set and don’t seem
-to follow a pattern (i.e., there seem to be certain columns with high
-missingness when compared with others), one could replace these missing
-values with the mean or median of the column.</p>
-<p>In most cases, rows with high missingness could introduce bias.
-Therefore, it would be more accurate to remove these samples to avoid
-biasing your analysis.</p>
-<pre class="r"><code># For the below we will be using the dataset: &quot;airquality&quot; as this data has missing values to remove.
-
-# Check for missing values
-missing_values &lt;- sapply(airquality, function(x) sum(is.na(x)))
-
-# Print the count of missing values in each column
-print(missing_values)</code></pre>
-<pre><code>  Ozone Solar.R    Wind    Temp   Month     Day 
-     37       7       0       0       0       0 </code></pre>
-<pre class="r"><code># Create a copy of the dataset for cleaning
-airquality_clean &lt;- airquality
-
-# Calculate the median for each column (ignoring NA values)
-medians &lt;- sapply(airquality_clean, function(x) median(x, na.rm = TRUE))
-
-# Replace NA values with the corresponding column medians
-for (col in names(airquality_clean)) {
-  airquality_clean[is.na(airquality_clean[[col]]), col] &lt;- medians[col]
-}</code></pre>
-<pre class="r"><code># Alternatively, remove rows with any missing values (if applicable)
-airquality_clean_2 &lt;- na.omit(airquality)
-
-# Now we check for cleaned data missing values:
-missing_values &lt;- sapply(airquality_clean, function(x) sum(is.na(x)))
-
-missing_values_2 &lt;- sapply(airquality_clean_2, function(x) sum(is.na(x)))
-
-cat(&quot;The number of missing values from 1st dataset:&quot;, sum(missing_values),  
-    &quot;and from the 2nd dataset:&quot;, sum(missing_values_2), &quot;\n&quot;)</code></pre>
-<pre><code>The number of missing values from 1st dataset: 0 and from the 2nd dataset: 0 </code></pre>
-</div>
-<div id="b.-look-for-outliers-and-inconsistencies-within-your-data"
-class="section level4">
-<h4>b. Look for <strong>outliers</strong> and inconsistencies within
-your data</h4>
-<p>Outliers in a dataset are values that deviate from the rest of your
-data and if included could skew your analysis and decrease the accuracy
-of your analysis.</p>
-<p>One can identify outliers using <code>z-score normalisation</code> to
-calculate how many SD’s your value is from the mean (i.e., evaluates how
-unsual a data point is).</p>
-<pre class="r"><code># Calculate z-scores for each feature
-z_scores &lt;- scale(airquality_clean_2)
-
-# Identify outliers using a z-score threshold (e.g., 3 standard deviations)
-outlier_threshold &lt;- 2
-outliers &lt;- apply(z_scores, 2, function(x) sum(abs(x) &gt; outlier_threshold))
-
-# Print the number of outliers in each column
-print(outliers)</code></pre>
-<pre><code>  Ozone Solar.R    Wind    Temp   Month     Day 
-      6       0       5       3       0       0 </code></pre>
-<p>Once you have identified outliers you can either remove them or use a
-cut-off threshold to only exclude values above/below a certain
-score.</p>
-<pre class="r"><code># Remove outliers based on the threshold
-# Keep rows where all feature z-scores are within the threshold
-airquality_no_outliers &lt;- airquality_clean_2[apply(z_scores, 1, function(x) all(abs(x) &lt;= outlier_threshold)), ]
-
-# Recalculate z-scores for the dataset without outliers
-z_scores_no_outliers &lt;- scale(airquality_no_outliers)
-
-# Identify remaining outliers
-outliers_no_outliers &lt;- apply(z_scores_no_outliers, 2, function(x) sum(abs(x) &gt; outlier_threshold))
-
-# Print the number of outliers in each column after removal
-print(outliers_no_outliers)</code></pre>
-<pre><code>  Ozone Solar.R    Wind    Temp   Month     Day 
-      5       0       2       3       0       0 </code></pre>
-</div>
-</div>
-<div id="step-3-data-transformation" class="section level2">
-<h2>Step 3: Data Transformation</h2>
-<div
-id="variables-might-have-different-units-cmmkm-and-therefore-would-have-different-scales-and-distributions.-this-introduces-unnecessary-dificulties-for-your-algorithm."
-class="section level4">
-<h4>Variables might have different units (cm/m/km) and therefore would
-have different scales and distributions. This introduces unnecessary
-dificulties for your algorithm.</h4>
-<div id="min-max-normalisation" class="section level5">
-<h5><strong>MIN-MAX NORMALISATION</strong></h5>
+<div id="hypothesis-testing" class="section level1">
+<h1>Hypothesis Testing:</h1>
+<div id="t-test" class="section level2">
+<h2>1. T-Test:</h2>
+<p>A T-test is used to determine if there is a significant difference
+between the means of two groups. It is typically used when comparing the
+means of two groups to see if they are statistically different from each
+other.</p>
+<p><em>When to use?</em></p>
 <ul>
-<li><p>Applying min-max normalization will define the values within a
-fixed range, commonly [0, 1].</p></li>
-<li><p>Typically used when you want to ensure all features are within
-the same range for certain machine learning algorithms (like neural
-networks) which are sensitive to the magnitude of the input
-value.</p></li>
+<li><p>When comparing the means of two independent groups (Independent
+T-test).</p></li>
+<li><p>When comparing the means of two related groups or paired samples
+(Paired T-test).</p></li>
 </ul>
-<pre class="r"><code>data(&quot;mtcars&quot;)
+<pre class="r"><code># Example Data
+method_A &lt;- c(85, 88, 90, 92, 87)
+method_B &lt;- c(78, 82, 80, 85, 79)
 
-# Min-max normalize the mpg variable
-mtcars$mpg_mm &lt;- scale(mtcars$mpg, 
-                       center = min(mtcars$mpg), 
-                       scale = max(mtcars$mpg) - min(mtcars$mpg))
+# Perform independent T-test
+t_test_result &lt;- t.test(method_A, method_B)
 
-# Now we can check what minimum and maximum of the normalized mpg variable is:
-cat(&quot;The minimum of the normalized mpg variable is:&quot;, min(mtcars$mpg_mm),  
-    &quot;and the maximum is:&quot;, max(mtcars$mpg_mm), &quot;\n&quot;)</code></pre>
-<pre><code>The minimum of the normalized mpg variable is: 0 and the maximum is: 1 </code></pre>
+# Print results
+print(t_test_result)</code></pre>
+<pre><code>
+    Welch Two Sample t-test
+
+data:  method_A and method_B
+t = 4.3879, df = 7.9943, p-value = 0.002328
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+  3.605389 11.594611
+sample estimates:
+mean of x mean of y 
+     88.4      80.8 </code></pre>
+<pre class="r"><code># Perform independent T-test
+t_test_result &lt;- t.test(method_A, method_B, paired = TRUE)
+
+# Print results
+print(t_test_result)</code></pre>
+<pre><code>
+    Paired t-test
+
+data:  method_A and method_B
+t = 11.206, df = 4, p-value = 0.0003612
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ 5.716923 9.483077
+sample estimates:
+mean difference 
+            7.6 </code></pre>
+<p><em>Interpretation:</em> <code>p-value &lt; 0.05</code> = there is a
+significant difference between the paired samples.</p>
 </div>
-</div>
-<div
-id="large-scale-variables-generally-lead-to-large-coefficients-and-could-result-in-unstable-and-incorrect-models.-therefore-our-data-needs-to-be-standardized-and-re-scaled-in-these-scenarios."
-class="section level4">
-<h4>Large scale variables (generally) lead to large coefficients and
-could result in unstable and incorrect models. Therefore our data needs
-to be <code>standardized</code> and <code>re-scaled</code> in these
-scenarios.</h4>
-<div id="z-score-normalisation" class="section level5">
-<h5><strong>Z-SCORE NORMALISATION</strong></h5>
+<div id="wilcoxon-test" class="section level2">
+<h2>2. Wilcoxon Test:</h2>
+<p>Mann–Whitney U test (also called the Mann–Whitney–Wilcoxon (MWW/MWU),
+Wilcoxon rank-sum test, or Wilcoxon–Mann–Whitney test) is a
+nonparametric statistical test to compare two independent groups.</p>
+<p>The Wilcoxon Signed-Rank Test is a non-parametric test used to
+compare two related samples or paired observations to determine if their
+population mean ranks differ.</p>
+<p><em>When to use?</em></p>
 <ul>
-<li><p>Standardizes the data such that the mean of the values becomes 0
-and the standard deviation becomes 1.</p></li>
-<li><p>There is no fixed range after standardization and the values are
-rescaled relative to their SD</p></li>
+<li>When the data is paired and does not meet the assumptions required
+for a T-test (e.g., non-normality).</li>
 </ul>
-<pre class="r"><code>data(&quot;mtcars&quot;)
+<pre class="r"><code># Example Data
+before &lt;- c(5, 7, 8, 6, 9)
+after &lt;- c(6, 8, 7, 7, 10)
 
-# Standardize the &#39;mpg&#39; feature manually
-mpg_standardized &lt;- (mtcars$mpg - mean(mtcars$mpg)) / sd(mtcars$mpg)
+# Perform Wilcoxon rank-sum test Test
+wilcox_test_result &lt;- wilcox.test(before, after)</code></pre>
+<pre><code>Warning in wilcox.test.default(before, after): cannot compute exact p-value
+with ties</code></pre>
+<pre class="r"><code># Print results
+print(wilcox_test_result)</code></pre>
+<pre><code>
+    Wilcoxon rank sum test with continuity correction
 
-# Alternatively, use the scale function to standardize multiple columns
-data_standardized &lt;- as.data.frame(scale(mtcars))</code></pre>
-<p>Standardized ‘mpg’ values:</p>
-<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
--1.6079 -0.7741 -0.1478  0.0000  0.4495  2.2913 </code></pre>
+data:  before and after
+W = 10, p-value = 0.6704
+alternative hypothesis: true location shift is not equal to 0</code></pre>
+<pre class="r"><code># Perform Wilcoxon Signed-Rank Test
+wilcox_test_result &lt;- wilcox.test(before, after, paired = TRUE)</code></pre>
+<pre><code>Warning in wilcox.test.default(before, after, paired = TRUE): cannot compute
+exact p-value with ties</code></pre>
+<pre class="r"><code># Print results
+print(wilcox_test_result)</code></pre>
+<pre><code>
+    Wilcoxon signed rank test with continuity correction
+
+data:  before and after
+V = 3, p-value = 0.233
+alternative hypothesis: true location shift is not equal to 0</code></pre>
+<p><em>Interpretation:</em> <code>p-value &lt; 0.05</code> = there is a
+significant difference between the paired samples.</p>
 </div>
+<div id="shapiro-wilk-test-for-normality" class="section level2">
+<h2>3. Shapiro-Wilk Test for Normality:</h2>
+<p>The Shapiro-Wilk test assesses whether a sample comes from a normally
+distributed population. It is particularly useful for checking the
+normality assumption in parametric tests like the T-test and ANOVA.</p>
+<p><em>When to use?</em></p>
+<ul>
+<li><p>When you need to check if your data is normally distributed
+before performing parametric tests.</p></li>
+<li><p>To validate the assumptions of normality for statistical tests
+that assume data is normally distributed.</p></li>
+</ul>
+<pre class="r"><code># Example Data
+sample_data &lt;- c(5.2, 6.1, 5.8, 7.2, 6.5, 5.9, 6.8, 6.0, 6.7, 5.7)
+
+# Perform Shapiro-Wilk test
+shapiro_test_result &lt;- shapiro.test(sample_data)
+
+# Print results
+print(shapiro_test_result)</code></pre>
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  sample_data
+W = 0.97508, p-value = 0.9335</code></pre>
+<p><em>Interpretation:</em> The Shapiro-Wilk test returns a p-value that
+indicates whether the sample deviates from a normal distribution.</p>
+<ul>
+<li><p>p-value &gt; 0.05: Fail to reject the null hypothesis; data is
+not significantly different from a normal distribution.</p></li>
+<li><p>p-value ≤ 0.05: Reject the null hypothesis; data significantly
+deviates from a normal distribution.</p></li>
+</ul>
 </div>
+<div id="multiple-comparisons" class="section level2">
+<h2>4. Multiple comparisons:</h2>
+<p>ANOVA and Kruskal-Wallis Rank Sum Test are used to determine if there
+are any statistically significant differences between the means of three
+or more independent groups.</p>
+<p><em>When to use?</em></p>
+<ul>
+<li>When comparing means among three or more groups.</li>
+</ul>
+<pre class="r"><code># Example Data
+scores &lt;- data.frame(
+  score = c(85, 88, 90, 92, 87, 78, 82, 80, 85, 79, 95, 97, 92, 91, 96),
+  method = factor(rep(c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;), each = 5))
+)
+
+# Perform ANOVA
+anova_result &lt;- aov(score ~ method, data = scores)
+
+# Print summary of results
+summary(anova_result)</code></pre>
+<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+method       2  451.6  225.80   31.22 1.76e-05 ***
+Residuals   12   86.8    7.23                     
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code># Perform Kruskal-Wallis Rank Sum Test
+kruskal.test(score ~ method, data = scores)</code></pre>
+<pre><code>
+    Kruskal-Wallis rank sum test
+
+data:  score by method
+Kruskal-Wallis chi-squared = 11.576, df = 2, p-value = 0.003064</code></pre>
+<p><em>Interpretation:</em> <code>p-value &lt; 0.05</code> = there is a
+significant difference between the group means.</p>
+<ul>
+<li>Post-hoc tests (e.g., Tukey’s HSD) can be used to determine which
+specific groups differ.</li>
+</ul>
 </div>
-<div id="step-4-data-reduction" class="section level2">
-<h2>Step 4: Data Reduction</h2>
-<p>Data reduction is a crucial step when working with high-dimensional
-data sets. Reducing the number of variables (features) or the size of
-your dataset helps reduce the risk of having an overfitting model in
-downstream analyses. These methods can improve the accuracy and
-performance of your model. By decreasing the size of your dataset one
-can also decrease the comutational burden.</p>
-<div id="types-of-data-reduction-techniques" class="section level4">
-<h4>Types of Data Reduction Techniques:</h4>
-<ol style="list-style-type: decimal">
-<li><p>Principal Component Analysis (PCA): PCA is a commonly used
-technique for dimensionality reduction. It transforms the data into a
-new coordinate system where the greatest variance lies on the first
-principal components.</p></li>
-<li><p>Feature Selection: This involves selecting a subset of relevant
-features based on certain criteria such as correlation or
-variance.</p></li>
-<li><p>Sampling: Instead of using the entire dataset, you can sample a
-representative portion of the data for training.</p></li>
-<li><p>Aggregation: Aggregating data points into groups (e.g., by
-averaging or summing) to reduce the number of instances while retaining
-key characteristics.</p></li>
+<div id="two-way-anova" class="section level2">
+<h2>5. two-way ANOVA:</h2>
+<p>A two-way ANOVA (Analysis of Variance) is used when you want to
+examine the effect of two independent variables (also called factors) on
+a dependent variable, and to determine whether there is an interaction
+between these two factors. It is typically used in situations where:</p>
+<p>Two independent variables: You have two categorical variables
+(factors) and one continuous dependent variable. For example, you might
+examine how both “teaching method” (Factor 1) and “gender” (Factor 2)
+affect student test scores (dependent variable).</p>
+<p>Main effects: It tests for the individual (main) effects of each
+independent variable on the dependent variable. For instance, the main
+effect of “teaching method” and the main effect of “gender” on test
+scores.</p>
+<p>Interaction effect: It examines whether the effect of one independent
+variable depends on the level of the other variable. For example, if the
+effect of a teaching method on test scores differs based on gender.</p>
+<p>Two-way ANOVA is commonly used in experiments where you need to
+analyze the effect of two factors and their potential interaction on an
+outcome. It’s more efficient than performing two separate one-way ANOVAs
+for each factor.</p>
+<pre class="r"><code># Example Data
+head(npk)</code></pre>
+<pre><code>  block N P K yield
+1     1 0 1 1  49.5
+2     1 1 1 0  62.8
+3     1 0 0 0  46.8
+4     1 1 0 1  57.0
+5     2 1 0 0  59.8
+6     2 1 1 1  58.5</code></pre>
+<pre class="r"><code># Perform two-way ANOVA
+npk.aov &lt;- aov(yield ~  N*K, npk)
+summary(npk.aov)</code></pre>
+<pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)  
+N            1  189.3  189.28   6.775 0.0170 *
+K            1   95.2   95.20   3.408 0.0797 .
+N:K          1   33.1   33.14   1.186 0.2891  
+Residuals   20  558.7   27.94                 
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p><em>Interpretation:</em> <code>p-value &lt; 0.05</code> = there is a
+significant difference between the group means.</p>
+<ul>
+<li>Post-hoc tests (e.g., Tukey’s HSD) can be used to determine which
+specific groups differ.</li>
+</ul>
+</div>
+<div id="fisher-test" class="section level2">
+<h2>6. Fisher Test:</h2>
+<p>The Fisher test is used to determine if there is a significant
+association between two categorical variables.</p>
+<p><em>When to use?</em></p>
+<ul>
+<li>When testing the independence of two categorical variables in a
+contingency table.</li>
+</ul>
+<pre class="r"><code># Example Data
+study_method &lt;- matrix(c(20, 15, 30, 25), nrow = 2, byrow = TRUE)
+rownames(study_method) &lt;- c(&quot;Passed&quot;, &quot;Failed&quot;)
+colnames(study_method) &lt;- c(&quot;Method A&quot;, &quot;Method B&quot;)
+
+# Perform Fisher test
+fisher_result &lt;- fisher.test(study_method)
+
+# Print results
+print(fisher_result)</code></pre>
+<pre><code>
+    Fisher&#39;s Exact Test for Count Data
+
+data:  study_method
+p-value = 0.8312
+alternative hypothesis: true odds ratio is not equal to 1
+95 percent confidence interval:
+ 0.4353737 2.8593717
+sample estimates:
+odds ratio 
+  1.109811 </code></pre>
+<p><em>Interpretation:</em> <code>p-value &lt; 0.05</code> there is a
+significant association between the study method and the passing
+rate.</p>
+</div>
+<div id="correlation" class="section level2">
+<h2>7. Correlation:</h2>
+<p>Correlation analysis is used to investigate the association between
+two or more variables.</p>
+<div id="step-1-choose-a-correlation-method" class="section level3">
+<h3>Step 1: Choose a Correlation Method</h3>
+<p><strong><em>Pearson Correlation</em></strong> measures the linear
+relationship between two continuous variables. It assumes both variables
+follow a normal distribution.</p>
+<p><strong><em>Spearman and Kendall Correlation</em></strong> are
+non-parametric and measure the strength and direction of the association
+between two ranked variables.</p>
+</div>
+<div id="step-2-calculate-correlation" class="section level3">
+<h3>Step 2: Calculate Correlation</h3>
+<ol style="list-style-type: lower-roman">
+<li>Pearson Correlation</li>
 </ol>
+<pre class="r"><code># Pearson correlation test
+pearson_res &lt;- cor.test(mtcars$mpg, mtcars$wt, method = &quot;pearson&quot;)
+pearson_res</code></pre>
+<pre><code>
+    Pearson&#39;s product-moment correlation
+
+data:  mtcars$mpg and mtcars$wt
+t = -9.559, df = 30, p-value = 1.294e-10
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.9338264 -0.7440872
+sample estimates:
+       cor 
+-0.8676594 </code></pre>
+<ol start="2" style="list-style-type: lower-roman">
+<li>Spearman and Kendall Correlation</li>
+</ol>
+<pre class="r"><code># Spearman correlation test
+spearman_res &lt;- cor.test(mtcars$mpg, mtcars$wt, method = &quot;spearman&quot;)
+spearman_res</code></pre>
+<pre><code>
+    Spearman&#39;s rank correlation rho
+
+data:  mtcars$mpg and mtcars$wt
+S = 10292, p-value = 1.488e-11
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+-0.886422 </code></pre>
+<pre class="r"><code># Kendall correlation test
+kendall_res &lt;- cor.test(mtcars$mpg, mtcars$wt, method = &quot;kendall&quot;)
+kendall_res</code></pre>
+<pre><code>
+    Kendall&#39;s rank correlation tau
+
+data:  mtcars$mpg and mtcars$wt
+z = -5.7981, p-value = 6.706e-09
+alternative hypothesis: true tau is not equal to 0
+sample estimates:
+       tau 
+-0.7278321 </code></pre>
 </div>
-<div id="pca" class="section level4">
-<h4><strong>PCA:</strong></h4>
-<pre class="r"><code># Standardize the dataset (scale to mean 0 and standard deviation 1)
-mtcars_scaled &lt;- as.data.frame(scale(mtcars))
+<div id="step-3-interpretation" class="section level3">
+<h3>Step 3: Interpretation</h3>
+<p>Correlation Coefficient:</p>
+<ul>
+<li><p><code>-1</code>: Strong negative correlation (as one variable
+increases, the other decreases).</p></li>
+<li><p><code>0</code>: No correlation.</p></li>
+<li><p><code>1</code>: Strong positive correlation (both variables
+increase together).</p></li>
+</ul>
+<p>P-Value:</p>
+<ul>
+<li><code>p-value &lt; 0.05</code> indicates a statistically significant
+correlation.</li>
+</ul>
+<p><span
+style="color:red;"><strong><em>Exercise:</em></strong></span></p>
+<p>Perform a correlation analysis using the <code>mpg</code> and
+<code>qsec</code> variables from the <code>mtcars</code> to investigate
+the extent of correlation between the two variables. Provide an
+interpretation of the correlation coefficient and its p-value.</p>
+<details>
+<summary>
+<em>Example interpretation</em>:
+</summary>
+<ul>
+<li><p>The Pearson correlation coefficient is -0.8677, which points to a
+strong negative linear relationship between the variables.</p></li>
+<li><p>The p-value is significantly low (p &lt; 0.001), indicating that
+the correlation is statistically significant.</p></li>
+<li><p>The 95% confidence interval suggests that the true correlation
+lies between -0.9338 and -0.7441.</p></li>
+</ul>
+</div>
+<div id="simple-linear-regression" class="section level3">
+<h3>3. Simple Linear Regression:</h3>
+<pre class="r"><code>x &lt;- mtcars$mpg
+y &lt;- mtcars$wt
 
-# Perform PCA to reduce the dataset to two principal components
-pca_result &lt;- prcomp(mtcars_scaled, center = TRUE, scale. = TRUE)
+model = lm(y ~ x)
+summary(model)</code></pre>
+<pre><code>
+Call:
+lm(formula = y ~ x)
 
-# Get summary of PCA to show variance explained by each component
-summary(pca_result)</code></pre>
-<pre><code>Importance of components:
-                          PC1    PC2     PC3     PC4     PC5     PC6    PC7
-Standard deviation     2.5707 1.6280 0.79196 0.51923 0.47271 0.46000 0.3678
-Proportion of Variance 0.6008 0.2409 0.05702 0.02451 0.02031 0.01924 0.0123
-Cumulative Proportion  0.6008 0.8417 0.89873 0.92324 0.94356 0.96279 0.9751
-                           PC8    PC9    PC10   PC11
-Standard deviation     0.35057 0.2776 0.22811 0.1485
-Proportion of Variance 0.01117 0.0070 0.00473 0.0020
-Cumulative Proportion  0.98626 0.9933 0.99800 1.0000</code></pre>
-<pre class="r"><code># Create a biplot to visualize PCA (first two principal components)**** make better
-biplot(pca_result, scale = 0)</code></pre>
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.6516 -0.3490 -0.1381  0.3190  1.3684 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  6.04726    0.30869  19.590  &lt; 2e-16 ***
+x           -0.14086    0.01474  -9.559 1.29e-10 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.4945 on 30 degrees of freedom
+Multiple R-squared:  0.7528,    Adjusted R-squared:  0.7446 
+F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10</code></pre>
+<pre class="r"><code>par(mfrow = c(2, 2))
+plot(model)</code></pre>
+<p><img src="figure/Statistics.Rmd/unnamed-chunk-38-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="checking-assumptions" class="section level4">
+<h4><em>Checking Assumptions</em>:</h4>
+<div
+id="assumption-1-linearity-check-if-the-relationship-between-variables-is-linear."
+class="section level5">
+<h5><strong>Assumption 1: Linearity</strong> –&gt; Check if the
+relationship between variables is linear.</h5>
+<p>Plot of <code>x</code> vs <code>y</code>: This scatter plot displays
+the relationship between the predictor <code>x</code> and the response
+<code>y</code>.</p>
+<p>Abline (Regression Line): The <code>abline(model)</code> adds the
+fitted regression line to the plot.</p>
+<pre class="r"><code>plot(x, y)
+abline(model)</code></pre>
 <p><img src="figure/Statistics.Rmd/unnamed-chunk-39-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-39-1">
@@ -1378,208 +1534,15 @@ tkcaccia
 </table>
 </div>
 </div>
-</div>
-<div id="feature-selection" class="section level4">
-<h4><strong>Feature Selection:</strong></h4>
-<p><code>mtcars</code> prior to feature selection:</p>
-<pre class="r"><code>str(mtcars)</code></pre>
-<pre><code>&#39;data.frame&#39;:   32 obs. of  11 variables:
- $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
- $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
- $ disp: num  160 160 108 258 360 ...
- $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
- $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
- $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
- $ qsec: num  16.5 17 18.6 19.4 17 ...
- $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
- $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
- $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
- $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
-<pre class="r"><code># Step 1: Calculate the variance for each feature (column)
-feature_variances &lt;- apply(mtcars, 2, var)
-
-# Step 2: Set a threshold for filtering low variance features (e.g., use the 25th percentile of the variance)
-threshold &lt;- quantile(feature_variances, 0.25) 
-
-# Step 3: Retain only the features with variance above the threshold
-filtered_data &lt;- mtcars[, feature_variances &gt; threshold]</code></pre>
-<p><code>mtcars</code> after feature selection:</p>
-<pre class="r"><code>str(filtered_data)</code></pre>
-<pre><code>&#39;data.frame&#39;:   32 obs. of  8 variables:
- $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
- $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
- $ disp: num  160 160 108 258 360 ...
- $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
- $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
- $ qsec: num  16.5 17 18.6 19.4 17 ...
- $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
- $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
-</div>
-</div>
-</div>
-<div id="hypothesis-testing" class="section level1">
-<h1>Hypothesis Testing:</h1>
-<div id="t-test" class="section level2">
-<h2>1. T-Test:</h2>
-<p>A T-test is used to determine if there is a significant difference
-between the means of two groups. It is typically used when comparing the
-means of two groups to see if they are statistically different from each
-other.</p>
-<p><em>When to use?</em></p>
-<ul>
-<li><p>When comparing the means of two independent groups (Independent
-T-test).</p></li>
-<li><p>When comparing the means of two related groups or paired samples
-(Paired T-test).</p></li>
-</ul>
-<pre class="r"><code># Example Data
-method_A &lt;- c(85, 88, 90, 92, 87)
-method_B &lt;- c(78, 82, 80, 85, 79)
-
-# Perform T-test
-t_test_result &lt;- t.test(method_A, method_B)
-
-# Print results
-print(t_test_result)</code></pre>
-<pre><code>
-    Welch Two Sample t-test
-
-data:  method_A and method_B
-t = 4.3879, df = 7.9943, p-value = 0.002328
-alternative hypothesis: true difference in means is not equal to 0
-95 percent confidence interval:
-  3.605389 11.594611
-sample estimates:
-mean of x mean of y 
-     88.4      80.8 </code></pre>
-<p><em>Interpretation:</em> <code>p-value &lt; 0.05</code> = there is a
-significant difference between the paired samples.</p>
-</div>
-<div id="anova" class="section level2">
-<h2>2. ANOVA:</h2>
-<p>ANOVA is used to determine if there are any statistically significant
-differences between the means of three or more independent groups.</p>
-<p><em>When to use?</em></p>
-<ul>
-<li>When comparing means among three or more groups.</li>
-</ul>
-<pre class="r"><code># Example Data
-scores &lt;- data.frame(
-  score = c(85, 88, 90, 92, 87, 78, 82, 80, 85, 79, 95, 97, 92, 91, 96),
-  method = factor(rep(c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;), each = 5))
-)
-
-# Perform ANOVA
-anova_result &lt;- aov(score ~ method, data = scores)
-
-# Print summary of results
-summary(anova_result)</code></pre>
-<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-method       2  451.6  225.80   31.22 1.76e-05 ***
-Residuals   12   86.8    7.23                     
----
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p><em>Interpretation:</em> <code>p-value &lt; 0.05</code> = there is a
-significant difference between the group means.</p>
-<ul>
-<li>Post-hoc tests (e.g., Tukey’s HSD) can be used to determine which
-specific groups differ.</li>
-</ul>
-</div>
-<div id="shapiro-wilk-test-for-normality" class="section level2">
-<h2>3. Shapiro-Wilk Test for Normality:</h2>
-<p>The Shapiro-Wilk test assesses whether a sample comes from a normally
-distributed population. It is particularly useful for checking the
-normality assumption in parametric tests like the T-test and ANOVA.</p>
-<p><em>When to use?</em></p>
-<ul>
-<li><p>When you need to check if your data is normally distributed
-before performing parametric tests.</p></li>
-<li><p>To validate the assumptions of normality for statistical tests
-that assume data is normally distributed.</p></li>
-</ul>
-<pre class="r"><code># Example Data
-sample_data &lt;- c(5.2, 6.1, 5.8, 7.2, 6.5, 5.9, 6.8, 6.0, 6.7, 5.7)
-
-# Perform Shapiro-Wilk test
-shapiro_test_result &lt;- shapiro.test(sample_data)
-
-# Print results
-print(shapiro_test_result)</code></pre>
-<pre><code>
-    Shapiro-Wilk normality test
-
-data:  sample_data
-W = 0.97508, p-value = 0.9335</code></pre>
-<p><em>Interpretation:</em> The Shapiro-Wilk test returns a p-value that
-indicates whether the sample deviates from a normal distribution.</p>
-<ul>
-<li><p>p-value &gt; 0.05: Fail to reject the null hypothesis; data is
-not significantly different from a normal distribution.</p></li>
-<li><p>p-value ≤ 0.05: Reject the null hypothesis; data significantly
-deviates from a normal distribution.</p></li>
-</ul>
-</div>
-<div id="chi-squared-test" class="section level2">
-<h2>4. Chi-Squared Test:</h2>
-<p>The Chi-squared test is used to determine if there is a significant
-association between two categorical variables.</p>
-<p><em>When to use?</em></p>
-<ul>
-<li>When testing the independence of two categorical variables in a
-contingency table.</li>
-</ul>
-<pre class="r"><code># Example Data
-study_method &lt;- matrix(c(20, 15, 30, 25), nrow = 2, byrow = TRUE)
-rownames(study_method) &lt;- c(&quot;Passed&quot;, &quot;Failed&quot;)
-colnames(study_method) &lt;- c(&quot;Method A&quot;, &quot;Method B&quot;)
-
-# Perform Chi-squared test
-chi_sq_result &lt;- chisq.test(study_method)
-
-# Print results
-print(chi_sq_result)</code></pre>
-<pre><code>
-    Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
-
-data:  study_method
-X-squared = 0.00058442, df = 1, p-value = 0.9807</code></pre>
-<p><em>Interpretation:</em> <code>p-value &lt; 0.05</code> there is a
-significant association between the study method and the passing
-rate.</p>
-</div>
-<div id="wilcoxon-signed-rank-test" class="section level2">
-<h2>5. Wilcoxon Signed-Rank Test:</h2>
-<p>The Wilcoxon Signed-Rank Test is a non-parametric test used to
-compare two related samples or paired observations to determine if their
-population mean ranks differ.</p>
-<p><em>When to use?</em></p>
-<ul>
-<li>When the data is paired and does not meet the assumptions required
-for a T-test (e.g., non-normality).</li>
-</ul>
-<pre class="r"><code># Example Data
-before &lt;- c(5, 7, 8, 6, 9)
-after &lt;- c(6, 8, 7, 7, 10)
-
-# Perform Wilcoxon Signed-Rank Test
-wilcox_test_result &lt;- wilcox.test(before, after, paired = TRUE)</code></pre>
-<pre><code>Warning in wilcox.test.default(before, after, paired = TRUE): cannot compute
-exact p-value with ties</code></pre>
-<pre class="r"><code># Print results
-print(wilcox_test_result)</code></pre>
-<pre><code>
-    Wilcoxon signed rank test with continuity correction
-
-data:  before and after
-V = 3, p-value = 0.233
-alternative hypothesis: true location shift is not equal to 0</code></pre>
-<p><em>Interpretation:</em> <code>p-value &lt; 0.05</code> = there is a
-significant difference between the paired samples.</p>
-<div id="now-your-data-is-ready-for-downstream-analyses"
-class="section level4">
-<h4><strong>Now your data is ready for downstream
-analyses!</strong></h4>
+<p><em>What to Look For</em>:</p>
+<p><strong>Linear Relationship</strong>: The data points should roughly
+form a straight line if the linearity assumption is satisfied. The
+fitted regression line should capture the trend of the data points
+well.</p>
+<p><strong>Non-Linearity</strong>: If the data points show a clear
+curvature or systematic pattern not captured by the straight line, this
+suggests that the linearity assumption is violated. In such cases,
+consider polynomial regression or other non-linear models.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1627,6 +1590,8 @@ loaded via a namespace (and not attached):
 [53] tibble_3.2.1      tidyselect_1.2.1  rstudioapi_0.16.0 knitr_1.48       
 [57] htmltools_0.5.8.1 carData_3.0-5     rmarkdown_2.27    compiler_4.3.3   
 [61] getPass_0.2-4    </code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
