@@ -30,7 +30,7 @@ The idea of univariate analysis is to first understand the variables individuall
 - Simple Regression analysis
 
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 # Installation of packages (usually needed)
 # install.packages("ggplot2")
 # install.packages("dplyr")
@@ -48,55 +48,42 @@ library(stats)
 ### 1. Summarising Data
 
 ```{r}
-# Using the data set stored in Rstudio called "cars"
-
-# We need to create an array of our single variable for UA:
-x <- cars$speed
-
+data("iris")
+# We need to create an array of our variable for Sepal.Length:
+x <- iris$Sepal.Length
 ```
 
 Looking at the **CENTRAL TENDENCY** of the data:
 
-```{r}
-mean(x)
-median(x)
-mode(x)
-```
+- `mean(x)`
+
+- `median(x)`
+
+- `mode(x)`
+
 
 Looking at the **DISPERSION** of the data:
 
-```{r}
-min(x)
-max(x)
-```
+- `min(x)`
+
+- `max(x)`
+
+- `range(x)` - Range of the data
+
+- `IQR(x)`- Inter-quantile range
+
+- `var(x)` - Variance
+
+- `sd(x)` - Standard Deviation
+
+
+TIP: you can use the function `summary` for a quick look at your data
 
 ```{r}
-# Range of the data:
-range(x)
+summary(iris)
 ```
 
-```{r}
-# Inter-quantile range:
-IQR(x)
-```
-
-```{r}
-# Variance -->
-var(x)
-```
-
-```{r}
-# Standard Deviation:
-sd(x)
-```
-
-***TIP:*** you can use the function `summary` to produce result summaries of the results of various model fitting functions.
-
-```{r}
-summary(x)
-```
-
-### 2. Frequency Tables:
+#### Frequency Tables:
 
 -   The frequency of an observation tells you the number of times the observation occurs in the data.
 
@@ -106,358 +93,15 @@ summary(x)
 
 -   These tables can show qualitative (categorical) or quantitative (numeric) variables.
 
-#### Example Data
-
-We will use a data frame with a categorical variable and a numerical variable to demonstrate each type of table.
-
-```{r}
-# Create example data
-set.seed(123)  # For reproducibility
-data <- data.frame(
-  category = sample(c("A", "B", "C", "D"), 100, replace = TRUE),
-  value = rnorm(100, mean = 50, sd = 10)
-)
-head(data)
-```
-
 ```{r}
 # Frequency table for the categorical variable
-freq_table <- table(data$category)
+freq_table <- table(iris$Species)
 freq_table
-
-```
-
-```{r}
-# Qualitative Variables:
-freq_table_numeric <- table(data$value)
-freq_table_numeric 
 ```
 
 **Note:** the frequency table is CASE-SENSITIVE so the frequencies of the variables corresponds to how many times that specific number of string appears.
 
-#### Grouped Tables:
-
-Grouped tables aggregate the data into groups or bins.
-
-```{r}
-# 1st Step: Create BINS for the numerical data
-bins <- cut(x, breaks = 5)
-freq_table_numeric <- table(bins)
-freq_table_numeric
-```
-
-```{r}
-# Group data into bins and create a grouped table:
-grouped_table <- table(cut(x, breaks = 5))
-grouped_table
-```
-
-#### Percentage (Proportion) Tables
-
-Percentage tables show the proportion of each unique value or group in the data.
-
-```{r}
-# Percentage table for the categorical variable
-percentage_table <- prop.table(table(x)) * 100
-percentage_table
-```
-
-```{r}
-# Percentage table for the grouped numerical data
-percentage_table_numeric <- prop.table(table(cut(x, breaks = 5))) * 100
-percentage_table_numeric
-```
-
-#### Cumulative Proportion Tables
-
-Cumulative proportion tables show the cumulative proportion of each unique value or group.
-
-```{r}
-# Cumulative proportion table for the categorical variable
-cumulative_prop <- cumsum(prop.table(table(data$category)))
-cumulative_prop <- cumulative_prop * 100
-cumulative_prop
-```
-
-```{r}
-# Cumulative proportion table for the grouped numerical data
-cumulative_prop_numeric <- cumsum(prop.table(table(cut(x, breaks = 5))))
-cumulative_prop_numeric <- cumulative_prop_numeric * 100
-cumulative_prop_numeric
-```
-
-[***Question 1:***]{style="color:red;"}
-
-Using the `cars` datset:
-
-a.  Calculate the mean, median, and standard deviation of variable "speed".
-
-b.  Interpret what these statistics tell you about the speed data.
-
-c.  Compute the range and interquartile range (IQR) of speed.
-
-d.  What do these measures reveal about the dispersion of the speed data?
-
-e.  Use the summary function to get a summary of x.
-
-f.  Describe the central tendency and dispersion metrics provided by the summary output.
-
-[***Question 2:***]{style="color:red;"}
-
-*Using the below:*
-
-```{r}
-xy <- data.frame(
-  category = sample(c("A", "B", "C", "D"), 100, replace = TRUE)
-)
-head(xy)
-```
-
-a.  Create a frequency table for the category variable.
-
-b.  What is the frequency of each category?
-
-*Using the below:*
-
-```{r}
-data <- data.frame(
-  value = rnorm(100, mean = 50, sd = 10)
-)
-```
-
-c.  Create a frequency table for the value variable.
-
-d.  How many observations fall into each unique value?
-
-*Using the below:*
-
-```{r}
-x <- data$value
-bins <- cut(x, breaks = 5)
-```
-
-e.  Create a grouped frequency table for the value variable using 5 bins.
-
-f.  What are the frequencies for each bin?
-
-*Using the below:*
-
-```{r}
-x <- data$value
-bins <- cut(x, breaks = 5)
-```
-
-g.  Create a percentage (proportion) table for the grouped value data.
-
-h.  What percentage of the observations fall into each bin?
-
-<details>
-
-<summary>Answers:</summary>
-
-```{r, echo=TRUE}
-# Question 1:
-# a. Calculate the mean, median, and standard deviation of variable "speed"
-mean_speed <- mean(x)
-median_speed <- median(x)
-sd_speed <- sd(x)
-
-# c. Compute the range and interquartile range (IQR) of speed
-range_speed <- range(x)
-iqr_speed <- IQR(x)
-
-# e. Use the summary function to get a summary of x
-summary_speed <- summary(x)
-
-# Question 2:
-# a. Create a frequency table for the category variable
-freq_table_category <- table(xy$category)
-
-# c. Create a frequency table for the value variable
-freq_table_value <- table(data$value)
-
-# e. Create a grouped frequency table for the value variable using 5 bins
-grouped_table <- table(bins)
-
-# g. Create a percentage (proportion) table for the grouped value data
-percentage_table <- prop.table(grouped_table) * 100
-```
-
-### 3. Univariate Hypothesis Testing:
-
-Often, the data you are dealing with is a subset (sample) of the complete data (population). Thus, the common question here is:
-
--   *Can the findings of the sample be extrapolated to the population? i.e., Is the sample representative of the population, or has the population changed?*
-
-Such questions are answered using specific hypothesis tests designed to deal with such univariate data-based problems.
-
-Example Dataframe:
-
-```{r}
-set.seed(42)  # For reproducibility
-
-# Generate numerical data
-sample_data_large <- rnorm(50, mean = 100, sd = 15)  # Sample size > 30
-sample_data_small <- rnorm(20, mean = 100, sd = 15)  # Sample size < 30
-
-# Known population parameters
-population_mean <- 100
-population_sd <- 15
-
-# Generate categorical data
-category_data <- sample(c("A", "B", "C"), 100, replace = TRUE)
-ordinal_data <- sample(c("Low", "Medium", "High"), 100, replace = TRUE)
-```
-
-a.  **Z Test:** Used for numerical (quantitative) data where the sample size is greater than 30 and the population’s standard deviation is known.
-
-```{r}
-# Z Test: Test if sample mean is significantly different from population mean
-library(stats)
-
-# Perform Z Test
-z_score <- (mean(sample_data_large) - population_mean) / (population_sd / sqrt(length(sample_data_large)))
-z_score
-p_value_z <- 2 * pnorm(-abs(z_score))  # Two-tailed test
-p_value_z
-```
-
-Interpretation: If the p-value is less than the significance level (commonly 0.05), the sample mean is significantly different from the population mean.
-
-b.  **One-Sample t-Test:** Used for numerical (quantitative) data where the sample size is less than 30 or the population’s standard deviation is unknown.
-
-```{r}
-# One-Sample t-Test: Test if sample mean is significantly different from population mean
-t_test_result <- t.test(sample_data_small, mu = population_mean)
-t_test_result
-```
-
-Interpretation: The t-test result provides a p-value and confidence interval for the sample mean. A p-value less than 0.05 indicates a significant difference from the population mean.
-
-c.  **Chi-Square Test:** Used with ordinal categorical data
-
-```{r}
-# Chi-Square Test: Test the distribution of categorical data
-observed_counts <- table(category_data)
-expected_counts <- rep(length(category_data) / length(observed_counts), length(observed_counts))
-
-chi_square_result <- chisq.test(observed_counts, p = expected_counts / sum(expected_counts))
-chi_square_result
-```
-
-Interpretation: The Chi-Square test assesses whether the observed frequencies differ from the expected frequencies. A p-value less than 0.05 suggests a significant difference.
-
-d.  **Kolmogorov-Smirnov Test:** Used with nominal categorical data
-
-```{r}
-# Kolmogorov-Smirnov Test: Compare sample distribution to a normal distribution
-ks_test_result <- ks.test(sample_data_large, "pnorm", mean = population_mean, sd = population_sd)
-ks_test_result
-```
-
-Interpretation: The KS test assesses whether the sample follows the specified distribution. A p-value less than 0.05 indicates a significant deviation from the normal distribution.
-
-### 4. Visualising Univariate Data:
-
-Visualizing univariate data helps us understand the distribution and patterns within a single variable. Below, we'll cover visualization techniques for both categorical and numeric data.
-
-Example Data:
-
-```{r}
-set.seed(42)  # For reproducibility
-
-# Numeric data
-numeric_data <- rnorm(100, mean = 50, sd = 10)
-
-# Categorical data
-categorical_data <- sample(c("Category A", "Category B", "Category C"), 100, replace = TRUE)
-```
-
-a.  Visualising **Numeric** Data:
-
-A histogram shows the distribution of numeric data by dividing it into bins and counting the frequency of data points in each bin.
-
-```{r}
-library(ggplot2)
-# Histogram
-ggplot(data.frame(numeric_data), aes(x = numeric_data)) +
-  geom_histogram(binwidth = 2.5, aes(y = ..density..), fill = "skyblue", color = "white", alpha = 0.7) +
-  geom_density(color = "darkblue", size = 1) +  # Added a density line
-  labs(title = "Histogram",x = "Value", y = "Density") +
-  theme_classic(base_size = 15) +
-  theme(plot.title = element_text(hjust = 0.5, face = "bold"))
-
-```
-
-A **boxplot** provides a summary of the numeric data distribution, highlighting the median, quartiles, and potential outliers.
-
-```{r}
-# Boxplot
-ggplot(data.frame(numeric_data), aes(x = "", y = numeric_data)) +
-  geom_boxplot(fill = "lightgreen", color = "darkgreen", outlier.shape = NA) +
-  geom_jitter(width = 0.2, alpha = 0.5, color = "darkgreen", aes(x = "")) +  
-  labs(title = "Boxplot",y = "Value") +
-  theme_classic(base_size = 15) +
-  theme(plot.title = element_text(hjust = 0.5, face = "bold"))
-```
-
-A **density** plot shows the distribution of numeric data as a continuous probability density function.
-
-```{r}
-# Density Plot
-ggplot(data.frame(numeric_data), aes(x = numeric_data)) +
-  geom_density(fill = "purple", color = "black", alpha = 0.5, size = 1) +  
-  labs( title = "Density Plot",x = "Value", y = "Density") +
-  theme_minimal(base_size = 15) +  # Increase base font size
-  theme(
-    plot.title = element_text(hjust = 0.5, face = "bold", size = 16),
-    axis.title.x = element_text(size = 14),
-    axis.title.y = element_text(size = 14),
-    axis.text = element_text(size = 12),
-    panel.border = element_rect(color = "black", fill = NA, linewidth = 1)
-  )
-```
-
-b.  Visualizing **Categorical** Data:
-
-For categorical data, common visualizations include bar charts and pie charts.
-
-A **bar chart** displays the frequency or count of each category in a categorical variable.
-
-```{r}
-# Bar Chart
-ggplot(data.frame(categorical_data), aes(x = categorical_data)) +
-  geom_bar(fill = "coral", color = "black", width = 0.7) +
-  geom_text(stat = 'count', aes(label = ..count..), vjust = -0.5, color = "black", size = 5) +  # Add labels on bars
-  labs( x = "Category", y = "Count") +
-  theme_classic(base_size = 15) +
-  theme(plot.title = element_text(hjust = 0.5, face = "bold"))
-```
-
-A **pie chart** represents the proportion of each category in the dataset.
-
-```{r}
-# Pie Chart
-library(dplyr)
-library(ggplot2)
-
-pie_data <- as.data.frame(table(categorical_data)) %>%
-  rename(Category = categorical_data, Count = Freq) %>%
-  mutate(Proportion = Count / sum(Count),
-         label = scales::percent(Proportion)) 
-
-ggplot(pie_data, aes(x = "", y = Proportion, fill = Category)) +
-  geom_bar(stat = "identity", width = 1) +
-  coord_polar(theta = "y") +
-  labs(title = "Pie Chart") +
-  theme_void() +
-  scale_fill_brewer(palette = "Pastel1") +  
-  theme(legend.title = element_blank(),
-        plot.title = element_text(hjust = 0.5, face = "bold")) +
-  geom_text(aes(label = label), position = position_stack(vjust = 0.5))
-```
-
-### 5. Correlation:
+### 2. Correlation:
 
 Correlation analysis is used to investigate the association between two or more variables.
 
@@ -467,51 +111,7 @@ Correlation analysis is used to investigate the association between two or more 
 
 ***Spearman and Kendall Correlation*** are non-parametric and measure the strength and direction of the association between two ranked variables.
 
-#### Step 2: Preliminary Checks
-
-Before applying Pearson's correlation, check the assumptions:
-
-i. Normality Check --> Use the Shapiro-Wilk test to assess if the variables are normally distributed.
-
-- Null hypothesis: the data = normally distributed
-
-- Alternative hypothesis: the data = not normally distributed
-
-- If the p-value is less than 0.05, the null hypothesis is rejected
-```{r}
-# Shapiro-Wilk test for normality
-shapiro.test(mtcars$mpg)
-shapiro.test(mtcars$wt)
-```
-
-<details>
-
-<summary>*Does from data of each of the 2 variables (mpg, wt) follow a normal distribution?*:</summary>
-
-`mpg`: The p-value is 0.1229, which is greater than 0.05. Therefore, we do not reject the null hypothesis. This suggests that the mpg variable does not significantly deviate from a normal distribution.
-
-`wt`: The p-value is 0.09265, which is also greater than 0.05. Thus, we do not reject the null hypothesis. This indicates that the wt variable does not significantly deviate from a normal distribution.
-
-######
-
-ii. Visualize Normality --> Use Q-Q plots to visually inspect normality.
-
-```{r}
-library(ggpubr)
-par(mfrow=c(1,2))
-ggqqplot(mtcars$mpg, ylab = "MPG")
-ggqqplot(mtcars$wt, ylab = "Weight")
-```
-
-<details>
-
-<summary>*Is the covariation linear?*:</summary>
-
-Yes, form the plot above, the relationship is linear.
-
-######
-
-#### Step 3: Calculate Correlation
+#### Step 2: Calculate Correlation
 
 i. Pearson Correlation
 
@@ -524,7 +124,7 @@ pearson_res
 
 ii. Spearman and Kendall Correlation
 
-```{r}
+```{r, warning=FALSE}
 # Spearman correlation test
 spearman_res <- cor.test(mtcars$mpg, mtcars$wt, method = "spearman")
 spearman_res
@@ -532,24 +132,11 @@ spearman_res
 # Kendall correlation test
 kendall_res <- cor.test(mtcars$mpg, mtcars$wt, method = "kendall")
 kendall_res
-
 ```
 
+#### Step 3: Interpretation
 
-#### Step 4: Visualize the Correlation
-
-```{r}
-# Scatter plot with Pearson correlation
-ggscatter(mtcars, x = "mpg", y = "wt", 
-          add = "reg.line", conf.int = TRUE, 
-          cor.coef = TRUE, cor.method = "pearson",
-          xlab = "Miles per Gallon", ylab = "Weight (1000 lbs)")
-```
-
-
-#### **Step 5: Interpretation** 
-
-**Correlation Coefficient:**
+Correlation Coefficient:
 
 - `-1`: Strong negative correlation (as one variable increases, the other decreases).
 
@@ -557,7 +144,7 @@ ggscatter(mtcars, x = "mpg", y = "wt",
 
 - `1`: Strong positive correlation (both variables increase together).
 
-**P-Value:**
+P-Value:
 
 - `p-value < 0.05` indicates a statistically significant correlation.
 
@@ -575,40 +162,7 @@ Perform a correlation analysis using the `mpg` and `qsec` variables from the `mt
 
 - The 95% confidence interval suggests that the true correlation lies between -0.9338 and -0.7441.
 
-#### Compute correlation matrix in R
-
-The R function cor() can be used to compute a correlation matrix.
-
-```{r}
-# We start by loading the mtcars dataset and selecting a subset of columns for our analysis.
-data("mtcars")
-my_data <- mtcars[, c(1, 3, 4, 5, 6, 7)]
-# Display first few rows
-head(my_data)
-
-```
-
-##### We then compute the correlation matrix:
-
-```{r}
-rescm <- cor(my_data)
-# Round the results to 2 decimal places for easier interpretation
-round(rescm, 2)
-```
-
-*Interpretation:*
-- Values close to 1 or -1 indicate strong positive or negative correlations, respectively.
-
-- Values close to 0 suggest little to no linear relationship.
-
-##### Visualising the Correlation Matrix:
-
-```{r}
-library(corrplot)
-corrplot(rescm,tl.col = "black", addCoef.col = "black")
-```
-
-### 6. Simple Linear Regression:
+### 3. Simple Linear Regression:
 
 ```{r}
 x <- mtcars$mpg

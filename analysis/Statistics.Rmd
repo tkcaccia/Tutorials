@@ -1,0 +1,703 @@
+---
+title: "Module 2: Data Pre-Proccessing"
+author: "Stefano Cacciatore"
+output: 
+  html_document:
+  toc: true
+  toc_depth: 2
+  theme: united
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+---
+
+
+## Univariate Analysis
+
+*What is univariate analysis ?*
+
+The idea of univariate analysis is to first understand the variables individually. It is typically the first step in understanding a data set. A variable in UA is a condition or subset that your data falls into. You can think of it as a “category" such as "age", "weight" or "length". However, UA does not look at \> than 1 variable at a time (this would be a bivariate analysis)
+
+#### Learning Objectives:
+
+-   Summarising Data
+
+-   Frequency Tables
+
+-   Univariate Hypothesis Testing
+
+-   Visualising Univariate Data
+
+- Correlation
+
+- Simple Regression analysis
+
+
+```{r}
+# Installation of packages (usually needed)
+# install.packages("ggplot2")
+# install.packages("dplyr")
+# install.packages("ggpubr")
+# install.packages("corrplot")
+
+# Loading of packages
+library(ggplot2)
+library(dplyr)
+library(ggpubr)
+library(corrplot)
+library(stats)
+```
+
+### 1. Summarising Data
+
+```{r}
+# Using the data set stored in Rstudio called "cars"
+
+# We need to create an array of our single variable for UA:
+x <- cars$speed
+
+```
+
+Looking at the **CENTRAL TENDENCY** of the data:
+
+```{r}
+mean(x)
+median(x)
+mode(x)
+```
+
+Looking at the **DISPERSION** of the data:
+
+```{r}
+min(x)
+max(x)
+```
+
+```{r}
+# Range of the data:
+range(x)
+```
+
+```{r}
+# Inter-quantile range:
+IQR(x)
+```
+
+```{r}
+# Variance -->
+var(x)
+```
+
+```{r}
+# Standard Deviation:
+sd(x)
+```
+
+***TIP:*** you can use the function `summary` to produce result summaries of the results of various model fitting functions.
+
+```{r}
+summary(x)
+```
+
+### 2. Frequency Tables:
+
+-   The frequency of an observation tells you the number of times the observation occurs in the data.
+
+-   A frequency table is a collection of these observations and their frequencies.
+
+-   A frequency table can be shown either graphically (bar chart/histogram) or as a frequency distribution table.
+
+-   These tables can show qualitative (categorical) or quantitative (numeric) variables.
+
+#### Example Data
+
+We will use a data frame with a categorical variable and a numerical variable to demonstrate each type of table.
+
+```{r}
+# Create example data
+set.seed(123)  # For reproducibility
+data <- data.frame(
+  category = sample(c("A", "B", "C", "D"), 100, replace = TRUE),
+  value = rnorm(100, mean = 50, sd = 10)
+)
+head(data)
+```
+
+```{r}
+# Frequency table for the categorical variable
+freq_table <- table(data$category)
+freq_table
+
+```
+
+```{r}
+# Qualitative Variables:
+freq_table_numeric <- table(data$value)
+freq_table_numeric 
+```
+
+**Note:** the frequency table is CASE-SENSITIVE so the frequencies of the variables corresponds to how many times that specific number of string appears.
+
+#### Grouped Tables:
+
+Grouped tables aggregate the data into groups or bins.
+
+```{r}
+# 1st Step: Create BINS for the numerical data
+bins <- cut(x, breaks = 5)
+freq_table_numeric <- table(bins)
+freq_table_numeric
+```
+
+```{r}
+# Group data into bins and create a grouped table:
+grouped_table <- table(cut(x, breaks = 5))
+grouped_table
+```
+
+#### Percentage (Proportion) Tables
+
+Percentage tables show the proportion of each unique value or group in the data.
+
+```{r}
+# Percentage table for the categorical variable
+percentage_table <- prop.table(table(x)) * 100
+percentage_table
+```
+
+```{r}
+# Percentage table for the grouped numerical data
+percentage_table_numeric <- prop.table(table(cut(x, breaks = 5))) * 100
+percentage_table_numeric
+```
+
+#### Cumulative Proportion Tables
+
+Cumulative proportion tables show the cumulative proportion of each unique value or group.
+
+```{r}
+# Cumulative proportion table for the categorical variable
+cumulative_prop <- cumsum(prop.table(table(data$category)))
+cumulative_prop <- cumulative_prop * 100
+cumulative_prop
+```
+
+```{r}
+# Cumulative proportion table for the grouped numerical data
+cumulative_prop_numeric <- cumsum(prop.table(table(cut(x, breaks = 5))))
+cumulative_prop_numeric <- cumulative_prop_numeric * 100
+cumulative_prop_numeric
+```
+
+[***Question 1:***]{style="color:red;"}
+
+Using the `cars` datset:
+
+a.  Calculate the mean, median, and standard deviation of variable "speed".
+
+b.  Interpret what these statistics tell you about the speed data.
+
+c.  Compute the range and interquartile range (IQR) of speed.
+
+d.  What do these measures reveal about the dispersion of the speed data?
+
+e.  Use the summary function to get a summary of x.
+
+f.  Describe the central tendency and dispersion metrics provided by the summary output.
+
+[***Question 2:***]{style="color:red;"}
+
+*Using the below:*
+
+```{r}
+xy <- data.frame(
+  category = sample(c("A", "B", "C", "D"), 100, replace = TRUE)
+)
+head(xy)
+```
+
+a.  Create a frequency table for the category variable.
+
+b.  What is the frequency of each category?
+
+*Using the below:*
+
+```{r}
+data <- data.frame(
+  value = rnorm(100, mean = 50, sd = 10)
+)
+```
+
+c.  Create a frequency table for the value variable.
+
+d.  How many observations fall into each unique value?
+
+*Using the below:*
+
+```{r}
+x <- data$value
+bins <- cut(x, breaks = 5)
+```
+
+e.  Create a grouped frequency table for the value variable using 5 bins.
+
+f.  What are the frequencies for each bin?
+
+*Using the below:*
+
+```{r}
+x <- data$value
+bins <- cut(x, breaks = 5)
+```
+
+g.  Create a percentage (proportion) table for the grouped value data.
+
+h.  What percentage of the observations fall into each bin?
+
+<details>
+
+<summary>Answers:</summary>
+
+```{r, echo=TRUE}
+# Question 1:
+# a. Calculate the mean, median, and standard deviation of variable "speed"
+mean_speed <- mean(x)
+median_speed <- median(x)
+sd_speed <- sd(x)
+
+# c. Compute the range and interquartile range (IQR) of speed
+range_speed <- range(x)
+iqr_speed <- IQR(x)
+
+# e. Use the summary function to get a summary of x
+summary_speed <- summary(x)
+
+# Question 2:
+# a. Create a frequency table for the category variable
+freq_table_category <- table(xy$category)
+
+# c. Create a frequency table for the value variable
+freq_table_value <- table(data$value)
+
+# e. Create a grouped frequency table for the value variable using 5 bins
+grouped_table <- table(bins)
+
+# g. Create a percentage (proportion) table for the grouped value data
+percentage_table <- prop.table(grouped_table) * 100
+```
+
+### 3. Univariate Hypothesis Testing:
+
+Often, the data you are dealing with is a subset (sample) of the complete data (population). Thus, the common question here is:
+
+-   *Can the findings of the sample be extrapolated to the population? i.e., Is the sample representative of the population, or has the population changed?*
+
+Such questions are answered using specific hypothesis tests designed to deal with such univariate data-based problems.
+
+Example Dataframe:
+
+```{r}
+set.seed(42)  # For reproducibility
+
+# Generate numerical data
+sample_data_large <- rnorm(50, mean = 100, sd = 15)  # Sample size > 30
+sample_data_small <- rnorm(20, mean = 100, sd = 15)  # Sample size < 30
+
+# Known population parameters
+population_mean <- 100
+population_sd <- 15
+
+# Generate categorical data
+category_data <- sample(c("A", "B", "C"), 100, replace = TRUE)
+ordinal_data <- sample(c("Low", "Medium", "High"), 100, replace = TRUE)
+```
+
+a.  **Z Test:** Used for numerical (quantitative) data where the sample size is greater than 30 and the population’s standard deviation is known.
+
+```{r}
+# Z Test: Test if sample mean is significantly different from population mean
+library(stats)
+
+# Perform Z Test
+z_score <- (mean(sample_data_large) - population_mean) / (population_sd / sqrt(length(sample_data_large)))
+z_score
+p_value_z <- 2 * pnorm(-abs(z_score))  # Two-tailed test
+p_value_z
+```
+
+Interpretation: If the p-value is less than the significance level (commonly 0.05), the sample mean is significantly different from the population mean.
+
+b.  **One-Sample t-Test:** Used for numerical (quantitative) data where the sample size is less than 30 or the population’s standard deviation is unknown.
+
+```{r}
+# One-Sample t-Test: Test if sample mean is significantly different from population mean
+t_test_result <- t.test(sample_data_small, mu = population_mean)
+t_test_result
+```
+
+Interpretation: The t-test result provides a p-value and confidence interval for the sample mean. A p-value less than 0.05 indicates a significant difference from the population mean.
+
+c.  **Chi-Square Test:** Used with ordinal categorical data
+
+```{r}
+# Chi-Square Test: Test the distribution of categorical data
+observed_counts <- table(category_data)
+expected_counts <- rep(length(category_data) / length(observed_counts), length(observed_counts))
+
+chi_square_result <- chisq.test(observed_counts, p = expected_counts / sum(expected_counts))
+chi_square_result
+```
+
+Interpretation: The Chi-Square test assesses whether the observed frequencies differ from the expected frequencies. A p-value less than 0.05 suggests a significant difference.
+
+d.  **Kolmogorov-Smirnov Test:** Used with nominal categorical data
+
+```{r}
+# Kolmogorov-Smirnov Test: Compare sample distribution to a normal distribution
+ks_test_result <- ks.test(sample_data_large, "pnorm", mean = population_mean, sd = population_sd)
+ks_test_result
+```
+
+Interpretation: The KS test assesses whether the sample follows the specified distribution. A p-value less than 0.05 indicates a significant deviation from the normal distribution.
+
+### 4. Visualising Univariate Data:
+
+Visualizing univariate data helps us understand the distribution and patterns within a single variable. Below, we'll cover visualization techniques for both categorical and numeric data.
+
+Example Data:
+
+```{r}
+set.seed(42)  # For reproducibility
+
+# Numeric data
+numeric_data <- rnorm(100, mean = 50, sd = 10)
+
+# Categorical data
+categorical_data <- sample(c("Category A", "Category B", "Category C"), 100, replace = TRUE)
+```
+
+# Data Pre-Proccessing
+
+```{r,message=FALSE}
+library(dplyr)
+library(ggplot2)
+data("airquality")
+data("mtcars")
+```
+
+## Step 1: Data Collection
+
+Firstly, in order to conduct your analysis you need to have your data.
+
+The source of data depends on your research question and project requirements.
+
+You need to ensure that the data you obtain is of high-quality and of relevance to your problem.
+
+## Step 2: Data Cleaning
+
+#### a. Isolate and deal with **missing values**:
+
+There are multiple methods for dealing with missing data.
+
+If the missing values are random within your data set and don't seem to follow a pattern (i.e., there seem to be certain columns with high missingness when compared with others), one could replace these missing values with the mean or median of the column.
+
+In most cases, rows with high missingness could introduce bias. Therefore, it would be more accurate to remove these samples to avoid biasing your analysis.
+
+```{r}
+# For the below we will be using the dataset: "airquality" as this data has missing values to remove.
+
+# Check for missing values
+missing_values <- sapply(airquality, function(x) sum(is.na(x)))
+
+# Print the count of missing values in each column
+print(missing_values)
+```
+
+```{r}
+# Create a copy of the dataset for cleaning
+airquality_clean <- airquality
+
+# Calculate the median for each column (ignoring NA values)
+medians <- sapply(airquality_clean, function(x) median(x, na.rm = TRUE))
+
+# Replace NA values with the corresponding column medians
+for (col in names(airquality_clean)) {
+  airquality_clean[is.na(airquality_clean[[col]]), col] <- medians[col]
+}
+
+```
+
+```{r}
+# Alternatively, remove rows with any missing values (if applicable)
+airquality_clean_2 <- na.omit(airquality)
+
+# Now we check for cleaned data missing values:
+missing_values <- sapply(airquality_clean, function(x) sum(is.na(x)))
+
+missing_values_2 <- sapply(airquality_clean_2, function(x) sum(is.na(x)))
+
+cat("The number of missing values from 1st dataset:", sum(missing_values),  
+    "and from the 2nd dataset:", sum(missing_values_2), "\n")
+```
+
+#### b. Look for **outliers** and inconsistencies within your data
+
+Outliers in a dataset are values that deviate from the rest of your data and if included could skew your analysis and decrease the accuracy of your analysis.
+
+One can identify outliers using `z-score normalisation` to calculate how many SD's your value is from the mean (i.e., evaluates how unsual a data point is).
+
+```{r}
+# Calculate z-scores for each feature
+z_scores <- scale(airquality_clean_2)
+
+# Identify outliers using a z-score threshold (e.g., 3 standard deviations)
+outlier_threshold <- 2
+outliers <- apply(z_scores, 2, function(x) sum(abs(x) > outlier_threshold))
+
+# Print the number of outliers in each column
+print(outliers)
+```
+
+Once you have identified outliers you can either remove them or use a cut-off threshold to only exclude values above/below a certain score.
+
+```{r}
+# Remove outliers based on the threshold
+# Keep rows where all feature z-scores are within the threshold
+airquality_no_outliers <- airquality_clean_2[apply(z_scores, 1, function(x) all(abs(x) <= outlier_threshold)), ]
+
+# Recalculate z-scores for the dataset without outliers
+z_scores_no_outliers <- scale(airquality_no_outliers)
+
+# Identify remaining outliers
+outliers_no_outliers <- apply(z_scores_no_outliers, 2, function(x) sum(abs(x) > outlier_threshold))
+
+# Print the number of outliers in each column after removal
+print(outliers_no_outliers)
+```
+
+## Step 3: Data Transformation
+
+#### Variables might have different units (cm/m/km) and therefore would have different scales and distributions. This introduces unnecessary dificulties for your algorithm.
+
+##### **MIN-MAX NORMALISATION**
+
+-   Applying min-max normalization will define the values within a fixed range, commonly [0, 1].
+
+-   Typically used when you want to ensure all features are within the same range for certain machine learning algorithms (like neural networks) which are sensitive to the magnitude of the input value.
+
+```{r}
+data("mtcars")
+
+# Min-max normalize the mpg variable
+mtcars$mpg_mm <- scale(mtcars$mpg, 
+                       center = min(mtcars$mpg), 
+                       scale = max(mtcars$mpg) - min(mtcars$mpg))
+
+# Now we can check what minimum and maximum of the normalized mpg variable is:
+cat("The minimum of the normalized mpg variable is:", min(mtcars$mpg_mm),  
+    "and the maximum is:", max(mtcars$mpg_mm), "\n")
+```
+
+#### Large scale variables (generally) lead to large coefficients and could result in unstable and incorrect models. Therefore our data needs to be `standardized` and `re-scaled` in these scenarios.
+
+##### **Z-SCORE NORMALISATION**
+
+-   Standardizes the data such that the mean of the values becomes 0 and the standard deviation becomes 1.
+
+-   There is no fixed range after standardization and the values are rescaled relative to their SD
+
+```{r}
+data("mtcars")
+
+# Standardize the 'mpg' feature manually
+mpg_standardized <- (mtcars$mpg - mean(mtcars$mpg)) / sd(mtcars$mpg)
+
+# Alternatively, use the scale function to standardize multiple columns
+data_standardized <- as.data.frame(scale(mtcars))
+```
+
+Standardized 'mpg' values:
+
+```{r, echo=FALSE}
+print(summary(mpg_standardized))
+```
+
+## Step 4: Data Reduction
+
+Data reduction is a crucial step when working with high-dimensional data sets. Reducing the number of variables (features) or the size of your dataset helps reduce the risk of having an overfitting model in downstream analyses. These methods can improve the accuracy and performance of your model. By decreasing the size of your dataset one can also decrease the comutational burden.
+
+#### Types of Data Reduction Techniques:
+
+1.  Principal Component Analysis (PCA): PCA is a commonly used technique for dimensionality reduction. It transforms the data into a new coordinate system where the greatest variance lies on the first principal components.
+
+2.  Feature Selection: This involves selecting a subset of relevant features based on certain criteria such as correlation or variance.
+
+3.  Sampling: Instead of using the entire dataset, you can sample a representative portion of the data for training.
+
+4.  Aggregation: Aggregating data points into groups (e.g., by averaging or summing) to reduce the number of instances while retaining key characteristics.
+
+#### **PCA:**
+
+```{r}
+
+# Standardize the dataset (scale to mean 0 and standard deviation 1)
+mtcars_scaled <- as.data.frame(scale(mtcars))
+
+# Perform PCA to reduce the dataset to two principal components
+pca_result <- prcomp(mtcars_scaled, center = TRUE, scale. = TRUE)
+
+# Get summary of PCA to show variance explained by each component
+summary(pca_result)
+
+# Create a biplot to visualize PCA (first two principal components)**** make better
+biplot(pca_result, scale = 0)
+```
+
+#### **Feature Selection:**
+
+`mtcars` prior to feature selection:
+
+```{r}
+str(mtcars)
+
+# Step 1: Calculate the variance for each feature (column)
+feature_variances <- apply(mtcars, 2, var)
+
+# Step 2: Set a threshold for filtering low variance features (e.g., use the 25th percentile of the variance)
+threshold <- quantile(feature_variances, 0.25) 
+
+# Step 3: Retain only the features with variance above the threshold
+filtered_data <- mtcars[, feature_variances > threshold]
+```
+
+`mtcars` after feature selection:
+
+```{r}
+str(filtered_data)
+```
+
+# Hypothesis Testing:
+
+## 1. T-Test:
+
+A T-test is used to determine if there is a significant difference between the means of two groups. It is typically used when comparing the means of two groups to see if they are statistically different from each other.
+
+*When to use?*
+
+- When comparing the means of two independent groups (Independent T-test).
+
+- When comparing the means of two related groups or paired samples (Paired T-test).
+
+```{r}
+# Example Data
+method_A <- c(85, 88, 90, 92, 87)
+method_B <- c(78, 82, 80, 85, 79)
+
+# Perform T-test
+t_test_result <- t.test(method_A, method_B)
+
+# Print results
+print(t_test_result)
+
+```
+
+*Interpretation:* `p-value < 0.05` = there is a significant difference between the paired samples.
+
+## 2. ANOVA:
+
+ANOVA is used to determine if there are any statistically significant differences between the means of three or more independent groups.
+
+*When to use?*
+
+- When comparing means among three or more groups.
+
+```{r}
+# Example Data
+scores <- data.frame(
+  score = c(85, 88, 90, 92, 87, 78, 82, 80, 85, 79, 95, 97, 92, 91, 96),
+  method = factor(rep(c("A", "B", "C"), each = 5))
+)
+
+# Perform ANOVA
+anova_result <- aov(score ~ method, data = scores)
+
+# Print summary of results
+summary(anova_result)
+
+```
+
+*Interpretation:* `p-value < 0.05` = there is a significant difference between the group means. 
+
+- Post-hoc tests (e.g., Tukey’s HSD) can be used to determine which specific groups differ.
+
+## 3. Shapiro-Wilk Test for Normality:
+
+The Shapiro-Wilk test assesses whether a sample comes from a normally distributed population. It is particularly useful for checking the normality assumption in parametric tests like the T-test and ANOVA.
+
+*When to use?*
+
+- When you need to check if your data is normally distributed before performing parametric tests.
+
+- To validate the assumptions of normality for statistical tests that assume data is normally distributed.
+
+```{r}
+# Example Data
+sample_data <- c(5.2, 6.1, 5.8, 7.2, 6.5, 5.9, 6.8, 6.0, 6.7, 5.7)
+
+# Perform Shapiro-Wilk test
+shapiro_test_result <- shapiro.test(sample_data)
+
+# Print results
+print(shapiro_test_result)
+```
+
+*Interpretation:* The Shapiro-Wilk test returns a p-value that indicates whether the sample deviates from a normal distribution.
+
+- p-value > 0.05: Fail to reject the null hypothesis; data is not significantly different from a normal distribution.
+
+- p-value ≤ 0.05: Reject the null hypothesis; data significantly deviates from a normal distribution.
+
+## 4. Chi-Squared Test:
+
+The Chi-squared test is used to determine if there is a significant association between two categorical variables.
+
+*When to use?*
+
+- When testing the independence of two categorical variables in a contingency table.
+
+```{r}
+# Example Data
+study_method <- matrix(c(20, 15, 30, 25), nrow = 2, byrow = TRUE)
+rownames(study_method) <- c("Passed", "Failed")
+colnames(study_method) <- c("Method A", "Method B")
+
+# Perform Chi-squared test
+chi_sq_result <- chisq.test(study_method)
+
+# Print results
+print(chi_sq_result)
+```
+
+*Interpretation:* `p-value < 0.05` there is a significant association between the study method and the passing rate.
+
+## 5. Wilcoxon Signed-Rank Test:
+
+The Wilcoxon Signed-Rank Test is a non-parametric test used to compare two related samples or paired observations to determine if their population mean ranks differ.
+
+*When to use?*
+
+- When the data is paired and does not meet the assumptions required for a T-test (e.g., non-normality).
+
+```{r}
+# Example Data
+before <- c(5, 7, 8, 6, 9)
+after <- c(6, 8, 7, 7, 10)
+
+# Perform Wilcoxon Signed-Rank Test
+wilcox_test_result <- wilcox.test(before, after, paired = TRUE)
+
+# Print results
+print(wilcox_test_result)
+```
+
+*Interpretation:* `p-value < 0.05` = there is a significant difference between the paired samples.
+
+#### **Now your data is ready for downstream analyses!**

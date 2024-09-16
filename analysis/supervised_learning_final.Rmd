@@ -1,0 +1,518 @@
+---
+title: "Module 4: Supervised Learning"
+author: "Stefano Cacciatore"
+output: 
+  html_document:
+  toc: true
+  toc_depth: 2
+  theme: united
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+---
+
+# Supervised Learning
+
+Supervised learning is learning in which we teach or train the machine using data that is well labeled meaning some data is already tagged with the correct answer.
+
+The machine is provided with a test dataset so that the supervised learning algorithm analyses the training data and produces a correct outcome from labeled data.
+
+Supervised learning itself is composed of;
+
+-   `Regression`, where the output is numerical
+
+-   `Classification`, where the output is categorical
+
+## Regression
+
+Regression analysis is a statistical technique used to model and analyze the relationship between a dependent variable and one (**`univariate regression`**) or more independent variables(**`multivariate regression`**).
+
+### Simple Linear Regression
+
+Simple linear regression involves a single independent variable and fits the equation;
+
+<center>$y=b_0 +b_1x$</center>
+
+where;
+
+-   $y$ is the dependent variable
+
+-   $x$ is the independent variable
+
+-   $b_0$ is the intercept
+
+-   $b_1$ is the slope of the linear graph
+
+#### Step 1: Loading libraries and import the dataset
+
+The `caret` library is important for data partitioning, model training and evaluation
+
+```{r data_prep, message=FALSE}
+
+library(caret)   
+
+# Load the dataset
+df <- read.csv('data/tumor_size_patient_survival.csv')
+
+# Display the first rows
+head(df)
+
+```
+
+Functions like `head()`, `summary()`, `str()` can be used to get an overview of the data.
+
+#### Step 2: Data Pre-Processing
+
+This step involves;
+
+-   handling missing values by either removing missing values or mean, median or mode imputation
+
+-   encoding categorical variables
+
+-   normalising and standardising numerical features
+
+#### Step 3: Splitting the dataset into training and test set
+
+Usually the dataset can be split into 75% for training and 25% for test. This facilitates data generalisation and avoids over fitting.
+
+```{r splitting_dataset}
+ 
+set.seed(45)  # for reproducibility
+trainIndex <- createDataPartition(df$patient_survival, p = 0.75, list = FALSE)
+trainData <- df[trainIndex, ]
+testData <- df[-trainIndex, ]
+```
+
+#### Step 4: Train the linear regression model
+
+This involves fitting the model to the training set using the `lm()` function
+
+```{r model_train}
+
+model <- lm(patient_survival ~ tumor_size, data = trainData)
+
+# Extract coefficients
+coefficients <- coef(model)
+coefficients
+
+```
+
+The linear equation that fits to the data in our training set is
+
+<center>$y = 395 - 4x$</center>
+
+#### Step 5: Evaluating the model
+
+This involves assessing the performance of the model on the testing set. There are various metrics for model evaluation including;
+
+-   Mean Absolute Error (MAE)
+
+-   Mean Squared Error (MSE)
+
+-   Root Mean Squared Error (RMSE)
+
+-   R-Squared (R^2^)Score
+
+```{r model_eval}
+
+test_predictions <- predict(model, newdata = testData)
+mae <- MAE(test_predictions, testData$patient_survival)
+rmse <- RMSE(test_predictions, testData$patient_survival)
+r2_score <- summary(model)$r.squared
+
+cat('MAE on test set (in days): ', mae, "\n",
+  'RMSE on test set (in days): ', rmse, "\n",
+  'R-Squared Score: ', r2_score)
+```
+
+#### Step 6: Visualising the model
+
+```{r linear_visual}
+library(ggplot2)
+
+# Add a column to differentiate between training and test data
+trainData$dataset <- "Training"
+testData$dataset <- "Test"
+
+# Combine train and test data into a single dataframe for plotting
+combinedData <- rbind(trainData, testData)
+
+# Create a scatter plot with regression line for both training and test sets
+ggplot(combinedData, aes(x = tumor_size, y = patient_survival, color = dataset, shape = dataset)) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(data = trainData, aes(x = tumor_size, y = patient_survival), method = "lm", se = FALSE, color = "#00008B") +
+  labs(title = "Relationship between Tumor Size and Patient Survival",
+       x = "Tumor Size (mm)",
+       y = "Patient Survival (Days)") +
+  theme_minimal() +
+  scale_color_manual(values = c("Training" = "blue", "Test" = "red")) +
+  scale_shape_manual(values = c("Training" = 16, "Test" = 16)) +
+  guides(color = guide_legend(title = "Dataset"),
+         shape = guide_legend(title = "Dataset"))
+
+```
+
+### Multivariate Linear Regression
+
+Most real-life scenarios are characterised by multivariate or high-dimensional features where more than one independent variable influences the target or dependent variable. Multi variate algorithms fit the model;
+
+<center>$y = b_0 + b_1x_1 +b_2x_2 + b_3x_3 + ... + b_nx_n$</center>
+
+The `mpg` dataset from the `ggplot2` package can be used for multivariate regression. It includes information on car attributes. we will choose some relevant attributes to predict `hwy`, miles per gallon (MPG).
+
+#### Step 1: Loading the dataset
+
+```{r mv_load_dataset}
+# Load the dataset
+library(ggplot2)
+data(mpg)
+df <- mpg
+head(df)
+
+```
+
+We can choose predictors; `displ` - (engine displacement), `cyl` - (number of cylinders), `year` - (year of the car) and `class` - (type of car)
+
+#### Step 2: Splitting and preparing the dataset
+
+```{r mv-split}
+library(caret)
+
+set.seed(30) # for reproducibility
+
+# Split the data into training and testing sets
+trainIndex <- createDataPartition(df$hwy, p = 0.75, list = FALSE)
+trainData <- df[trainIndex, ]
+testData <- df[-trainIndex, ]
+
+```
+
+#### Step 3: Fitting the model
+
+```{r mv_model}
+model_mv <- lm(hwy ~ displ + cyl + year + class, data = trainData)
+summary(model_mv) 
+```
+
+#### Step 4: Evaluating the model
+
+```{r, mv_eval}
+test_predictions_mv <- predict(model_mv, newdata = testData)
+mae <- MAE(test_predictions_mv, testData$hwy)
+rmse <- RMSE(test_predictions_mv, testData$hwy)
+r2_score <- summary(model)$r.squared
+
+cat('MAE on test set (in days): ', mae, "\n",
+  'RMSE on test set (in days): ', rmse, "\n",
+  'R-Squared Score: ', r2_score)
+
+```
+
+## Classification
+
+### Logistic Regression (LR)
+
+logistic regression is classification algorithm used to predict a binary class label (for example, 0 or 1, cancer or no cancer).
+
+LR has much in common with linear regression, the difference being that linear regression is used to predict a `continuous target`, whereas logistic regression is used to predict a `categorical target`.
+
+We can modify the `iris` dataset to demonstrate logistic regression for binary classification by classifying whether a flower is of "setosa" species or not.
+
+#### Step 1: Data Preparation
+
+Converting the iris data set into binary classification by creating a variable `Issetosa`
+
+```{r lr_data-prep}
+data(iris)
+head(iris)
+
+iris$IsSetosa <- ifelse(iris$Species == "setosa", 1, 0)
+
+head(iris)
+```
+
+#### Step 2: Splitting the dataset
+
+Split the dataset into training (75%) and test (25%) sets
+
+```{r lr_split}
+library(caret)
+set.seed(123) # for reproducibility
+
+#
+train_index <- createDataPartition(iris$IsSetosa, p = 0.75, list = FALSE)
+train_data <- iris[train_index, ]
+test_data <- iris[-train_index, ]
+
+```
+
+#### Step 3: Fitting the logistic regression model
+
+We shall predict `IsSetosa` using `Sepal.Length` and `Sepal.Width`
+
+```{r lr_model, warning=FALSE}
+
+model_lr <- glm(IsSetosa ~ Sepal.Length + Sepal.Width, data = train_data, family = binomial)
+
+summary(model_lr)
+```
+
+#### Step 4: Making Predictions
+
+```{r lr_predict}
+# Make predictions on the training data
+test_predictions <- predict(model_lr, newdata = test_data, type = "response")
+
+# Convert the predicted probabilities to binary outcomes
+predicted_class <- ifelse(test_predictions > 0.5, 1, 0)
+
+predicted_class
+```
+
+#### Step 5: Evaluating the model
+
+**Confusion matrix**
+
+A confusion matrix is a 2×2 table that shows the predicted values from the model vs. the actual values from the test dataset.
+
+It is a common way to evaluate the performance of a logistic regression model.
+
+```{r confusion}
+library(caret)
+
+# Create a confusion matrix using caret
+conf_matrix <- confusionMatrix(as.factor(predicted_class), as.factor(test_data$IsSetosa))
+print(conf_matrix)
+
+```
+
+```{R PLOT_CONF}
+library(ggplot2)
+library(reshape2)
+
+# Convert confusion matrix to a dataframe
+conf_matrix_df <- as.data.frame(conf_matrix$table)
+
+# Create a heatmap using ggplot2
+ggplot(data = conf_matrix_df, aes(x = Reference, y = Prediction, fill = Freq)) +
+  geom_tile() +
+  geom_text(aes(label = Freq), vjust = 1) +
+  scale_fill_gradient(low = "white", high = "steelblue") +
+  theme_minimal() +
+  labs(title = "Confusion Matrix", x = "Actual", y = "Predicted")
+```
+
+-   ***Sensitivity:*** The “true positive rate” – the measure of how well the model correctly predicted positive cases.
+
+<center>$Sensitivity = \frac{Actual Positive}{Actual Positive + False Negative}$</center>
+
+-   ***Specificity:*** The “true negative rate” – the measure of how well the model correctly predicted positive cases.
+
+<center>$Specificity = \frac{Actual Negative}{Actual Negative + False Positive}$</center>
+
+-   ***Total miss-classification rate:*** The percentage of total incorrect classifications made by the model.
+
+##### **Receiver-operating characteristic curve (ROC)**
+
+The ROC curve is a visual representation of model performance across all thresholds.
+
+The ROC curve is drawn by calculating the true positive rate (TPR) and false positive rate (FPR) at every possible threshold, then graphing TPR over FPR
+
+##### **Area under the curve (AUC)**
+
+The area under the ROC curve (AUC) represents the probability that the model, if given a randomly chosen positive and negative example, will rank the positive higher than the negative.
+
+```{r ROC, message=FALSE}
+library(pROC)
+# Create ROC curve
+roc_curve <- roc(test_data$IsSetosa, test_predictions)
+
+# Plot ROC curve
+plot(roc_curve, main = "ROC Curve", col = "blue", lwd = 2)
+
+# Compute AUC
+auc_value <- auc(roc_curve)
+print(paste("AUC: ", round(auc_value, 4)))
+```
+
+### k-Nearest Neighbors (kNN)
+
+K-nearest neighbors works by directly measuring the (Euclidean) distance between observations and inferring the class of unlabeled data from the class of its nearest neighbors.
+
+Typically in machine learning, there are two clear steps, where one first `trains` a model and then uses the model to predict new outputs (class labels in this case). In the `kNN`, these two steps are combined into a single function call to `knn`.
+
+Lets draw a set of 50 random iris observations to train the model and predict the species of another set of 50 randomly chosen flowers. The knn function takes the training data, the new data (to be inferred) and the labels of the training data, and returns (by default) the predicted class.
+
+```{r knn}
+set.seed(12L)
+train <- sample(150, 50)
+test <- sample(150, 50)
+library("class")
+knnres <- knn(iris[train, -5], iris[test, -5], iris$Species[train])
+head(knnres)
+
+```
+
+## Tree-based Methods
+
+Tree-based methods are supervised learning algorithms that partition data into subsets based on feature values.
+
+Types of Tree-based methods;
+
+-   **Decision trees:** In these models where each internal node represents a feature test, each branch represents the outcome of the test, and each leaf node represents a class label or a continuous value
+
+-   **Ensemble Methods:** These methods combine multiple decision trees to improve performance. Examples include; Random Forest model, boosting models (Xboost)
+
+### Decision Trees
+
+Decision trees can be used as classification or regression algorithms.
+
+Let us classify the species of iris flowers based on the features in the dataset.
+
+#### Step 1: Loading Libraries and the dataset
+
+```{r decision_tree, message=FALSE}
+#install.packages("rpart.plot")
+#install.packages("randomForest")
+library(caret)
+library(rpart)
+library(rpart.plot)
+library(randomForest)
+
+# Load the iris dataset
+data(iris)
+```
+
+#### Step 2: Fitting the decision tree model
+
+```{r model_tree}
+model_tree <- rpart(Species ~ ., data = iris, method = "class")
+```
+
+#### Step 3: Plotting the decision tree
+
+```{r tree_plot}
+rpart.plot(model_tree, main = "Decision Tree for Iris Dataset")
+```
+
+#### Step 4: Making predictions and model evaluation
+
+```{r tree_predict}
+tree_predictions <- predict(model_tree, type = "class")
+conf_matrix_tree <- confusionMatrix(tree_predictions, iris$Species)
+print("Decision Tree Confusion Matrix: ")
+print(conf_matrix_tree)
+
+```
+
+### Random Forest Model
+
+A random forest allows us to determine the most important predictors across the explanatory variables by generating many decision trees and then ranking the variables by importance.
+
+#### Step 1: Fitting the random forest model
+
+```{r random_forest}
+model_rf <- randomForest(Species ~ ., data = iris, ntree = 100)
+
+# Print model summary
+print(model_rf)
+```
+
+#### Step 2: Making predictions and model evaluation
+
+```{r model_rf}
+# Make predictions and evaluate
+rf_predictions <- predict(model_rf)
+conf_matrix_rf <- confusionMatrix(rf_predictions, iris$Species)
+print("Random Forest Confusion Matrix:")
+print(conf_matrix_rf)
+```
+
+## Cross-Validation
+
+Is a technique used to assess the generalisability of a model to new data. It involves dividing the dataset into multiple folds and training the model on each fold while using the remaining set for validation.
+
+### Cross-Validation with PLS-DA.
+
+This function performs a 10-fold cross-validation on a given data set using Partial Least Squares (PLS) model. To assess the prediction ability of the model, a 10-fold cross-validation is conducted by generating splits with a ratio 1:9 of the data set. Permutation testing was undertaken to estimate the classification/regression performance of predictors.
+
+```{r cv, message=FALSE}
+library(KODAMA)
+data(iris)
+data=iris[,-5]
+labels=iris[,5]
+pp=pls.double.cv(data,labels)
+print(pp$Q2Y)
+table(pp$Ypred,labels)
+```
+
+## Feature transformation
+
+Is the process of modifying and converting input features of a data set by applying mathematical operations to improve the learning and prediction performance of ML models.
+
+Transformation techniques include scaling, normalisation and logarithmisation, which deal with differences in scale and distribution between features, non-linearity and outliers.
+
+Input features (variables) may have different units, e.g. kilometre, day, year, etc., and so the variables have different scales and probably different distributions which increases the learning difficulty of ML algorithms from the data.
+
+### Normalisation
+
+A number of different normalization methods are provided in KODAMA:
+
+"none": no normalization method is applied.
+
+"pqn": the Probabilistic Quotient Normalization is computed as described in Dieterle, et al. (2006).
+
+"sum": samples are normalized to the sum of the absolute value of all variables for a given sample.
+
+"median": samples are normalized to the median value of all variables for a given sample.
+
+"sqrt": samples are normalized to the root of the sum of the squared value of all variables for a given sample.
+
+```{r normalisation, message=FALSE}
+library(KODAMA)
+
+data(MetRef)
+u=MetRef$data;
+u=u[,-which(colSums(u)==0)]
+u=normalization(u)$newXtrain
+class=as.numeric(as.factor(MetRef$gender))
+cc=pca(u)
+plot(cc$x,pch=21,bg=class)
+```
+
+### Scaling and Standardisation
+
+A number of different scaling methods are provided in KODAMA:
+
+-   "`none`": no scaling method is applied.
+
+-   "`centering`": centers the mean to zero.
+
+-   "`autoscaling`": centers the mean to zero and scales data by dividing each variable by the variance.
+
+-   "`rangescaling`": centers the mean to zero and scales data by dividing each variable by the difference between the minimum and the maximum value.
+
+-   "`paretoscaling`": centers the mean to zero and scales data by dividing each variable by the square root of the standard deviation. Unit scaling divides each variable by the standard deviation so that each variance equal to 1.
+
+```{r scaling,  message=FALSE,}
+library(KODAMA)
+data(MetRef)
+u=MetRef$data;
+u=u[,-which(colSums(u)==0)]
+u=scaling(u)$newXtrain
+class=as.numeric(as.factor(MetRef$gender))
+cc=pca(u)
+plot(cc$x,pch=21,bg=class,xlab=cc$txt[1],ylab=cc$txt[2])
+```
+
+We can combine both normalisation and scaling to see the difference in the output
+
+```{r both,  message=FALSE,}
+library(KODAMA)
+data(MetRef)
+u=MetRef$data;
+u=u[,-which(colSums(u)==0)]
+u=normalization(u)$newXtrain
+u=scaling(u)$newXtrain
+class=as.numeric(as.factor(MetRef$gender))
+cc=pca(u)
+plot(cc$x,pch=21,bg=class,xlab=cc$txt[1],ylab=cc$txt[2])
+```
