@@ -349,7 +349,7 @@ div.tocify {
       <a href="Introduction.html">Introduction to R and RStudio</a>
     </li>
     <li>
-      <a href="Statistics">Statistics</a>
+      <a href="Statistics.html">Statistics</a>
     </li>
     <li>
       <a href="Visualisation.html">Data Visualisation</a>
@@ -358,16 +358,16 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Module 2
+    Multivariate analysis
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="supervised_learning_final.html">Supervised Learning</a>
+      <a href="Supervised_learning.html">Supervised Learning</a>
     </li>
     <li>
-      <a href="Module_5_Unsupervised_Learning.html">Unsupervised Learning</a>
+      <a href="Unsupervised_Learning.html">Unsupervised Learning</a>
     </li>
   </ul>
 </li>
@@ -557,15 +557,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreee9cf75197fecd2b17c49839ac8157b084819504etargetblanke9cf751a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree2313b88201db8a78bab10efdc7890afb64b0edbatargetblank2313b88a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/tkcaccia/Tutorials/tree/e9cf75197fecd2b17c49839ac8157b084819504e" target="_blank">e9cf751</a>
+<a href="https://github.com/tkcaccia/Tutorials/tree/2313b88201db8a78bab10efdc7890afb64b0edba" target="_blank">2313b88</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreee9cf75197fecd2b17c49839ac8157b084819504etargetblanke9cf751a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree2313b88201db8a78bab10efdc7890afb64b0edbatargetblank2313b88a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -575,7 +575,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/tkcaccia/Tutorials/tree/e9cf75197fecd2b17c49839ac8157b084819504e" target="_blank">e9cf751</a>.
+<a href="https://github.com/tkcaccia/Tutorials/tree/2313b88201db8a78bab10efdc7890afb64b0edba" target="_blank">2313b88</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -651,6 +651,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/tkcaccia/Tutorials/5033c128d8bca78746899004bd82e65b109bffd4/docs/Module_5_Unsupervised_Learning.html" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -813,10 +830,84 @@ cross-validation to decide the optimal number of clusters.</p></li>
 fviz_nbclust(filtered_data, kmeans, method = &quot;wss&quot;) + 
   labs(subtitle = &quot;Elbow Method for Optimal K&quot;)</code></pre>
 <p><img src="figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-4-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># 2.  Silhouette method 
 fviz_nbclust(filtered_data, kmeans, method = &quot;silhouette&quot;) + 
   labs(subtitle = &quot;Silhouette Method for Optimal K&quot;)</code></pre>
 <p><img src="figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-4-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-2">
+Past versions of unnamed-chunk-4-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-4-2.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="step-4-k-means-clustering-parameter-selection"
 class="section level4">
@@ -835,9 +926,83 @@ kmeans_res_manhattan &lt;- kmeans(dist(filtered_data, method = &quot;manhattan&q
 fviz_cluster(kmeans_res_euclidean, data = filtered_data) + 
   labs(title = &quot;K-means Clustering with Euclidean Distance&quot;)</code></pre>
 <p><img src="figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-6-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>fviz_cluster(kmeans_res_manhattan, data = filtered_data) + 
   labs(title = &quot;K-means Clustering with Manhattan Distance&quot;)</code></pre>
 <p><img src="figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-6-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-2">
+Past versions of unnamed-chunk-6-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-6-2.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="step-5-visualization-with-pca" class="section level4">
 <h4>Step 5: Visualization with PCA</h4>
@@ -854,6 +1019,43 @@ fviz_pca_ind(pca_res,
              col.ind = as.factor(kmeans_res_euclidean$cluster)) +
   labs(title = &quot;PCA Visualization&quot;)</code></pre>
 <p><img src="figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-7-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="step-6-visualization-with-t-sne" class="section level4">
 <h4>Step 6: Visualization with t-SNE</h4>
@@ -877,8 +1079,8 @@ Learning embedding...
 Iteration 50: error is 44.706463 (50 iterations in 0.00 seconds)
 Iteration 100: error is 44.987762 (50 iterations in 0.01 seconds)
 Iteration 150: error is 44.895181 (50 iterations in 0.01 seconds)
-Iteration 200: error is 45.880938 (50 iterations in 0.00 seconds)
-Iteration 250: error is 46.116539 (50 iterations in 0.00 seconds)
+Iteration 200: error is 45.880938 (50 iterations in 0.01 seconds)
+Iteration 250: error is 46.116539 (50 iterations in 0.01 seconds)
 Iteration 300: error is 1.006513 (50 iterations in 0.00 seconds)
 Iteration 350: error is 0.069938 (50 iterations in 0.00 seconds)
 Iteration 400: error is 0.053021 (50 iterations in 0.00 seconds)
@@ -908,6 +1110,43 @@ ggplot(tsne_data, aes(x = Dim1, y = Dim2, color = Cluster)) +
   geom_point() + 
   labs(title = &quot;t-SNE Visualization&quot;, x = &quot;Dimension 1&quot;, y = &quot;Dimension 2&quot;)</code></pre>
 <p><img src="figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
+Past versions of unnamed-chunk-9-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-9-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="t-sne-parameter-optimization" class="section level4">
 <h4>T-SNE Parameter optimization:</h4>
@@ -951,10 +1190,10 @@ Building tree...
 Done in 0.00 seconds (sparsity = 0.918757)!
 Learning embedding...
 Iteration 50: error is 44.751156 (50 iterations in 0.00 seconds)
-Iteration 100: error is 45.308458 (50 iterations in 0.00 seconds)
+Iteration 100: error is 45.308458 (50 iterations in 0.01 seconds)
 Iteration 150: error is 44.348748 (50 iterations in 0.01 seconds)
 Iteration 200: error is 45.104693 (50 iterations in 0.01 seconds)
-Iteration 250: error is 45.680708 (50 iterations in 0.00 seconds)
+Iteration 250: error is 45.680708 (50 iterations in 0.01 seconds)
 Iteration 300: error is 0.734819 (50 iterations in 0.00 seconds)
 Iteration 350: error is 0.059571 (50 iterations in 0.00 seconds)
 Iteration 400: error is 0.054598 (50 iterations in 0.00 seconds)
@@ -970,7 +1209,7 @@ Iteration 850: error is 0.054679 (50 iterations in 0.00 seconds)
 Iteration 900: error is 0.055034 (50 iterations in 0.00 seconds)
 Iteration 950: error is 0.055220 (50 iterations in 0.00 seconds)
 Iteration 1000: error is 0.054738 (50 iterations in 0.00 seconds)
-Fitting performed in 0.08 seconds.</code></pre>
+Fitting performed in 0.09 seconds.</code></pre>
 <pre class="r"><code># Convert t-SNE results to a data frame for plotting
 tsne_data &lt;- as.data.frame(tsne_res$Y)
 colnames(tsne_data) &lt;- c(&quot;Dim1&quot;, &quot;Dim2&quot;)
@@ -986,6 +1225,43 @@ ggplot(tsne_data, aes(x = Dim1, y = Dim2, color = Cluster)) +
   labs(title = &quot;t-SNE Visualization&quot;, x = &quot;Dimension 1&quot;, y = &quot;Dimension 2&quot;) +
   theme_minimal()</code></pre>
 <p><img src="figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-10-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <details>
 <summary>
 <em>Assessing Clustering Performance?</em>
@@ -1018,10 +1294,84 @@ cluster compared to other clusters.</p></li>
 silhouette_euclidean &lt;- silhouette(kmeans_res_euclidean$cluster, dist(filtered_data))
 plot(silhouette_euclidean, main = &quot;Silhouette Plot for Euclidean K-means&quot;)</code></pre>
 <p><img src="figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
+Past versions of unnamed-chunk-12-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-12-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Calculate silhouette scores for Manhattan K-means
 silhouette_manhattan &lt;- silhouette(kmeans_res_manhattan$cluster, dist(filtered_data, method = &quot;manhattan&quot;))
 plot(silhouette_manhattan, main = &quot;Silhouette Plot for Manhattan K-means&quot;)</code></pre>
 <p><img src="figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-12-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-2">
+Past versions of unnamed-chunk-12-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-12-2.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p><strong><em>Davies-Bouldin Index</em></strong></p>
 <ul>
 <li><p>The DB-index is a validation technique that is a metric for
@@ -1067,12 +1417,86 @@ results.</p>
 # Use NbClust to determine the optimal number of clusters
 nb &lt;- NbClust(filtered_data, min.nc = 2, max.nc = 10, method = &quot;kmeans&quot;)</code></pre>
 <p><img src="figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-1">
+Past versions of unnamed-chunk-14-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-14-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-14-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>*** : The Hubert index is a graphical method of determining the number of clusters.
                 In the plot of Hubert index, we seek a significant knee that corresponds to a 
                 significant increase of the value of the measure i.e the significant peak in Hubert
                 index second differences plot. 
  </code></pre>
 <p><img src="figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-14-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-2">
+Past versions of unnamed-chunk-14-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-14-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-14-2.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>*** : The D index is a graphical method of determining the number of clusters. 
                 In the plot of D index, we seek a significant knee (the significant peak in Dindex
                 second differences plot) that corresponds to a significant increase of the value of
@@ -1106,6 +1530,43 @@ hc &lt;- hclust(dist_matrix, method = &quot;complete&quot;)
 # Plot the dendrogram
 plot(hc, main = &quot;Dendrogram of Hierarchical Clustering&quot;, xlab = &quot;Branches&quot;, ylab = &quot;Euclidean Distance&quot;, labels = FALSE)</code></pre>
 <p><img src="figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-1">
+Past versions of unnamed-chunk-15-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-15-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-15-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Visualising the output from our Hierarchical Clustering using
 PCA:</p>
 <pre class="r"><code># Convert PCA results to a data frame for ggplot2
@@ -1127,6 +1588,43 @@ ggplot(pca_res, aes(x = PC1, y = PC2, color = clusters)) +
   labs(title = &quot;PCA of Hierarchical Clustering&quot;, x = &quot;PC1&quot;, y = &quot;PC2&quot;) +
   theme_minimal()</code></pre>
 <p><img src="figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-16-1">
+Past versions of unnamed-chunk-16-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-16-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-16-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="probabilistic-clustering" class="section level3">
 <h3>3. Probabilistic Clustering:</h3>
@@ -1161,6 +1659,43 @@ Clustering table:
 <pre class="r"><code># Plot the clustering results
 plot(model, what = &quot;classification&quot;)</code></pre>
 <p><img src="figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-19-1">
+Past versions of unnamed-chunk-19-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-19-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-19-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Predict cluster memberships for new data
 new_data &lt;- data[1:5, ]
 predictions &lt;- predict(model, new_data)
@@ -1195,11 +1730,85 @@ outliers.</p></li>
 <pre class="r"><code># Visualize the k-NN distance plot for eps parameter
 kNNdistplot(scaled_data, minPts = 5)  </code></pre>
 <p><img src="figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-21-1">
+Past versions of unnamed-chunk-21-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-21-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-21-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Add a line where approximately the noise starts. We see at
 <code>~0.8</code> the noise begins:</p>
 <pre class="r"><code>kNNdistplot(scaled_data, minPts = 5)  
 abline(h = 0.8, col = &quot;red&quot;, lty = 2)  </code></pre>
 <p><img src="figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-22-1">
+Past versions of unnamed-chunk-22-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-22-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-22-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Now we can perform DBSCAN clustering:</p>
 <pre class="r"><code># Perform DBSCAN clustering
 eps &lt;- 0.8  # Set eps based on the k-NN distance plot
@@ -1229,6 +1838,43 @@ ggplot(pca_df, aes(x = PC1, y = PC2, color = cluster)) +
   labs(title = &quot;PCA of DBSCAN Clustering&quot;, x = &quot;PC1&quot;, y = &quot;PC2&quot;) +
   theme_minimal()</code></pre>
 <p><img src="figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-23-1">
+Past versions of unnamed-chunk-23-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-23-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Module_5_Unsupervised_Learning.Rmd/unnamed-chunk-23-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">

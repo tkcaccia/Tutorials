@@ -349,7 +349,7 @@ div.tocify {
       <a href="Introduction.html">Introduction to R and RStudio</a>
     </li>
     <li>
-      <a href="Statistics">Statistics</a>
+      <a href="Statistics.html">Statistics</a>
     </li>
     <li>
       <a href="Visualisation.html">Data Visualisation</a>
@@ -358,16 +358,16 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Module 2
+    Multivariate analysis
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="supervised_learning_final.html">Supervised Learning</a>
+      <a href="Supervised_learning.html">Supervised Learning</a>
     </li>
     <li>
-      <a href="Module_5_Unsupervised_Learning.html">Unsupervised Learning</a>
+      <a href="Unsupervised_Learning.html">Unsupervised Learning</a>
     </li>
   </ul>
 </li>
@@ -557,15 +557,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreee9cf75197fecd2b17c49839ac8157b084819504etargetblanke9cf751a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree2313b88201db8a78bab10efdc7890afb64b0edbatargetblank2313b88a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/tkcaccia/Tutorials/tree/e9cf75197fecd2b17c49839ac8157b084819504e" target="_blank">e9cf751</a>
+<a href="https://github.com/tkcaccia/Tutorials/tree/2313b88201db8a78bab10efdc7890afb64b0edba" target="_blank">2313b88</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreee9cf75197fecd2b17c49839ac8157b084819504etargetblanke9cf751a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree2313b88201db8a78bab10efdc7890afb64b0edbatargetblank2313b88a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -575,7 +575,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/tkcaccia/Tutorials/tree/e9cf75197fecd2b17c49839ac8157b084819504e" target="_blank">e9cf751</a>.
+<a href="https://github.com/tkcaccia/Tutorials/tree/2313b88201db8a78bab10efdc7890afb64b0edba" target="_blank">2313b88</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -651,6 +651,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/tkcaccia/Tutorials/5033c128d8bca78746899004bd82e65b109bffd4/docs/supervised_learning_final.html" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -820,6 +837,43 @@ ggplot(combinedData, aes(x = tumor_size, y = patient_survival, color = dataset, 
          shape = guide_legend(title = &quot;Dataset&quot;))</code></pre>
 <pre><code>`geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="figure/supervised_learning_final.Rmd/linear_visual-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-linear_visual-1">
+Past versions of linear_visual-1.png
+</button>
+</p>
+<div id="fig-linear_visual-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/supervised_learning_final.Rmd/linear_visual-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="multivariate-linear-regression" class="section level3">
@@ -1057,6 +1111,43 @@ ggplot(data = conf_matrix_df, aes(x = Reference, y = Prediction, fill = Freq)) +
   theme_minimal() +
   labs(title = &quot;Confusion Matrix&quot;, x = &quot;Actual&quot;, y = &quot;Predicted&quot;)</code></pre>
 <p><img src="figure/supervised_learning_final.Rmd/PLOT_CONF-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-PLOT_CONF-1">
+Past versions of PLOT_CONF-1.png
+</button>
+</p>
+<div id="fig-PLOT_CONF-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/supervised_learning_final.Rmd/PLOT_CONF-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <ul>
 <li><strong><em>Sensitivity:</em></strong> The “true positive rate” –
 the measure of how well the model correctly predicted positive
@@ -1100,6 +1191,43 @@ roc_curve &lt;- roc(test_data$IsSetosa, test_predictions)
 # Plot ROC curve
 plot(roc_curve, main = &quot;ROC Curve&quot;, col = &quot;blue&quot;, lwd = 2)</code></pre>
 <p><img src="figure/supervised_learning_final.Rmd/ROC-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-ROC-1">
+Past versions of ROC-1.png
+</button>
+</p>
+<div id="fig-ROC-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/supervised_learning_final.Rmd/ROC-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Compute AUC
 auc_value &lt;- auc(roc_curve)
 print(paste(&quot;AUC: &quot;, round(auc_value, 4)))</code></pre>
@@ -1172,6 +1300,43 @@ data(iris)</code></pre>
 <h4>Step 3: Plotting the decision tree</h4>
 <pre class="r"><code>rpart.plot(model_tree, main = &quot;Decision Tree for Iris Dataset&quot;)</code></pre>
 <p><img src="figure/supervised_learning_final.Rmd/tree_plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-tree_plot-1">
+Past versions of tree_plot-1.png
+</button>
+</p>
+<div id="fig-tree_plot-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/supervised_learning_final.Rmd/tree_plot-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="step-4-making-predictions-and-model-evaluation"
 class="section level4">
@@ -1345,6 +1510,43 @@ class=as.numeric(as.factor(MetRef$gender))
 cc=pca(u)
 plot(cc$x,pch=21,bg=class)</code></pre>
 <p><img src="figure/supervised_learning_final.Rmd/normalisation-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-normalisation-1">
+Past versions of normalisation-1.png
+</button>
+</p>
+<div id="fig-normalisation-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/supervised_learning_final.Rmd/normalisation-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="scaling-and-standardisation" class="section level3">
 <h3>Scaling and Standardisation</h3>
@@ -1371,6 +1573,43 @@ class=as.numeric(as.factor(MetRef$gender))
 cc=pca(u)
 plot(cc$x,pch=21,bg=class,xlab=cc$txt[1],ylab=cc$txt[2])</code></pre>
 <p><img src="figure/supervised_learning_final.Rmd/scaling-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-scaling-1">
+Past versions of scaling-1.png
+</button>
+</p>
+<div id="fig-scaling-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/supervised_learning_final.Rmd/scaling-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>We can combine both normalisation and scaling to see the difference
 in the output</p>
 <pre class="r"><code>library(KODAMA)
@@ -1383,6 +1622,43 @@ class=as.numeric(as.factor(MetRef$gender))
 cc=pca(u)
 plot(cc$x,pch=21,bg=class,xlab=cc$txt[1],ylab=cc$txt[2])</code></pre>
 <p><img src="figure/supervised_learning_final.Rmd/both-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-both-1">
+Past versions of both-1.png
+</button>
+</p>
+<div id="fig-both-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/supervised_learning_final.Rmd/both-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">

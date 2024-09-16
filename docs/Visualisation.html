@@ -349,7 +349,7 @@ div.tocify {
       <a href="Introduction.html">Introduction to R and RStudio</a>
     </li>
     <li>
-      <a href="Statistics">Statistics</a>
+      <a href="Statistics.html">Statistics</a>
     </li>
     <li>
       <a href="Visualisation.html">Data Visualisation</a>
@@ -358,16 +358,16 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Module 2
+    Multivariate analysis
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="supervised_learning_final.html">Supervised Learning</a>
+      <a href="Supervised_learning.html">Supervised Learning</a>
     </li>
     <li>
-      <a href="Module_5_Unsupervised_Learning.html">Unsupervised Learning</a>
+      <a href="Unsupervised_Learning.html">Unsupervised Learning</a>
     </li>
   </ul>
 </li>
@@ -557,15 +557,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreee9cf75197fecd2b17c49839ac8157b084819504etargetblanke9cf751a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree2313b88201db8a78bab10efdc7890afb64b0edbatargetblank2313b88a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/tkcaccia/Tutorials/tree/e9cf75197fecd2b17c49839ac8157b084819504e" target="_blank">e9cf751</a>
+<a href="https://github.com/tkcaccia/Tutorials/tree/2313b88201db8a78bab10efdc7890afb64b0edba" target="_blank">2313b88</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreee9cf75197fecd2b17c49839ac8157b084819504etargetblanke9cf751a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree2313b88201db8a78bab10efdc7890afb64b0edbatargetblank2313b88a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -575,7 +575,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/tkcaccia/Tutorials/tree/e9cf75197fecd2b17c49839ac8157b084819504e" target="_blank">e9cf751</a>.
+<a href="https://github.com/tkcaccia/Tutorials/tree/2313b88201db8a78bab10efdc7890afb64b0edba" target="_blank">2313b88</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -650,6 +650,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/tkcaccia/Tutorials/5033c128d8bca78746899004bd82e65b109bffd4/docs/Visualisation.html" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -739,6 +756,43 @@ ggplot(starwars_QC1, aes(x = height, y = mass)) +
   labs(title = &quot;Relationship between Mass and Height&quot;, x = &quot;Height(cm)&quot;, y = &quot;Mass(kg)&quot;) +
   theme_minimal()</code></pre>
 <p><img src="figure/Visualisation.Rmd/scatter-plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-scatter-plot-1">
+Past versions of scatter-plot-1.png
+</button>
+</p>
+<div id="fig-scatter-plot-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Visualisation.Rmd/scatter-plot-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div id="correlation-coefficient." class="section level4">
 <h4>Correlation coefficient.</h4>
 <p>The correlation between 2 variables is found with the
@@ -786,10 +840,84 @@ F-statistic: 72.38 on 1 and 56 DF,  p-value: 1.138e-11</code></pre>
   theme_minimal()</code></pre>
 <pre><code>`geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="figure/Visualisation.Rmd/regression_plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-regression_plot-1">
+Past versions of regression_plot-1.png
+</button>
+</p>
+<div id="fig-regression_plot-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Visualisation.Rmd/regression_plot-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Regression diagnostics
 par(mfrow = c(2, 2))  # Set up plotting area for 4 plots
 plot(model)</code></pre>
 <p><img src="figure/Visualisation.Rmd/regresion_diagnostics-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-regresion_diagnostics-1">
+Past versions of regresion_diagnostics-1.png
+</button>
+</p>
+<div id="fig-regresion_diagnostics-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Visualisation.Rmd/regresion_diagnostics-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="box-plots" class="section level2">
@@ -818,8 +946,45 @@ dataset</p>
        x = &quot;Species&quot;,
        y = &quot;Sepal Length (cm)&quot;) +
   theme_minimal()</code></pre>
-<p><img src="figure/Visualisation.Rmd/simple_boxplot-1.png" width="672" style="display: block; margin: auto;" />
-We can compare the species list</p>
+<p><img src="figure/Visualisation.Rmd/simple_boxplot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-simple_boxplot-1">
+Past versions of simple_boxplot-1.png
+</button>
+</p>
+<div id="fig-simple_boxplot-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Visualisation.Rmd/simple_boxplot-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We can compare the species list</p>
 <pre class="r"><code>#install.packages(&quot;ggpubr&quot;)
 library(ggpubr)
 library(ggplot2)
@@ -847,6 +1012,43 @@ ggboxplot(df, x = &quot;Species&quot;, y = &quot;Sepal.Length&quot;, width = 0.8
                      label.y = c(8.5, 9.2, 8.7)) +  # Manually adjust the position of significance labels
   theme(legend.position = &quot;none&quot;, plot.margin = unit(c(2, 1, 1, 1), &quot;cm&quot;))</code></pre>
 <p><img src="figure/Visualisation.Rmd/ggboxplot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-ggboxplot-1">
+Past versions of ggboxplot-1.png
+</button>
+</p>
+<div id="fig-ggboxplot-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Visualisation.Rmd/ggboxplot-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="heatmaps" class="section level2">
 <h2>3. Heatmaps</h2>
@@ -873,9 +1075,46 @@ data analysis)</p></li>
 df &lt;- scale(mtcars)
 # Default plot
 heatmap(df, scale = &quot;none&quot;)</code></pre>
-<p><img src="figure/Visualisation.Rmd/heatmap-1.png" width="672" style="display: block; margin: auto;" />
-We can customise by using the <code>RColorBrewer</code> color palette to
-change the appearance. The arguments <code>RowSideColors</code> and
+<p><img src="figure/Visualisation.Rmd/heatmap-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-heatmap-1">
+Past versions of heatmap-1.png
+</button>
+</p>
+<div id="fig-heatmap-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Visualisation.Rmd/heatmap-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We can customise by using the <code>RColorBrewer</code> color palette
+to change the appearance. The arguments <code>RowSideColors</code> and
 <code>ColSideColors</code> are used to annotate rows and columns
 respectively.</p>
 <pre class="r"><code>library(&quot;RColorBrewer&quot;)
@@ -884,6 +1123,43 @@ heatmap(df, scale = &quot;none&quot;, col =  col,
         RowSideColors = rep(c(&quot;blue&quot;, &quot;pink&quot;), each = 16),
         ColSideColors = c(rep(&quot;purple&quot;, 5), rep(&quot;orange&quot;, 6)))</code></pre>
 <p><img src="figure/Visualisation.Rmd/heatmap_custom-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-heatmap_custom-1">
+Past versions of heatmap_custom-1.png
+</button>
+</p>
+<div id="fig-heatmap_custom-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Visualisation.Rmd/heatmap_custom-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="survival-plots" class="section level2">
 <h2>4. Survival plots</h2>
@@ -932,8 +1208,45 @@ Attaching package: &#39;survival&#39;</code></pre>
 
 # Visualize with survminer
 ggsurvplot(fit, data = BRCAOV.survInfo, risk.table = TRUE)</code></pre>
-<p><img src="figure/Visualisation.Rmd/survival-1.png" width="672" style="display: block; margin: auto;" />
-The simple plot above shows an estimate of survival probability
+<p><img src="figure/Visualisation.Rmd/survival-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-survival-1">
+Past versions of survival-1.png
+</button>
+</p>
+<div id="fig-survival-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Visualisation.Rmd/survival-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The simple plot above shows an estimate of survival probability
 depending on days from cancer diagnostics grouped by cancer types.
 Additionally an informative risk set table which shows the number of
 patients that were under observation in the specific period of time.</p>
@@ -952,6 +1265,43 @@ specification of the parameters</p>
   risk.table.y.text = FALSE # show bars instead of names in text annotations in legend of risk table
 )</code></pre>
 <p><img src="figure/Visualisation.Rmd/survival_plot_customised-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-survival_plot_customised-1">
+Past versions of survival_plot_customised-1.png
+</button>
+</p>
+<div id="fig-survival_plot_customised-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Visualisation.Rmd/survival_plot_customised-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="pie-charts" class="section level2">
 <h2>5. Pie Charts:</h2>
@@ -974,6 +1324,43 @@ ggplot(x, aes(x = &quot;&quot;, y = Freq, fill = Var1)) +
   theme(legend.title = element_blank(),
         plot.title = element_text(hjust = 0.5, face = &quot;bold&quot;))</code></pre>
 <p><img src="figure/Visualisation.Rmd/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-1-1">
+Past versions of unnamed-chunk-1-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-1-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/5033c128d8bca78746899004bd82e65b109bffd4/docs/figure/Visualisation.Rmd/unnamed-chunk-1-1.png" target="_blank">5033c12</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
