@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Stefano Cacciatore" />
+
+<meta name="date" content="2024-09-18" />
+
+<title>TCGA</title>
+
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">R Tutorial</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="Install.html">R install</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Basic
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Introduction.html">Introduction to R and RStudio</a>
+    </li>
+    <li>
+      <a href="Statistics.html">Statistics</a>
+    </li>
+    <li>
+      <a href="Visualisation.html">Data Visualisation</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Multivariate analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Supervised_learning.html">Supervised Learning</a>
+    </li>
+    <li>
+      <a href="Unsupervised_Learning.html">Unsupervised Learning</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Applications
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="TCGA.html">TCGA</a>
+    </li>
+    <li>
+      <a href="Single-cell.html">Single-cell</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/oliverdesousa/R_Tutorials">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">TCGA</h1>
+<h4 class="author">Stefano Cacciatore</h4>
+<h4 class="date">September 18, 2024</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2024-09-18
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>Tutorials/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.1). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20240905code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20240905)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20240905code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20240905)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreecbb2736ddeb6de44f10e495f42b08d3b86d14faftargetblankcbb2736a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/tkcaccia/Tutorials/tree/cbb2736ddeb6de44f10e495f42b08d3b86d14faf" target="_blank">cbb2736</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreecbb2736ddeb6de44f10e495f42b08d3b86d14faftargetblankcbb2736a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/tkcaccia/Tutorials/tree/cbb2736ddeb6de44f10e495f42b08d3b86d14faf" target="_blank">cbb2736</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    data/.DS_Store
+
+Unstaged changes:
+    Deleted:    data/COADREAD.clin.merged.picked.txt
+    Deleted:    data/COADREAD.rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.data.txt
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/TCGA.Rmd</code>) and HTML
+(<code>docs/TCGA.html</code>) files. If you’ve configured a remote Git
+repository (see <code>?wflow_git_remote</code>), click on the hyperlinks
+in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/cbb2736ddeb6de44f10e495f42b08d3b86d14faf/analysis/TCGA.Rmd" target="_blank">cbb2736</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2024-09-18
+</td>
+<td>
+Start my new project
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="mirseq-analysis" class="section level1">
+<h1>miRseq Analysis:</h1>
+<p><strong>Analysing miRseq Gene Expression Data from a Colerectal
+Adenocarcinoma Cohort:</strong></p>
+<pre class="r"><code># install.packages(&quot;readxl&quot;)
+library(readxl)
+library(KODAMA)</code></pre>
+<p><strong><em>Prepare Clinical Data:</em></strong></p>
+<pre class="r"><code># Read in Clinical Data:
+coad=read.csv(&quot;../Data/TCGA/COAD.clin.merged.picked.txt&quot;,sep=&quot;\t&quot;,check.names = FALSE, row.names = 1)
+
+coad &lt;- as.data.frame(coad) 
+
+# Clean column names: replace dots with dashes &amp; convert to uppercase
+colnames(coad) = toupper(colnames(coad))
+
+ # Transpose the dataframe so that rows become columns and vice versa
+coad = t(coad) </code></pre>
+<p><strong><em>Prepare miRNA-seq expression data:</em></strong></p>
+<pre class="r"><code># Read RNA-seq expression data:
+r = read.csv(&quot;../Data/TCGA/COAD.rnaseqv2__illuminaga_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.data.txt&quot;, sep = &quot;\t&quot;, check.names = FALSE, row.names = 1)
+# Remove the first row:
+r = r[-1,]
+# Convert expression data to numeric matrix format
+temp = matrix(as.numeric(as.matrix(r)), ncol=ncol(r))
+colnames(temp) = colnames(r)  
+rownames(temp) = rownames(r)  
+RNA = temp  
+
+# Transpose the matrix so that genes are rows and samples are columns
+RNA = t(RNA)  </code></pre>
+<p><strong><em>Extract patient and tissue information from column
+names:</em></strong></p>
+<pre class="r"><code>tcgaID = list()
+ # Extract sample ID
+tcgaID$sample.ID &lt;- substr(colnames(r), 1, 16)
+# Extract patient ID
+tcgaID$patient &lt;- substr(colnames(r), 1, 12)  
+# Extract tissue type
+tcgaID$tissue &lt;- substr(colnames(r), 14, 16)  
+
+tcgaID = as.data.frame(tcgaID)  </code></pre>
+<p><strong><em>Select Primary Solid Tumor tissue data
+(“01A”):</em></strong></p>
+<pre class="r"><code>sel=tcgaID$tissue == &quot;01A&quot;
+tcgaID.sel = tcgaID[sel, ]
+
+# Subset the RNA expression data to match selected samples
+RNA.sel = RNA[sel, ]</code></pre>
+<p><strong><em>Intersect patient IDs between clinical and RNA
+data:</em></strong></p>
+<pre class="r"><code>sel = intersect(tcgaID.sel$patient, rownames(coad))
+# Subset the clinical data to include only selected patients:
+coad.sel = coad[sel, ]
+# Assign patient IDs as row names to the RNA data:
+rownames(RNA.sel) = tcgaID.sel$patient
+# Subset the RNA data to include only selected patients
+RNA.sel = RNA.sel[sel, ]</code></pre>
+<p><strong><em>Prepare labels for pathology stages:</em></strong></p>
+<ul>
+<li><p>Classify stages <code>t1</code>, <code>t2</code>, &amp;
+<code>t3</code> as “low”</p></li>
+<li><p>Classify stages <code>t4</code>, <code>t4a</code>, &amp;
+<code>t4b</code> as “high”</p></li>
+<li><p>Convert any <code>tis</code> stages to <code>NA</code></p></li>
+</ul>
+<pre class="r"><code>labels = coad.sel[, &quot;pathology_T_stage&quot;]
+
+labels[labels %in% c(&quot;t1&quot;, &quot;t2&quot;, &quot;t3&quot;, &quot;tis&quot;)] = &quot;low&quot;
+
+labels[labels %in% c(&quot;t4&quot;, &quot;t4a&quot;, &quot;t4b&quot;)] = &quot;high&quot;</code></pre>
+<p><strong><em>Log Transform the expression data for our selected gene
+<code>CXCL2</code>:</em></strong></p>
+<pre class="r"><code>CXCL2 &lt;- log(1 + RNA.sel[, &quot;CXCL2|2920&quot;])
+LCN2 &lt;- log(1 + RNA.sel[,&quot;LCN2|3934&quot; ])</code></pre>
+<p><strong><em>Boxplot to visualize the distribution of log transformed
+gene expression by pathology stage:</em></strong></p>
+<pre class="r"><code>colors=c(&quot;#0073c2bb&quot;,&quot;#efc000bb&quot;,&quot;#868686bb&quot;,&quot;#cd534cbb&quot;,&quot;#7aabdcbb&quot;,&quot;#003c67bb&quot;)
+
+library(ggpubr)</code></pre>
+<pre><code>Loading required package: ggplot2</code></pre>
+<pre class="r"><code>df=data.frame(variable=CXCL2,labels=labels)
+
+my_comparisons=list()
+my_comparisons[[1]]=c(1,2)
+
+Nplot1=ggboxplot(df, x = &quot;labels&quot;, y = &quot;variable&quot;,fill=&quot;labels&quot;,
+                 width = 0.8,
+                 palette=colors,
+                 add = &quot;jitter&quot;,            
+                 add.params = list(size = 2, jitter = 0.2,fill=3, shape=10))+  
+  ylab(&quot;CXCL2 gene expression (FPKM)&quot;)+ xlab(&quot;&quot;)+
+  stat_compare_means(comparisons = my_comparisons,method=&quot;wilcox.test&quot;)
+
+Nplot1</code></pre>
+<p><img src="figure/TCGA.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><a
+href="https://icgeborg-my.sharepoint.com/:f:/g/personal/cacciato_icgeb_org/ElcY0X8Ja4ROgUM_vnAaZzsB8uyfjREQRmSt57VSLD2Iww?e=Ge4RKJ"
+class="uri">https://icgeborg-my.sharepoint.com/:f:/g/personal/cacciato_icgeb_org/ElcY0X8Ja4ROgUM_vnAaZzsB8uyfjREQRmSt57VSLD2Iww?e=Ge4RKJ</a></p>
+<p>Enrichment analysis</p>
+<pre class="r"><code>if (!require(&quot;BiocManager&quot;, quietly = TRUE))
+    install.packages(&quot;BiocManager&quot;)</code></pre>
+<pre><code>Bioconductor version &#39;3.18&#39; is out-of-date; the current release version &#39;3.19&#39;
+  is available with R version &#39;4.4&#39;; see https://bioconductor.org/install</code></pre>
+<pre class="r"><code>BiocManager::install(&quot;GSVA&quot;)</code></pre>
+<pre><code>&#39;getOption(&quot;repos&quot;)&#39; replaces Bioconductor standard repositories, see
+&#39;help(&quot;repositories&quot;, package = &quot;BiocManager&quot;)&#39; for details.
+Replacement repositories:
+    CRAN: https://cran.rstudio.com/</code></pre>
+<pre><code>Bioconductor version 3.18 (BiocManager 1.30.23), R 4.3.3 (2024-02-29)</code></pre>
+<pre><code>Warning: package(s) not installed when version(s) same as or greater than current; use
+  `force = TRUE` to re-install: &#39;GSVA&#39;</code></pre>
+<pre><code>Old packages: &#39;abind&#39;, &#39;arrow&#39;, &#39;BiocManager&#39;, &#39;boot&#39;, &#39;broom.helpers&#39;,
+  &#39;caTools&#39;, &#39;clock&#39;, &#39;corrplot&#39;, &#39;cpp11&#39;, &#39;curl&#39;, &#39;data.table&#39;, &#39;Deriv&#39;,
+  &#39;DescTools&#39;, &#39;digest&#39;, &#39;e1071&#39;, &#39;emmeans&#39;, &#39;EnvStats&#39;, &#39;evaluate&#39;, &#39;expm&#39;,
+  &#39;fastDummies&#39;, &#39;gert&#39;, &#39;ggrepel&#39;, &#39;golem&#39;, &#39;hardhat&#39;, &#39;harmony&#39;, &#39;httr2&#39;,
+  &#39;lpSolve&#39;, &#39;matrixStats&#39;, &#39;microbenchmark&#39;, &#39;minqa&#39;, &#39;mvtnorm&#39;, &#39;nlme&#39;,
+  &#39;patchwork&#39;, &#39;phangorn&#39;, &#39;pkgdown&#39;, &#39;ps&#39;, &#39;ragg&#39;, &#39;RANN&#39;, &#39;recipes&#39;, &#39;rjson&#39;,
+  &#39;rmarkdown&#39;, &#39;sf&#39;, &#39;sfsmisc&#39;, &#39;Signac&#39;, &#39;spatstat.explore&#39;,
+  &#39;spatstat.univar&#39;, &#39;spatstat.utils&#39;, &#39;spData&#39;, &#39;spdep&#39;, &#39;tinytex&#39;, &#39;waldo&#39;,
+  &#39;wk&#39;, &#39;xfun&#39;</code></pre>
+<pre class="r"><code>install.packages(&quot;GSA&quot;)</code></pre>
+<pre><code>
+The downloaded binary packages are in
+    /var/folders/p9/7vjxs6dd7p70vybzdhy_0hw00000gn/T//RtmpPqNxVI/downloaded_packages</code></pre>
+<pre class="r"><code>library(&quot;GSVA&quot;)
+library(&quot;GSA&quot;)
+library(&quot;KODAMA&quot;)
+
+genes=t(RNA.sel)
+t=unlist(lapply(strsplit(rownames(genes),&quot;\\|&quot;),function(x) x[1]))
+selt=ave(1:length(t), t, FUN = length)
+genes=genes[selt==1,]
+rownames(genes)=t[selt==1]
+
+
+geneset=GSA.read.gmt(&quot;../Data/Genesets/msigdb_v2023.2.Hs_GMTs/c2.cp.kegg_legacy.v2023.2.Hs.symbols.gmt&quot;)</code></pre>
+<pre><code>1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495969798991001011021031041051061071081091101111121131141151161171181191201211221231241251261271281291301311321331341351361371381391401411421431441451461471481491501511521531541551561571581591601611621631641651661671681691701711721731741751761771781791801811821831841851861
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185</code></pre>
+<pre class="r"><code>names(geneset$genesets)=geneset$geneset.names
+geneset=geneset$genesets
+
+
+gsva_TCGA &lt;- gsva(genes, geneset,min.sz = 5)</code></pre>
+<pre><code>Warning: Calling gsva(expr=., gset.idx.list=., method=., ...) is deprecated;
+use a method-specific parameter object (see &#39;?gsva&#39;).</code></pre>
+<pre><code>Warning in .filterFeatures(expr, method): 283 genes with constant expression
+values throughout the samples.</code></pre>
+<pre><code>Warning in .filterFeatures(expr, method): Since argument method!=&quot;ssgsea&quot;,
+genes with constant expression values are discarded.</code></pre>
+<pre><code>Estimating GSVA scores for 186 gene sets.
+Estimating ECDFs with Gaussian kernels
+  |                                                                              |                                                                      |   0%  |                                                                              |                                                                      |   1%  |                                                                              |=                                                                     |   1%  |                                                                              |=                                                                     |   2%  |                                                                              |==                                                                    |   2%  |                                                                              |==                                                                    |   3%  |                                                                              |===                                                                   |   4%  |                                                                              |===                                                                   |   5%  |                                                                              |====                                                                  |   5%  |                                                                              |====                                                                  |   6%  |                                                                              |=====                                                                 |   6%  |                                                                              |=====                                                                 |   7%  |                                                                              |=====                                                                 |   8%  |                                                                              |======                                                                |   8%  |                                                                              |======                                                                |   9%  |                                                                              |=======                                                               |  10%  |                                                                              |========                                                              |  11%  |                                                                              |========                                                              |  12%  |                                                                              |=========                                                             |  12%  |                                                                              |=========                                                             |  13%  |                                                                              |==========                                                            |  14%  |                                                                              |==========                                                            |  15%  |                                                                              |===========                                                           |  15%  |                                                                              |===========                                                           |  16%  |                                                                              |============                                                          |  17%  |                                                                              |============                                                          |  18%  |                                                                              |=============                                                         |  18%  |                                                                              |=============                                                         |  19%  |                                                                              |==============                                                        |  19%  |                                                                              |==============                                                        |  20%  |                                                                              |===============                                                       |  21%  |                                                                              |===============                                                       |  22%  |                                                                              |================                                                      |  23%  |                                                                              |=================                                                     |  24%  |                                                                              |=================                                                     |  25%  |                                                                              |==================                                                    |  25%  |                                                                              |==================                                                    |  26%  |                                                                              |===================                                                   |  27%  |                                                                              |====================                                                  |  28%  |                                                                              |====================                                                  |  29%  |                                                                              |=====================                                                 |  30%  |                                                                              |=====================                                                 |  31%  |                                                                              |======================                                                |  31%  |                                                                              |======================                                                |  32%  |                                                                              |=======================                                               |  32%  |                                                                              |=======================                                               |  33%  |                                                                              |========================                                              |  34%  |                                                                              |========================                                              |  35%  |                                                                              |=========================                                             |  35%  |                                                                              |=========================                                             |  36%  |                                                                              |==========================                                            |  37%  |                                                                              |==========================                                            |  38%  |                                                                              |===========================                                           |  38%  |                                                                              |===========================                                           |  39%  |                                                                              |============================                                          |  40%  |                                                                              |=============================                                         |  41%  |                                                                              |=============================                                         |  42%  |                                                                              |==============================                                        |  42%  |                                                                              |==============================                                        |  43%  |                                                                              |==============================                                        |  44%  |                                                                              |===============================                                       |  44%  |                                                                              |===============================                                       |  45%  |                                                                              |================================                                      |  45%  |                                                                              |================================                                      |  46%  |                                                                              |=================================                                     |  47%  |                                                                              |=================================                                     |  48%  |                                                                              |==================================                                    |  48%  |                                                                              |==================================                                    |  49%  |                                                                              |===================================                                   |  49%  |                                                                              |===================================                                   |  50%  |                                                                              |===================================                                   |  51%  |                                                                              |====================================                                  |  51%  |                                                                              |====================================                                  |  52%  |                                                                              |=====================================                                 |  52%  |                                                                              |=====================================                                 |  53%  |                                                                              |======================================                                |  54%  |                                                                              |======================================                                |  55%  |                                                                              |=======================================                               |  55%  |                                                                              |=======================================                               |  56%  |                                                                              |========================================                              |  56%  |                                                                              |========================================                              |  57%  |                                                                              |========================================                              |  58%  |                                                                              |=========================================                             |  58%  |                                                                              |=========================================                             |  59%  |                                                                              |==========================================                            |  60%  |                                                                              |===========================================                           |  61%  |                                                                              |===========================================                           |  62%  |                                                                              |============================================                          |  62%  |                                                                              |============================================                          |  63%  |                                                                              |=============================================                         |  64%  |                                                                              |=============================================                         |  65%  |                                                                              |==============================================                        |  65%  |                                                                              |==============================================                        |  66%  |                                                                              |===============================================                       |  67%  |                                                                              |===============================================                       |  68%  |                                                                              |================================================                      |  68%  |                                                                              |================================================                      |  69%  |                                                                              |=================================================                     |  69%  |                                                                              |=================================================                     |  70%  |                                                                              |==================================================                    |  71%  |                                                                              |==================================================                    |  72%  |                                                                              |===================================================                   |  73%  |                                                                              |====================================================                  |  74%  |                                                                              |====================================================                  |  75%  |                                                                              |=====================================================                 |  75%  |                                                                              |=====================================================                 |  76%  |                                                                              |======================================================                |  77%  |                                                                              |=======================================================               |  78%  |                                                                              |=======================================================               |  79%  |                                                                              |========================================================              |  80%  |                                                                              |========================================================              |  81%  |                                                                              |=========================================================             |  81%  |                                                                              |=========================================================             |  82%  |                                                                              |==========================================================            |  82%  |                                                                              |==========================================================            |  83%  |                                                                              |===========================================================           |  84%  |                                                                              |===========================================================           |  85%  |                                                                              |============================================================          |  85%  |                                                                              |============================================================          |  86%  |                                                                              |=============================================================         |  87%  |                                                                              |=============================================================         |  88%  |                                                                              |==============================================================        |  88%  |                                                                              |==============================================================        |  89%  |                                                                              |===============================================================       |  90%  |                                                                              |================================================================      |  91%  |                                                                              |================================================================      |  92%  |                                                                              |=================================================================     |  92%  |                                                                              |=================================================================     |  93%  |                                                                              |=================================================================     |  94%  |                                                                              |==================================================================    |  94%  |                                                                              |==================================================================    |  95%  |                                                                              |===================================================================   |  95%  |                                                                              |===================================================================   |  96%  |                                                                              |====================================================================  |  97%  |                                                                              |====================================================================  |  98%  |                                                                              |===================================================================== |  98%  |                                                                              |===================================================================== |  99%  |                                                                              |======================================================================|  99%  |                                                                              |======================================================================| 100%</code></pre>
+<pre class="r"><code>ma=multi_analysis(t(gsva_TCGA),CXCL2,FUN=&quot;correlation.test&quot;,method=&quot;spearman&quot;)
+ma=ma[order(as.numeric(ma$`p-value`)),]
+ma[1:10,]</code></pre>
+<pre><code>                                                            Feature   rho
+109                        KEGG_NOD_LIKE_RECEPTOR_SIGNALING_PATHWAY  0.43
+171                                             KEGG_TIGHT_JUNCTION -0.32
+99                                               KEGG_MELANOGENESIS -0.31
+186                                      KEGG_WNT_SIGNALING_PATHWAY -0.31
+3                                            KEGG_ADHERENS_JUNCTION -0.29
+182                   KEGG_VASOPRESSIN_REGULATED_WATER_REABSORPTION -0.29
+133                                     KEGG_PPAR_SIGNALING_PATHWAY -0.28
+153                      KEGG_RIG_I_LIKE_RECEPTOR_SIGNALING_PATHWAY  0.27
+22                                        KEGG_BASAL_CELL_CARCINOMA -0.27
+51  KEGG_EPITHELIAL_CELL_SIGNALING_IN_HELICOBACTER_PYLORI_INFECTION  0.27
+     p-value      FDR
+109 6.72e-10 1.25e-07
+171 6.09e-06 5.66e-04
+99  1.12e-05 6.93e-04
+186 1.71e-05 7.97e-04
+3   5.45e-05 1.87e-03
+182 6.02e-05 1.87e-03
+133 1.05e-04 2.79e-03
+153 1.54e-04 3.58e-03
+22  1.99e-04 4.03e-03
+51  2.17e-04 4.03e-03</code></pre>
+<pre class="r"><code>ma=multi_analysis(t(gsva_TCGA),LCN2,FUN=&quot;correlation.test&quot;,method=&quot;spearman&quot;)
+ma=ma[order(as.numeric(ma$`p-value`)),]
+ma[1:10,]</code></pre>
+<pre><code>                                              Feature   rho  p-value      FDR
+153        KEGG_RIG_I_LIKE_RECEPTOR_SIGNALING_PATHWAY  0.35 8.04e-07 1.46e-04
+42                 KEGG_CYTOSOLIC_DNA_SENSING_PATHWAY  0.34 2.23e-06 1.46e-04
+41        KEGG_CYTOKINE_CYTOKINE_RECEPTOR_INTERACTION  0.34 2.36e-06 1.46e-04
+87  KEGG_INTESTINAL_IMMUNE_NETWORK_FOR_IGA_PRODUCTION  0.33 3.61e-06 1.49e-04
+135                     KEGG_PRIMARY_IMMUNODEFICIENCY  0.33 4.01e-06 1.49e-04
+109          KEGG_NOD_LIKE_RECEPTOR_SIGNALING_PATHWAY  0.32 5.46e-06 1.69e-04
+14                                     KEGG_APOPTOSIS  0.32 6.49e-06 1.72e-04
+172         KEGG_TOLL_LIKE_RECEPTOR_SIGNALING_PATHWAY  0.30 2.19e-05 5.10e-04
+3                              KEGG_ADHERENS_JUNCTION -0.30 3.31e-05 6.84e-04
+186                        KEGG_WNT_SIGNALING_PATHWAY -0.29 3.74e-05 6.96e-04</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.3.3 (2024-02-29)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.5
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Bogota
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] GSA_1.03.3          GSVA_1.50.5         BiocManager_1.30.23
+ [4] ggpubr_0.6.0        ggplot2_3.5.1       KODAMA_3.1         
+ [7] umap_0.2.10.0       Rtsne_0.17          minerva_1.5.10     
+[10] readxl_1.4.3        workflowr_1.7.1    
+
+loaded via a namespace (and not attached):
+  [1] rstudioapi_0.16.0           jsonlite_1.8.8             
+  [3] magrittr_2.0.3              farver_2.1.2               
+  [5] rmarkdown_2.27              fs_1.6.4                   
+  [7] zlibbioc_1.48.2             vctrs_0.6.5                
+  [9] memoise_2.0.1               DelayedMatrixStats_1.24.0  
+ [11] RCurl_1.98-1.16             askpass_1.2.0              
+ [13] rstatix_0.7.2               htmltools_0.5.8.1          
+ [15] S4Arrays_1.2.1              broom_1.0.6                
+ [17] cellranger_1.1.0            Rhdf5lib_1.24.2            
+ [19] SparseArray_1.2.4           rhdf5_2.46.1               
+ [21] sass_0.4.9                  bslib_0.8.0                
+ [23] cachem_1.1.0                whisker_0.4.1              
+ [25] lifecycle_1.0.4             pkgconfig_2.0.3            
+ [27] rsvd_1.0.5                  Matrix_1.6-5               
+ [29] R6_2.5.1                    fastmap_1.2.0              
+ [31] GenomeInfoDbData_1.2.11     MatrixGenerics_1.14.0      
+ [33] digest_0.6.36               colorspace_2.1-1           
+ [35] AnnotationDbi_1.64.1        S4Vectors_0.40.2           
+ [37] ps_1.7.7                    rprojroot_2.0.4            
+ [39] irlba_2.3.5.1               RSpectra_0.16-2            
+ [41] GenomicRanges_1.54.1        RSQLite_2.3.7              
+ [43] beachmat_2.18.1             labeling_0.4.3             
+ [45] fansi_1.0.6                 httr_1.4.7                 
+ [47] abind_1.4-5                 compiler_4.3.3             
+ [49] bit64_4.0.5                 withr_3.0.1                
+ [51] backports_1.5.0             BiocParallel_1.36.0        
+ [53] carData_3.0-5               DBI_1.2.3                  
+ [55] highr_0.11                  HDF5Array_1.30.1           
+ [57] ggsignif_0.6.4              openssl_2.2.1              
+ [59] DelayedArray_0.28.0         tools_4.3.3                
+ [61] httpuv_1.6.15               glue_1.7.0                 
+ [63] callr_3.7.6                 rhdf5filters_1.14.1        
+ [65] promises_1.3.0              grid_4.3.3                 
+ [67] getPass_0.2-4               generics_0.1.3             
+ [69] gtable_0.3.5                tidyr_1.3.1                
+ [71] ScaledMatrix_1.10.0         BiocSingular_1.18.0        
+ [73] car_3.1-2                   utf8_1.2.4                 
+ [75] XVector_0.42.0              BiocGenerics_0.48.1        
+ [77] pillar_1.9.0                stringr_1.5.1              
+ [79] later_1.3.2                 dplyr_1.1.4                
+ [81] lattice_0.22-6              bit_4.0.5                  
+ [83] annotate_1.80.0             tidyselect_1.2.1           
+ [85] SingleCellExperiment_1.24.0 Biostrings_2.70.3          
+ [87] knitr_1.48                  git2r_0.33.0               
+ [89] IRanges_2.36.0              SummarizedExperiment_1.32.0
+ [91] stats4_4.3.3                xfun_0.46                  
+ [93] Biobase_2.62.0              matrixStats_1.3.0          
+ [95] stringi_1.8.4               yaml_2.3.10                
+ [97] evaluate_0.24.0             codetools_0.2-20           
+ [99] tibble_3.2.1                graph_1.80.0               
+[101] cli_3.6.3                   xtable_1.8-4               
+[103] reticulate_1.39.0           munsell_0.5.1              
+[105] processx_3.8.4              jquerylib_0.1.4            
+[107] Rcpp_1.0.13                 GenomeInfoDb_1.38.8        
+[109] png_0.1-8                   XML_3.99-0.17              
+[111] parallel_4.3.3              blob_1.2.4                 
+[113] sparseMatrixStats_1.14.0    bitops_1.0-8               
+[115] GSEABase_1.64.0             scales_1.3.0               
+[117] purrr_1.0.2                 crayon_1.5.3               
+[119] rlang_1.1.4                 KEGGREST_1.42.0            </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
