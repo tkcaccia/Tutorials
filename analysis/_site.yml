@@ -21,6 +21,12 @@ navbar:
         href: "Supervised_learning.html"
       - text: "Unsupervised Learning"
         href: "Unsupervised_Learning.html"
+    - text: "Applications"
+      menu:
+      - text: "TCGA"
+        href: "TCGA.html"
+      - text: "Single-cell"
+        href: "Single-cell.html"
     - text: "License"
       href: "license.html"
   right:
