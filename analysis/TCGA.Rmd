@@ -1,0 +1,183 @@
+---
+title: "TCGA"
+author: "Stefano Cacciatore"
+output: 
+  html_document:
+  toc: true
+  toc_depth: 2
+  theme: united
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+---
+
+# miRseq Analysis:
+
+**Analysing miRseq Gene Expression Data from a Colerectal Adenocarcinoma Cohort:**
+
+```{r, message=FALSE}
+# install.packages("readxl")
+library(readxl)
+library(KODAMA)
+```
+
+***Prepare Clinical Data:***
+
+```{r}
+# Read in Clinical Data:
+coad=read.csv("../Data/TCGA/COAD.clin.merged.picked.txt",sep="\t",check.names = FALSE, row.names = 1)
+
+coad <- as.data.frame(coad) 
+
+# Clean column names: replace dots with dashes & convert to uppercase
+colnames(coad) = toupper(colnames(coad))
+
+ # Transpose the dataframe so that rows become columns and vice versa
+coad = t(coad) 
+```
+
+***Prepare miRNA-seq expression data:***
+
+```{r}
+# Read RNA-seq expression data:
+r = read.csv("../Data/TCGA/COAD.rnaseqv2__illuminaga_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.data.txt", sep = "\t", check.names = FALSE, row.names = 1)
+# Remove the first row:
+r = r[-1,]
+# Convert expression data to numeric matrix format
+temp = matrix(as.numeric(as.matrix(r)), ncol=ncol(r))
+colnames(temp) = colnames(r)  
+rownames(temp) = rownames(r)  
+RNA = temp  
+
+# Transpose the matrix so that genes are rows and samples are columns
+RNA = t(RNA)  
+
+```
+
+***Extract patient and tissue information from column names:***
+
+```{r}
+
+tcgaID = list()
+ # Extract sample ID
+tcgaID$sample.ID <- substr(colnames(r), 1, 16)
+# Extract patient ID
+tcgaID$patient <- substr(colnames(r), 1, 12)  
+# Extract tissue type
+tcgaID$tissue <- substr(colnames(r), 14, 16)  
+
+tcgaID = as.data.frame(tcgaID)  
+```
+
+***Select Primary Solid Tumor tissue data ("01A"):***
+
+```{r}
+sel=tcgaID$tissue == "01A"
+tcgaID.sel = tcgaID[sel, ]
+
+# Subset the RNA expression data to match selected samples
+RNA.sel = RNA[sel, ]
+```
+
+***Intersect patient IDs between clinical and RNA data:***
+
+```{r}
+sel = intersect(tcgaID.sel$patient, rownames(coad))
+# Subset the clinical data to include only selected patients:
+coad.sel = coad[sel, ]
+# Assign patient IDs as row names to the RNA data:
+rownames(RNA.sel) = tcgaID.sel$patient
+# Subset the RNA data to include only selected patients
+RNA.sel = RNA.sel[sel, ]
+```
+
+***Prepare labels for pathology stages:***
+
+- Classify stages `t1`, `t2`, & `t3` as "low"
+
+- Classify stages `t4`, `t4a`, & `t4b` as "high"
+
+- Convert any `tis` stages to `NA`
+
+```{r}
+
+labels = coad.sel[, "pathology_T_stage"]
+
+labels[labels %in% c("t1", "t2", "t3", "tis")] = "low"
+
+labels[labels %in% c("t4", "t4a", "t4b")] = "high"
+
+```
+
+***Log Transform the expression data for our selected gene `CXCL2`:***
+
+```{r}
+CXCL2 <- log(1 + RNA.sel[, "CXCL2|2920"])
+LCN2 <- log(1 + RNA.sel[,"LCN2|3934" ])
+```
+
+***Boxplot to visualize the distribution of log transformed gene expression by pathology stage:***
+
+```{r}
+colors=c("#0073c2bb","#efc000bb","#868686bb","#cd534cbb","#7aabdcbb","#003c67bb")
+
+library(ggpubr)
+df=data.frame(variable=CXCL2,labels=labels)
+
+my_comparisons=list()
+my_comparisons[[1]]=c(1,2)
+
+Nplot1=ggboxplot(df, x = "labels", y = "variable",fill="labels",
+                 width = 0.8,
+                 palette=colors,
+                 add = "jitter",            
+                 add.params = list(size = 2, jitter = 0.2,fill=3, shape=10))+  
+  ylab("CXCL2 gene expression (FPKM)")+ xlab("")+
+  stat_compare_means(comparisons = my_comparisons,method="wilcox.test")
+
+Nplot1
+
+
+```
+
+https://icgeborg-my.sharepoint.com/:f:/g/personal/cacciato_icgeb_org/ElcY0X8Ja4ROgUM_vnAaZzsB8uyfjREQRmSt57VSLD2Iww?e=Ge4RKJ
+
+Enrichment analysis
+```{r}
+
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("GSVA")
+install.packages("GSA")
+
+library("GSVA")
+library("GSA")
+library("KODAMA")
+
+genes=t(RNA.sel)
+t=unlist(lapply(strsplit(rownames(genes),"\\|"),function(x) x[1]))
+selt=ave(1:length(t), t, FUN = length)
+genes=genes[selt==1,]
+rownames(genes)=t[selt==1]
+
+
+geneset=GSA.read.gmt("../Data/Genesets/msigdb_v2023.2.Hs_GMTs/c2.cp.kegg_legacy.v2023.2.Hs.symbols.gmt")
+names(geneset$genesets)=geneset$geneset.names
+geneset=geneset$genesets
+
+
+gsva_TCGA <- gsva(genes, geneset,min.sz = 5)
+
+
+ma=multi_analysis(t(gsva_TCGA),CXCL2,FUN="correlation.test",method="spearman")
+ma=ma[order(as.numeric(ma$`p-value`)),]
+ma[1:10,]
+
+ma=multi_analysis(t(gsva_TCGA),LCN2,FUN="correlation.test",method="spearman")
+ma=ma[order(as.numeric(ma$`p-value`)),]
+ma[1:10,]
+
+
+```
+
+
+
