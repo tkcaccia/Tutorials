@@ -100,9 +100,7 @@ RNA.sel = RNA.sel[sel, ]
 ```{r}
 
 labels = coad.sel[, "pathology_T_stage"]
-
 labels[labels %in% c("t1", "t2", "t3", "tis")] = "low"
-
 labels[labels %in% c("t4", "t4a", "t4b")] = "high"
 
 ```
@@ -138,8 +136,6 @@ Nplot1
 
 ```
 
-https://icgeborg-my.sharepoint.com/:f:/g/personal/cacciato_icgeb_org/ElcY0X8Ja4ROgUM_vnAaZzsB8uyfjREQRmSt57VSLD2Iww?e=Ge4RKJ
-
 Enrichment analysis
 ```{r}
 
@@ -159,14 +155,13 @@ selt=ave(1:length(t), t, FUN = length)
 genes=genes[selt==1,]
 rownames(genes)=t[selt==1]
 
-
 geneset=GSA.read.gmt("../Data/Genesets/msigdb_v2023.2.Hs_GMTs/c2.cp.kegg_legacy.v2023.2.Hs.symbols.gmt")
 names(geneset$genesets)=geneset$geneset.names
 geneset=geneset$genesets
 
-
-gsva_TCGA <- gsva(genes, geneset,min.sz = 5)
-
+#gsva_TCGA <- gsva(genes, geneset,min.sz = 5)
+gsvapar = gsvaParam(genes,geneset)
+gsva_TCGA=gsva(gsvapar)
 
 ma=multi_analysis(t(gsva_TCGA),CXCL2,FUN="correlation.test",method="spearman")
 ma=ma[order(as.numeric(ma$`p-value`)),]
