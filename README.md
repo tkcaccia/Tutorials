@@ -6,4 +6,4 @@ A [workflowr][] project.
 
 [vignette][] 
 
-[vignette]: https://oliverdesousa.github.io/R_Tutorials/docs/index.html
+[vignette]: https://github.com/tkcaccia/Tutorials
