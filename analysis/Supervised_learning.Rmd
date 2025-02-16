@@ -439,9 +439,9 @@ library(KODAMA)
 data(iris)
 data=iris[,-5]
 labels=iris[,5]
-pp=pls.double.cv(data,labels)
-print(pp$Q2Y)
-table(pp$Ypred,labels)
+#pp=pls.double.cv(data,labels)
+#print(pp$Q2Y)
+#table(pp$Ypred,labels)
 ```
 
 ## Feature transformation

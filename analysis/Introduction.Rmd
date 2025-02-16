@@ -30,7 +30,7 @@ In this section, we'll get to know the RStudio interface and understand its diff
 \
 
    
-![](https://tkcaccia.github.io/Tutorials/figure/Rstudio.png)
+![](data/Rstudio.png)
 
  \
  \
