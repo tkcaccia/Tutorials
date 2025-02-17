@@ -425,24 +425,162 @@ conf_matrix_rf <- confusionMatrix(rf_predictions, iris$Species)
 print("Random Forest Confusion Matrix:")
 print(conf_matrix_rf)
 ```
+## 3  **Getting Started** 
 
-## Cross-Validation
+To load the package, enter the following instruction in your R session:
 
-Is a technique used to assess the generalisability of a model to new data. It involves dividing the dataset into multiple folds and training the model on each fold while using the remaining set for validation.
+    library("fastPLS")
 
-### Cross-Validation with PLS-DA.
+If this command terminates without any error messages, you can be sure that the package has been installed successfully. The fastPLS package is now ready for use.
 
-This function performs a 10-fold cross-validation on a given data set using Partial Least Squares (PLS) model. To assess the prediction ability of the model, a 10-fold cross-validation is conducted by generating splits with a ratio 1:9 of the data set. Permutation testing was undertaken to estimate the classification/regression performance of predictors.
+The package includes both a user manual (this document) and a reference manual (help pages for each function). To view the user manual, enter `vignette("fastPLS")`. Help pages can be viewed using the help command `help(package="fastPLS")`.
 
-```{r cv, message=FALSE}
-library(KODAMA)
+ \newpage
+ 
+##  **Example using iris dataset** 
+
+To load the package and dataset, input the following command in your R session:
+
+```{r, message=FALSE}
+library(fastPLS)
 data(iris)
-data=iris[,-5]
-labels=iris[,5]
-#pp=pls.double.cv(data,labels)
-#print(pp$Q2Y)
-#table(pp$Ypred,labels)
 ```
+The iris dataset consists of 50 samples comprising of three different species:Setosa, Versicolor, and Virginica. These are classified as categorical variables. Four features were measured in centimeters (cm): the lengths and the widths of both sepals and petals. These features are used to determine the specie of the samples.
+
+View the content of the dataset by using the command below:
+```{r, eval=FALSE}
+head(iris)
+```
+
+
+Select a random samples from the large dataset
+```{r ss-chunk, echo=TRUE}
+ss=sample(150,15)
+```
+
+Split the predictors and the response data
+```{r Xtrain-chunk, echo=TRUE}
+Xtrain=iris[-ss,-5]
+Xtest=iris[ss,-5]
+Ytrain=iris[-ss,5]
+Ytest=iris[ss,5]
+labels=iris[,5]
+```
+
+
+Perform pls on the dataset
+
+```{r z-chunk, echo=TRUE}
+z=pls(Xtrain,Ytrain,Xtest)
+
+```
+
+Assign variable to the predicted and actual labels 
+```{r predictions-chunk, echo=TRUE}
+predictions <- z$Ypred
+actual_labels <- labels[ss]
+```
+
+Create a dataframe that shows the predicted and the actual label
+```{r results-chunk, echo=TRUE}
+results <- data.frame(Predicted = predictions, Actual= actual_labels)
+results
+```
+
+
+
+##  **Conclusion**
+The table above gives a comparison of the **predicted** and **actual label**. This shows that the pls model was not efficient or accurate to predict some of the labels. This method is limited by the user inability to select the number of component to use, which affects the accuracy of the model 
+
+###  **Choosing the number of component**
+Selecting the number of components when performing partial least square regression is crucial for achieving a good performance model. 
+
+Below is an example of how to input number of component for a model
+
+```{r, echo=TRUE}
+    pp=pls(Xtrain,Ytrain,Xtest,ncomp = c(2,4))
+    pp$Ypred
+```
+    pp=pls(Xtrain,Ytrain,Xtest,proj=TRUE)
+
+    plot(pp$Ttrain,col=Ytrain)
+    points(pp$Ttest,col=Ytest,pch=2)
+
+\begin{figure}[h]
+  \centerline{\includegraphics[width=12cm]{PLSplot.pdf}}
+  \caption{Projection of the test data on the training data plot}
+  \label{fig:F1}
+\end{figure}
+
+The graph above shows the PLS model performance to be able to project the Xtest (represented in triangles). The graph shows that the test points does not align well with the training cluster from the overlapping and the model is not efficient enough to distinguish the different groups.
+
+Apart from the graphical result, different parameters can be used to assess the efficency of the model. Parameters such as Q2Y, R2Y and confusion matrix.
+
+Q2Y:Measures the predictive power of the model on unseen/new data.If Q2Y>0.5,the model has good predictive ability, Q2Y>0.9 means excellent predictive power and Q2Y close to 0 or negative the model is poor at prediction.
+
+Run the command below:
+  
+    pp=pls(Xtrain,Ytrain,Xtest,Ytest)
+    pp$Q2Y
+
+R2Y: Measures how well the model explains the response variable (Ytrain).R²Y close to 1 means a good fit while R²Y close to 0 represent model does not explain Y well.
+
+Run the command below:
+
+    pp=pls(Xtrain,Ytrain,fit=TRUE)
+    pp$Yfit
+    pp$R2Y
+
+
+Number of components
+
+The above result model was optimized using 2 components which was indicated as **ncomp = c(2,4)**.
+
+
+Selecting too few or too many components can lead to underfitting or overfitting, respectively.
+
+A statistical model or a machine learning algorithm is said to have underfitting when a model is too simple to capture data complexities. It represents the inability of the model to learn the training data effectively result in poor performance both on the training and testing data
+
+Overfitting occurs when a model algorithm fails to give prediction on new dataset however gives ideal prediction on training dataset.This occurs when the model has been over-trained on a single or specific dataset.
+
+##  Cross Validation
+Cross validation is a method used in machine learning to evaluate the performance of a model on test data. 
+
+The dataset used are split into multiple folds or subsets, one of the folds is used as validation set and the reminder subset are used to train the model.This process is repeated several times, with a different fold used as the validation set each time.Finally, the results from each validation step are averaged to provide a more reliable estimate of the model's performance.
+
+Cross validation technique is useful in machine learning algorithm to avoid overfitting.
+
+### Types of Cross-Validation
+```{r external-image, echo=FALSE, out.width="80%", fig.align="center"}
+knitr::include_graphics("https://github.com/ModupeOjo/Tutorial/blob/master/static/images/Picture1.png?raw=true")
+```
+
+### PLS Double Cross-Validation
+Double cross-validation is an approach to model hyperparameter optimization and model selection that attempts to overcome the problem of overfitting the training dataset.
+This involves two stages, outer and inner cross-validation. 
+
+Outer cross-validation evaluates the overall performance of the model. The dataset is split multiple times(K-fold cross-validation) and each time, the model is trained and tested on a different subset.
+
+Inner cross-validation performs hyperparameter tuning to identify and select optimal parameter used in training a machine learning model.The training set of the outer fold is further split into sub-folds and the model is trained multiple times using different parameters.
+
+
+```{r external-image2, echo=FALSE, out.width="80%", fig.align="center"}
+knitr::include_graphics("https://github.com/ModupeOjo/Tutorial/blob/master/static/images/Double_cross_validation.png?raw=true")
+```
+
+In the next step, we apply pls double cross-validation to iris dataset
+
+```{r, echo=TRUE}
+pp=pls.double.cv(iris[,-5],(iris[,5]),ncomp=2:4)
+
+```
+
+To assess the prediction ability of the model, a 10-fold cross-validation is conducted by generating splits with a ratio 1:9 of the data set, that is by removing 10% of samples prior to any step of the statistical analysis, including PLS component selection and scaling. Best number of component for PLS was carried out by means of 10-fold cross-validation on the remaining 90% selecting the best Q2y value. Permutation testing was undertaken to estimate the classification/regression performance of predictors.
+
+Optimal number of PLS components
+
+    pp=optim.pls.cv(iris[,-5],(iris[,5]),ncomp=2:4)
+    pp$optim_comp
 
 ## Feature transformation
 
