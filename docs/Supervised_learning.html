@@ -569,15 +569,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree012feebd15218a123223ee5d592e8295a7a9da68targetblank012feeba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreea104537ee5941df2bf7aae5f29e122d02380b53btargetblanka104537a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/tkcaccia/Tutorials/tree/012feebd15218a123223ee5d592e8295a7a9da68" target="_blank">012feeb</a>
+<a href="https://github.com/tkcaccia/Tutorials/tree/a104537ee5941df2bf7aae5f29e122d02380b53b" target="_blank">a104537</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree012feebd15218a123223ee5d592e8295a7a9da68targetblank012feeba"
+id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreea104537ee5941df2bf7aae5f29e122d02380b53btargetblanka104537a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -587,7 +587,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/tkcaccia/Tutorials/tree/012feebd15218a123223ee5d592e8295a7a9da68" target="_blank">012feeb</a>.
+<a href="https://github.com/tkcaccia/Tutorials/tree/a104537ee5941df2bf7aae5f29e122d02380b53b" target="_blank">a104537</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -650,6 +650,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/a104537ee5941df2bf7aae5f29e122d02380b53b/analysis/Supervised_learning.Rmd" target="_blank">a104537</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2025-02-17
+</td>
+<td>
+Start my new project
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/tkcaccia/Tutorials/f26aafb71daf787f29a3929091828f5f0f8805aa/docs/Supervised_learning.html" target="_blank">f26aafb</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2025-02-17
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1597,26 +1631,183 @@ Balanced Accuracy           1.0000            0.9400           0.9250</code></pr
 </div>
 </div>
 </div>
+<div id="getting-started" class="section level2">
+<h2>3 <strong>Getting Started</strong></h2>
+<p>To load the package, enter the following instruction in your R
+session:</p>
+<pre><code>library(&quot;fastPLS&quot;)</code></pre>
+<p>If this command terminates without any error messages, you can be
+sure that the package has been installed successfully. The fastPLS
+package is now ready for use.</p>
+<p>The package includes both a user manual (this document) and a
+reference manual (help pages for each function). To view the user
+manual, enter <code>vignette("fastPLS")</code>. Help pages can be viewed
+using the help command <code>help(package="fastPLS")</code>.</p>
+<p></p>
+</div>
+<div id="example-using-iris-dataset" class="section level2">
+<h2><strong>Example using iris dataset</strong></h2>
+<p>To load the package and dataset, input the following command in your
+R session:</p>
+<pre class="r"><code>library(fastPLS)
+data(iris)</code></pre>
+<p>The iris dataset consists of 50 samples comprising of three different
+species:Setosa, Versicolor, and Virginica. These are classified as
+categorical variables. Four features were measured in centimeters (cm):
+the lengths and the widths of both sepals and petals. These features are
+used to determine the specie of the samples.</p>
+<p>View the content of the dataset by using the command below:</p>
+<pre class="r"><code>head(iris)</code></pre>
+<p>Select a random samples from the large dataset</p>
+<pre class="r"><code>ss=sample(150,15)</code></pre>
+<p>Split the predictors and the response data</p>
+<pre class="r"><code>Xtrain=iris[-ss,-5]
+Xtest=iris[ss,-5]
+Ytrain=iris[-ss,5]
+Ytest=iris[ss,5]
+labels=iris[,5]</code></pre>
+<p>Perform pls on the dataset</p>
+<pre class="r"><code>z=pls(Xtrain,Ytrain,Xtest)</code></pre>
+<p>Assign variable to the predicted and actual labels</p>
+<pre class="r"><code>predictions &lt;- z$Ypred
+actual_labels &lt;- labels[ss]</code></pre>
+<p>Create a dataframe that shows the predicted and the actual label</p>
+<pre class="r"><code>results &lt;- data.frame(Predicted = predictions, Actual= actual_labels)
+results</code></pre>
+<pre><code>           V1     Actual
+1      setosa     setosa
+2   virginica  virginica
+3   virginica versicolor
+4  versicolor versicolor
+5      setosa     setosa
+6   virginica  virginica
+7  versicolor  virginica
+8  versicolor versicolor
+9  versicolor versicolor
+10 versicolor versicolor
+11     setosa     setosa
+12 versicolor  virginica
+13     setosa     setosa
+14  virginica versicolor
+15  virginica versicolor</code></pre>
+</div>
+<div id="conclusion" class="section level2">
+<h2><strong>Conclusion</strong></h2>
+<p>The table above gives a comparison of the <strong>predicted</strong>
+and <strong>actual label</strong>. This shows that the pls model was not
+efficient or accurate to predict some of the labels. This method is
+limited by the user inability to select the number of component to use,
+which affects the accuracy of the model</p>
+<div id="choosing-the-number-of-component" class="section level3">
+<h3><strong>Choosing the number of component</strong></h3>
+<p>Selecting the number of components when performing partial least
+square regression is crucial for achieving a good performance model.</p>
+<p>Below is an example of how to input number of component for a
+model</p>
+<pre class="r"><code>    pp=pls(Xtrain,Ytrain,Xtest,ncomp = c(2,4))
+    pp$Ypred</code></pre>
+<pre><code>           V1         V2
+1      setosa     setosa
+2   virginica  virginica
+3   virginica  virginica
+4  versicolor versicolor
+5      setosa     setosa
+6   virginica  virginica
+7   virginica versicolor
+8  versicolor versicolor
+9  versicolor versicolor
+10 versicolor versicolor
+11     setosa     setosa
+12  virginica versicolor
+13     setosa     setosa
+14 versicolor  virginica
+15  virginica  virginica</code></pre>
+<pre><code>pp=pls(Xtrain,Ytrain,Xtest,proj=TRUE)
+
+plot(pp$Ttrain,col=Ytrain)
+points(pp$Ttest,col=Ytest,pch=2)</code></pre>
+<p>The graph above shows the PLS model performance to be able to project
+the Xtest (represented in triangles). The graph shows that the test
+points does not align well with the training cluster from the
+overlapping and the model is not efficient enough to distinguish the
+different groups.</p>
+<p>Apart from the graphical result, different parameters can be used to
+assess the efficency of the model. Parameters such as Q2Y, R2Y and
+confusion matrix.</p>
+<p>Q2Y:Measures the predictive power of the model on unseen/new data.If
+Q2Y&gt;0.5,the model has good predictive ability, Q2Y&gt;0.9 means
+excellent predictive power and Q2Y close to 0 or negative the model is
+poor at prediction.</p>
+<p>Run the command below:</p>
+<pre><code>pp=pls(Xtrain,Ytrain,Xtest,Ytest)
+pp$Q2Y</code></pre>
+<p>R2Y: Measures how well the model explains the response variable
+(Ytrain).R²Y close to 1 means a good fit while R²Y close to 0 represent
+model does not explain Y well.</p>
+<p>Run the command below:</p>
+<pre><code>pp=pls(Xtrain,Ytrain,fit=TRUE)
+pp$Yfit
+pp$R2Y</code></pre>
+<p>Number of components</p>
+<p>The above result model was optimized using 2 components which was
+indicated as <strong>ncomp = c(2,4)</strong>.</p>
+<p>Selecting too few or too many components can lead to underfitting or
+overfitting, respectively.</p>
+<p>A statistical model or a machine learning algorithm is said to have
+underfitting when a model is too simple to capture data complexities. It
+represents the inability of the model to learn the training data
+effectively result in poor performance both on the training and testing
+data</p>
+<p>Overfitting occurs when a model algorithm fails to give prediction on
+new dataset however gives ideal prediction on training dataset.This
+occurs when the model has been over-trained on a single or specific
+dataset.</p>
+</div>
+</div>
 <div id="cross-validation" class="section level2">
-<h2>Cross-Validation</h2>
-<p>Is a technique used to assess the generalisability of a model to new
-data. It involves dividing the dataset into multiple folds and training
-the model on each fold while using the remaining set for validation.</p>
-<div id="cross-validation-with-pls-da." class="section level3">
-<h3>Cross-Validation with PLS-DA.</h3>
-<p>This function performs a 10-fold cross-validation on a given data set
-using Partial Least Squares (PLS) model. To assess the prediction
-ability of the model, a 10-fold cross-validation is conducted by
-generating splits with a ratio 1:9 of the data set. Permutation testing
-was undertaken to estimate the classification/regression performance of
-predictors.</p>
-<pre class="r"><code>library(KODAMA)
-data(iris)
-data=iris[,-5]
-labels=iris[,5]
-#pp=pls.double.cv(data,labels)
-#print(pp$Q2Y)
-#table(pp$Ypred,labels)</code></pre>
+<h2>Cross Validation</h2>
+<p>Cross validation is a method used in machine learning to evaluate the
+performance of a model on test data.</p>
+<p>The dataset used are split into multiple folds or subsets, one of the
+folds is used as validation set and the reminder subset are used to
+train the model.This process is repeated several times, with a different
+fold used as the validation set each time.Finally, the results from each
+validation step are averaged to provide a more reliable estimate of the
+model’s performance.</p>
+<p>Cross validation technique is useful in machine learning algorithm to
+avoid overfitting.</p>
+<div id="types-of-cross-validation" class="section level3">
+<h3>Types of Cross-Validation</h3>
+<p><img src="https://github.com/ModupeOjo/Tutorial/blob/master/static/images/Picture1.png?raw=true" width="80%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="pls-double-cross-validation" class="section level3">
+<h3>PLS Double Cross-Validation</h3>
+<p>Double cross-validation is an approach to model hyperparameter
+optimization and model selection that attempts to overcome the problem
+of overfitting the training dataset. This involves two stages, outer and
+inner cross-validation.</p>
+<p>Outer cross-validation evaluates the overall performance of the
+model. The dataset is split multiple times(K-fold cross-validation) and
+each time, the model is trained and tested on a different subset.</p>
+<p>Inner cross-validation performs hyperparameter tuning to identify and
+select optimal parameter used in training a machine learning model.The
+training set of the outer fold is further split into sub-folds and the
+model is trained multiple times using different parameters.</p>
+<p><img src="https://github.com/ModupeOjo/Tutorial/blob/master/static/images/Double_cross_validation.png?raw=true" width="80%" style="display: block; margin: auto;" /></p>
+<p>In the next step, we apply pls double cross-validation to iris
+dataset</p>
+<pre class="r"><code>pp=pls.double.cv(iris[,-5],(iris[,5]),ncomp=2:4)</code></pre>
+<p>To assess the prediction ability of the model, a 10-fold
+cross-validation is conducted by generating splits with a ratio 1:9 of
+the data set, that is by removing 10% of samples prior to any step of
+the statistical analysis, including PLS component selection and scaling.
+Best number of component for PLS was carried out by means of 10-fold
+cross-validation on the remaining 90% selecting the best Q2y value.
+Permutation testing was undertaken to estimate the
+classification/regression performance of predictors.</p>
+<p>Optimal number of PLS components</p>
+<pre><code>pp=optim.pls.cv(iris[,-5],(iris[,5]),ncomp=2:4)
+pp$optim_comp</code></pre>
 </div>
 </div>
 <div id="feature-transformation" class="section level2">
@@ -1830,11 +2021,12 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] KODAMA_3.0           Matrix_1.6-5         umap_0.2.10.0       
- [4] Rtsne_0.17           minerva_1.5.10       randomForest_4.7-1.1
- [7] rpart.plot_3.1.2     rpart_4.1.23         class_7.3-22        
-[10] pROC_1.18.5          reshape2_1.4.4       caret_6.0-94        
-[13] lattice_0.22-6       ggplot2_3.5.1        workflowr_1.7.1     
+ [1] KODAMA_3.0           umap_0.2.10.0        Rtsne_0.17          
+ [4] minerva_1.5.10       fastPLS_0.1          irlba_2.3.5.1       
+ [7] Matrix_1.6-5         randomForest_4.7-1.1 rpart.plot_3.1.2    
+[10] rpart_4.1.23         class_7.3-22         pROC_1.18.5         
+[13] reshape2_1.4.4       caret_6.0-94         lattice_0.22-6      
+[16] ggplot2_3.5.1        workflowr_1.7.1     
 
 loaded via a namespace (and not attached):
  [1] rlang_1.1.5          magrittr_2.0.3       git2r_0.33.0        
