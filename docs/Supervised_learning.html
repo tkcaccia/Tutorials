@@ -11,7 +11,7 @@
 
 <meta name="author" content="Stefano Cacciatore" />
 
-<meta name="date" content="2025-02-17" />
+<meta name="date" content="2025-02-18" />
 
 <title>Module 4: Supervised Learning</title>
 
@@ -409,7 +409,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Module 4: Supervised Learning</h1>
 <h4 class="author">Stefano Cacciatore</h4>
-<h4 class="date">February 17, 2025</h4>
+<h4 class="date">February 18, 2025</h4>
 
 </div>
 
@@ -438,7 +438,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2025-02-17
+<strong>Last updated:</strong> 2025-02-18
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -569,15 +569,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreea104537ee5941df2bf7aae5f29e122d02380b53btargetblanka104537a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree397f9b2392aa08ab72ebc889cb4f20a61b2ed5edtargetblank397f9b2a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/tkcaccia/Tutorials/tree/a104537ee5941df2bf7aae5f29e122d02380b53b" target="_blank">a104537</a>
+<a href="https://github.com/tkcaccia/Tutorials/tree/397f9b2392aa08ab72ebc889cb4f20a61b2ed5ed" target="_blank">397f9b2</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreea104537ee5941df2bf7aae5f29e122d02380b53btargetblanka104537a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree397f9b2392aa08ab72ebc889cb4f20a61b2ed5edtargetblank397f9b2a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -587,7 +587,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/tkcaccia/Tutorials/tree/a104537ee5941df2bf7aae5f29e122d02380b53b" target="_blank">a104537</a>.
+<a href="https://github.com/tkcaccia/Tutorials/tree/397f9b2392aa08ab72ebc889cb4f20a61b2ed5ed" target="_blank">397f9b2</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -650,6 +650,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/397f9b2392aa08ab72ebc889cb4f20a61b2ed5ed/analysis/Supervised_learning.Rmd" target="_blank">397f9b2</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2025-02-18
+</td>
+<td>
+Start my new project
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/tkcaccia/Tutorials/5baa04e19d3a33d2ab9bce8f231f177a318a19f9/docs/Supervised_learning.html" target="_blank">5baa04e</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2025-02-17
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1722,10 +1756,11 @@ model</p>
 13     setosa     setosa
 14 versicolor  virginica
 15  virginica  virginica</code></pre>
-<pre><code>pp=pls(Xtrain,Ytrain,Xtest,proj=TRUE)
+<pre class="r"><code>    pp=pls(Xtrain,Ytrain,Xtest,proj=TRUE)
 
-plot(pp$Ttrain,col=Ytrain)
-points(pp$Ttest,col=Ytest,pch=2)</code></pre>
+    plot(pp$Ttrain,col=Ytrain)
+    points(pp$Ttest,col=Ytest,pch=2)</code></pre>
+<img src="figure/Supervised_learning.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" />
 <p>The graph above shows the PLS model performance to be able to project
 the Xtest (represented in triangles). The graph shows that the test
 points does not align well with the training cluster from the
@@ -1739,15 +1774,154 @@ Q2Y&gt;0.5,the model has good predictive ability, Q2Y&gt;0.9 means
 excellent predictive power and Q2Y close to 0 or negative the model is
 poor at prediction.</p>
 <p>Run the command below:</p>
-<pre><code>pp=pls(Xtrain,Ytrain,Xtest,Ytest)
-pp$Q2Y</code></pre>
+<pre class="r"><code>    pp=pls(Xtrain,Ytrain,Xtest,Ytest)
+    pp$Q2Y</code></pre>
+<pre><code>[1] -0.027485</code></pre>
 <p>R2Y: Measures how well the model explains the response variable
 (Ytrain).R²Y close to 1 means a good fit while R²Y close to 0 represent
 model does not explain Y well.</p>
 <p>Run the command below:</p>
-<pre><code>pp=pls(Xtrain,Ytrain,fit=TRUE)
-pp$Yfit
-pp$R2Y</code></pre>
+<pre class="r"><code>    pp=pls(Xtrain,Ytrain,fit=TRUE)
+    pp$Yfit</code></pre>
+<pre><code>       ncomp=4
+1       setosa
+2       setosa
+3       setosa
+4       setosa
+5       setosa
+6       setosa
+7       setosa
+8       setosa
+9       setosa
+10      setosa
+11      setosa
+12      setosa
+13      setosa
+14      setosa
+15      setosa
+16      setosa
+17      setosa
+18      setosa
+19      setosa
+20      setosa
+21      setosa
+22      setosa
+23      setosa
+24      setosa
+25      setosa
+26      setosa
+27      setosa
+28      setosa
+29      setosa
+30      setosa
+31      setosa
+32      setosa
+33      setosa
+34      setosa
+35      setosa
+36      setosa
+37      setosa
+38      setosa
+39      setosa
+40      setosa
+41      setosa
+42      setosa
+43      setosa
+44      setosa
+45      setosa
+46      setosa
+47   virginica
+48   virginica
+49   virginica
+50  versicolor
+51  versicolor
+52  versicolor
+53   virginica
+54  versicolor
+55   virginica
+56  versicolor
+57   virginica
+58  versicolor
+59  versicolor
+60   virginica
+61   virginica
+62  versicolor
+63  versicolor
+64  versicolor
+65   virginica
+66  versicolor
+67  versicolor
+68  versicolor
+69  versicolor
+70  versicolor
+71   virginica
+72  versicolor
+73  versicolor
+74  versicolor
+75  versicolor
+76   virginica
+77   virginica
+78   virginica
+79  versicolor
+80  versicolor
+81  versicolor
+82  versicolor
+83  versicolor
+84  versicolor
+85  versicolor
+86  versicolor
+87  versicolor
+88  versicolor
+89  versicolor
+90   virginica
+91   virginica
+92   virginica
+93   virginica
+94   virginica
+95   virginica
+96   virginica
+97  versicolor
+98  versicolor
+99   virginica
+100  virginica
+101  virginica
+102  virginica
+103  virginica
+104  virginica
+105  virginica
+106  virginica
+107  virginica
+108 versicolor
+109  virginica
+110 versicolor
+111  virginica
+112  virginica
+113  virginica
+114  virginica
+115  virginica
+116  virginica
+117 versicolor
+118  virginica
+119  virginica
+120 versicolor
+121  virginica
+122  virginica
+123  virginica
+124  virginica
+125  virginica
+126  virginica
+127  virginica
+128  virginica
+129  virginica
+130  virginica
+131  virginica
+132  virginica
+133  virginica
+134  virginica
+135  virginica</code></pre>
+<pre class="r"><code>    pp$R2Y</code></pre>
+<pre><code>          [,1]
+[1,] 0.6024956</code></pre>
 <p>Number of components</p>
 <p>The above result model was optimized using 2 components which was
 indicated as <strong>ncomp = c(2,4)</strong>.</p>
@@ -1806,8 +1980,10 @@ cross-validation on the remaining 90% selecting the best Q2y value.
 Permutation testing was undertaken to estimate the
 classification/regression performance of predictors.</p>
 <p>Optimal number of PLS components</p>
-<pre><code>pp=optim.pls.cv(iris[,-5],(iris[,5]),ncomp=2:4)
-pp$optim_comp</code></pre>
+<pre class="r"><code>    pp=optim.pls.cv(iris[,-5],(iris[,5]),ncomp=2:4)
+    pp$optim_comp</code></pre>
+<pre><code>     [,1]
+[1,]    4</code></pre>
 </div>
 </div>
 <div id="feature-transformation" class="section level2">
