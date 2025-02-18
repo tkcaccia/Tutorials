@@ -500,12 +500,12 @@ Below is an example of how to input number of component for a model
 ```{r, echo=TRUE}
     pp=pls(Xtrain,Ytrain,Xtest,ncomp = c(2,4))
     pp$Ypred
-```
+
     pp=pls(Xtrain,Ytrain,Xtest,proj=TRUE)
 
     plot(pp$Ttrain,col=Ytrain)
     points(pp$Ttest,col=Ytest,pch=2)
-
+```
 \begin{figure}[h]
   \centerline{\includegraphics[width=12cm]{PLSplot.pdf}}
   \caption{Projection of the test data on the training data plot}
@@ -519,19 +519,19 @@ Apart from the graphical result, different parameters can be used to assess the 
 Q2Y:Measures the predictive power of the model on unseen/new data.If Q2Y>0.5,the model has good predictive ability, Q2Y>0.9 means excellent predictive power and Q2Y close to 0 or negative the model is poor at prediction.
 
 Run the command below:
-  
+```{r, echo=TRUE} 
     pp=pls(Xtrain,Ytrain,Xtest,Ytest)
     pp$Q2Y
-
+```
 R2Y: Measures how well the model explains the response variable (Ytrain).R²Y close to 1 means a good fit while R²Y close to 0 represent model does not explain Y well.
 
 Run the command below:
-
+```{r, echo=TRUE}
     pp=pls(Xtrain,Ytrain,fit=TRUE)
     pp$Yfit
     pp$R2Y
 
-
+```
 Number of components
 
 The above result model was optimized using 2 components which was indicated as **ncomp = c(2,4)**.
@@ -578,10 +578,10 @@ pp=pls.double.cv(iris[,-5],(iris[,5]),ncomp=2:4)
 To assess the prediction ability of the model, a 10-fold cross-validation is conducted by generating splits with a ratio 1:9 of the data set, that is by removing 10% of samples prior to any step of the statistical analysis, including PLS component selection and scaling. Best number of component for PLS was carried out by means of 10-fold cross-validation on the remaining 90% selecting the best Q2y value. Permutation testing was undertaken to estimate the classification/regression performance of predictors.
 
 Optimal number of PLS components
-
+```{r, echo=TRUE}
     pp=optim.pls.cv(iris[,-5],(iris[,5]),ncomp=2:4)
     pp$optim_comp
-
+```
 ## Feature transformation
 
 Is the process of modifying and converting input features of a data set by applying mathematical operations to improve the learning and prediction performance of ML models.
