@@ -9,9 +9,9 @@ output:
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 ---
 
-# miRseq Analysis:
+# RNAseq Analysis:
 
-**Analysing miRseq Gene Expression Data from a Colerectal Adenocarcinoma Cohort:**
+**Analysing RNAseq Gene Expression Data from a Colerectal Adenocarcinoma Cohort:**
 
 ```{r, message=FALSE}
 # install.packages("readxl")
@@ -34,7 +34,7 @@ colnames(coad) = toupper(colnames(coad))
 coad = t(coad) 
 ```
 
-***Prepare miRNA-seq expression data:***
+***Prepare RNA-seq expression data:***
 
 ```{r}
 # Read RNA-seq expression data:
