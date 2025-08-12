@@ -137,7 +137,7 @@ Nplot1
 ```
 
 Enrichment analysis
-```{r}
+```{r, warning=FALSE, message=FALSE}
 
 if (!require("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
