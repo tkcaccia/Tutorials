@@ -154,14 +154,40 @@ t=unlist(lapply(strsplit(rownames(genes),"\\|"),function(x) x[1]))
 selt=ave(1:length(t), t, FUN = length)
 genes=genes[selt==1,]
 rownames(genes)=t[selt==1]
+```
+```{r, warning=FALSE, message=FALSE,echo=FALSE}
+quiet <- function(expr) {
+  suppressWarnings(suppressMessages({
+    res <- NULL
+    invisible(capture.output(res <- force(expr)))
+    res
+  }))
+}
+path <- "../Data/Genesets/msigdb_v2023.2.Hs_GMTs/c2.cp.kegg_legacy.v2023.2.Hs.symbols.gmt"
 
-geneset=suppressMessages(GSA.read.gmt("../Data/Genesets/msigdb_v2023.2.Hs_GMTs/c2.cp.kegg_legacy.v2023.2.Hs.symbols.gmt"))
+geneset <- quiet(GSA.read.gmt(path))
+
+```
+```{r, eval=FALSE}
+geneset=GSA.read.gmt("../Data/Genesets/msigdb_v2023.2.Hs_GMTs/c2.cp.kegg_legacy.v2023.2.Hs.symbols.gmt")
+```
+
+```{r, warning=FALSE, message=FALSE}
 names(geneset$genesets)=geneset$geneset.names
 geneset=geneset$genesets
 
 #gsva_TCGA <- gsva(genes, geneset,min.sz = 5)
 gsvapar = gsvaParam(genes,geneset)
+
+```
+
+```{r, warning=FALSE, message=FALSE,echo=FALSE}
+gsva_TCGA <- quiet(gsva(gsvapar))
+```
+```{r, eval=FALSE}
 gsva_TCGA=gsva(gsvapar)
+```
+```{r, warning=FALSE, message=FALSE}
 
 ma=multi_analysis(t(gsva_TCGA),CXCL2,FUN="correlation.test",method="spearman")
 ma=ma[order(as.numeric(ma$`p-value`)),]
