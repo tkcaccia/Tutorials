@@ -155,7 +155,7 @@ selt=ave(1:length(t), t, FUN = length)
 genes=genes[selt==1,]
 rownames(genes)=t[selt==1]
 
-geneset=GSA.read.gmt("../Data/Genesets/msigdb_v2023.2.Hs_GMTs/c2.cp.kegg_legacy.v2023.2.Hs.symbols.gmt")
+geneset=suppressMessages(GSA.read.gmt("../Data/Genesets/msigdb_v2023.2.Hs_GMTs/c2.cp.kegg_legacy.v2023.2.Hs.symbols.gmt"))
 names(geneset$genesets)=geneset$geneset.names
 geneset=geneset$genesets
 
