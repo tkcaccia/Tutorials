@@ -569,15 +569,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree182c32269b5a13284606178b5082380767bd0c92targetblank182c322a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree7c695238d6b35a5d3cbfa7c624cc74fd71f90d1etargetblank7c69523a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/tkcaccia/Tutorials/tree/182c32269b5a13284606178b5082380767bd0c92" target="_blank">182c322</a>
+<a href="https://github.com/tkcaccia/Tutorials/tree/7c695238d6b35a5d3cbfa7c624cc74fd71f90d1e" target="_blank">7c69523</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree182c32269b5a13284606178b5082380767bd0c92targetblank182c322a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree7c695238d6b35a5d3cbfa7c624cc74fd71f90d1etargetblank7c69523a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -587,7 +587,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/tkcaccia/Tutorials/tree/182c32269b5a13284606178b5082380767bd0c92" target="_blank">182c322</a>.
+<a href="https://github.com/tkcaccia/Tutorials/tree/7c695238d6b35a5d3cbfa7c624cc74fd71f90d1e" target="_blank">7c69523</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -652,6 +652,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/7c695238d6b35a5d3cbfa7c624cc74fd71f90d1e/analysis/TCGA.Rmd" target="_blank">7c69523</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2025-08-13
+</td>
+<td>
+Start my new project
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/tkcaccia/Tutorials/36cba688276b64f55f52051a232d21bfc0399e74/docs/TCGA.html" target="_blank">36cba68</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2025-08-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1002,7 +1036,7 @@ BiocManager::install(&quot;GSVA&quot;)
 install.packages(&quot;GSA&quot;)</code></pre>
 <pre><code>
 The downloaded binary packages are in
-    /var/folders/p9/7vjxs6dd7p70vybzdhy_0hw00000gn/T//RtmpuGBDBE/downloaded_packages</code></pre>
+    /var/folders/p9/7vjxs6dd7p70vybzdhy_0hw00000gn/T//Rtmp5DpfBk/downloaded_packages</code></pre>
 <pre class="r"><code>library(&quot;GSVA&quot;)
 library(&quot;GSA&quot;)
 library(&quot;KODAMA&quot;)
@@ -1013,7 +1047,7 @@ selt=ave(1:length(t), t, FUN = length)
 genes=genes[selt==1,]
 rownames(genes)=t[selt==1]
 
-geneset=GSA.read.gmt(&quot;../Data/Genesets/msigdb_v2023.2.Hs_GMTs/c2.cp.kegg_legacy.v2023.2.Hs.symbols.gmt&quot;)</code></pre>
+geneset=suppressMessages(GSA.read.gmt(&quot;../Data/Genesets/msigdb_v2023.2.Hs_GMTs/c2.cp.kegg_legacy.v2023.2.Hs.symbols.gmt&quot;))</code></pre>
 <pre><code>1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495969798991001011021031041051061071081091101111121131141151161171181191201211221231241251261271281291301311321331341351361371381391401411421431441451461471481491501511521531541551561571581591601611621631641651661671681691701711721731741751761771781791801811821831841851861
 2
 3
