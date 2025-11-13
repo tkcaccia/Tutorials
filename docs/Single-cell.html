@@ -9,11 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Stefano Cacciatore" />
 
-<meta name="date" content="2025-08-13" />
 
-<title>Single-cell</title>
+<title>Single-cell pipeline</title>
 
 <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -407,9 +405,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Single-cell</h1>
-<h4 class="author">Stefano Cacciatore</h4>
-<h4 class="date">August 13, 2025</h4>
+<h1 class="title toc-ignore">Single-cell pipeline</h1>
 
 </div>
 
@@ -417,7 +413,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-ok text-success"
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -428,8 +424,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-</a>
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -438,13 +434,13 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2025-08-13
+<strong>Last updated:</strong> 2025-11-13
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 0
+aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>Tutorials/</code> <span
@@ -467,18 +463,21 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate"
+<div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
@@ -569,15 +568,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreecd0328c2ffc198c5489ea11ebb3fe4310e8eea65targetblankcd0328ca">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree6a1a585e5304e1d71a5a56afa1456d24df5d1941targetblank6a1a585a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/tkcaccia/Tutorials/tree/cd0328c2ffc198c5489ea11ebb3fe4310e8eea65" target="_blank">cd0328c</a>
+<a href="https://github.com/tkcaccia/Tutorials/tree/6a1a585e5304e1d71a5a56afa1456d24df5d1941" target="_blank">6a1a585</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstreecd0328c2ffc198c5489ea11ebb3fe4310e8eea65targetblankcd0328ca"
+id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree6a1a585e5304e1d71a5a56afa1456d24df5d1941targetblank6a1a585a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -587,7 +586,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/tkcaccia/Tutorials/tree/cd0328c2ffc198c5489ea11ebb3fe4310e8eea65" target="_blank">cd0328c</a>.
+<a href="https://github.com/tkcaccia/Tutorials/tree/6a1a585e5304e1d71a5a56afa1456d24df5d1941" target="_blank">6a1a585</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -608,7 +607,8 @@ Ignored files:
     Ignored:    data/.DS_Store
 
 Unstaged changes:
-    Modified:   output/Table.csv
+    Modified:   analysis/Single-cell.Rmd
+    Deleted:    test.R
 
 </code></pre>
 <p>
@@ -653,6 +653,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/tkcaccia/Tutorials/c17525a0fda4bf2d5b6ca5488792a36339dd75ae/docs/Single-cell.html" target="_blank">c17525a</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2025-08-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -749,7 +766,7 @@ html
 tkcaccia
 </td>
 <td>
-2025-02-17
+2025-02-18
 </td>
 <td>
 Build site.
@@ -783,7 +800,7 @@ html
 tkcaccia
 </td>
 <td>
-2025-02-16
+2025-02-17
 </td>
 <td>
 Build site.
@@ -800,7 +817,7 @@ html
 tkcaccia
 </td>
 <td>
-2025-02-16
+2025-02-17
 </td>
 <td>
 Build site.
@@ -864,12 +881,236 @@ Start my new project
 </div>
 </div>
 </div>
-<div id="mirseq-analysis" class="section level1">
-<h1>miRseq Analysis:</h1>
-<p><strong>Analysing miRseq Gene Expression Data from a Colerectal
-Adenocarcinoma Cohort:</strong></p>
-<p><a href="https://satijalab.org/seurat/articles/pbmc3k_tutorial"
-class="uri">https://satijalab.org/seurat/articles/pbmc3k_tutorial</a></p>
+<div id="single-cell-data" class="section level2">
+<h2>Single-cell data</h2>
+<p>For this tutorial, we will be analyzing the a dataset of Peripheral
+Blood Mononuclear Cells (PBMC) freely available from 10X Genomics. There
+are 2,700 single cells that were sequenced on the Illumina NextSeq 500.
+The raw data can be found <a
+href="https://cf.10xgenomics.com/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz">here</a>.</p>
+<p>We start by reading in the data. The Read10X() function reads in the
+output of the cellranger pipeline from 10X, returning a unique molecular
+identified (UMI) count matrix. The values in this matrix represent the
+number of molecules for each feature (i.e. gene; row) that are detected
+in each cell (column). Note that more recent versions of cellranger now
+also output using the h5 file format, which can be read in using the
+Read10X_h5() function in Seurat.</p>
+<p>We next use the count matrix to create a Seurat object. The object
+serves as a container that contains both data (like the count matrix)
+and analysis (like PCA, or clustering results) for a single-cell
+dataset. For more information, check out our [Seurat object interaction
+vignette], or our GitHub Wiki. For example, in Seurat v5, the count
+matrix is stored in pbmc[[“RNA”]]$counts.</p>
+<pre class="r"><code>library(dplyr)
+library(Seurat)
+library(patchwork)
+library(KODAMA)
+library(KODAMAextra)
+
+
+# Load the PBMC dataset
+pbmc.data &lt;- Read10X(data.dir = &quot;../singlecell_tutorial/filtered_gene_bc_matrices/hg19/&quot;)
+# Initialize the Seurat object with the raw (non-normalized data).
+pbmc &lt;- CreateSeuratObject(counts = pbmc.data, project = &quot;pbmc3k&quot;, min.cells = 3, min.features = 200)
+pbmc</code></pre>
+<pre><code>An object of class Seurat 
+13714 features across 2700 samples within 1 assay 
+Active assay: RNA (13714 features, 0 variable features)
+ 1 layer present: counts</code></pre>
+<p>QC and selecting cells for further analysis Seurat allows you to
+easily explore QC metrics and filter cells based on any user-defined
+criteria. A few QC metrics commonly used by the community include</p>
+<p>The number of unique genes detected in each cell. Low-quality cells
+or empty droplets will often have very few genes Cell doublets or
+multiplets may exhibit an aberrantly high gene count Similarly, the
+total number of molecules detected within a cell (correlates strongly
+with unique genes) The percentage of reads that map to the mitochondrial
+genome Low-quality / dying cells often exhibit extensive mitochondrial
+contamination We calculate mitochondrial QC metrics with the
+PercentageFeatureSet() function, which calculates the percentage of
+counts originating from a set of features We use the set of all genes
+starting with MT- as a set of mitochondrial genes # The [[ operator can
+add columns to object metadata. This is a great place to stash QC
+stats</p>
+<pre class="r"><code>pbmc[[&quot;percent.mt&quot;]] &lt;- PercentageFeatureSet(pbmc, pattern = &quot;^MT-&quot;)</code></pre>
+<p>#Where are QC metrics stored in Seurat? The number of unique genes
+and total molecules are automatically calculated during
+CreateSeuratObject() You can find them stored in the object meta
+data</p>
+<pre><code># Show QC metrics for the first 5 cells
+head(pbmc@meta.data, 5)</code></pre>
+<p>In the example below, we first visualize key quality control (QC)
+metrics and then apply thresholds to remove low-quality or outlier
+cells.</p>
+<p>We retain only cells that meet the following criteria:</p>
+<p>Have between 200 and 2,500 detected features (genes)</p>
+<p>Have more than 500 total RNA counts</p>
+<p>Contain less than 5% mitochondrial transcripts, which helps exclude
+stressed or dying cells</p>
+<pre class="r"><code># Visualize QC metrics as a violin plot
+VlnPlot(pbmc, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent.mt&quot;), ncol = 3)</code></pre>
+<p><img src="figure/Single-cell.Rmd/unnamed-chunk-3-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>pbmc &lt;- subset(pbmc, subset = nCount_RNA&gt;500 &amp; nFeature_RNA &gt; 200 &amp; nFeature_RNA &lt; 2500 &amp; percent.mt &lt; 5)</code></pre>
+<p>#Normalizing the data After removing unwanted cells from the dataset,
+the next step is to normalize the data. By default, we employ a
+global-scaling normalization method “LogNormalize” that normalizes the
+feature expression measurements for each cell by the total expression,
+multiplies this by a scale factor (10,000 by default), and
+log-transforms the result. In Seurat v5, Normalized values are stored in
+pbmc[[“RNA”]]$data.</p>
+<pre class="r"><code>pbmc &lt;- NormalizeData(pbmc)</code></pre>
+<p>While this method of normalization is standard and widely used in
+scRNA-seq analysis, global-scaling relies on an assumption that each
+cell originally contains the same number of RNA molecules. We and others
+have developed alternative workflows for the single cell preprocessing
+that do not make these assumptions. For users who are interested, please
+check out our SCTransform() normalization workflow. The method is
+described in ourpaper, with a separate vignette using Seurat here. The
+use of SCTransform replaces the need to run NormalizeData,
+FindVariableFeatures, or ScaleData (described below.)</p>
+<p>Identification of highly variable features (feature selection) We
+next calculate a subset of features that exhibit high cell-to-cell
+variation in the dataset (i.e, they are highly expressed in some cells,
+and lowly expressed in others). We and others have found that focusing
+on these genes in downstream analysis helps to highlight biological
+signal in single-cell datasets.</p>
+<p>Our procedure in Seurat is described in detail here, and improves on
+previous versions by directly modeling the mean-variance relationship
+inherent in single-cell data, and is implemented in the
+FindVariableFeatures() function. By default, we return 2,000 features
+per dataset. These will be used in downstream analysis, like PCA.</p>
+<pre class="r"><code>pbmc &lt;- FindVariableFeatures(pbmc, selection.method = &quot;vst&quot;, nfeatures = 2000)</code></pre>
+<p>Scaling the data Next, we apply a linear transformation (‘scaling’)
+that is a standard pre-processing step prior to dimensional reduction
+techniques like PCA. The ScaleData() function:</p>
+<p>Shifts the expression of each gene, so that the mean expression
+across cells is 0 Scales the expression of each gene, so that the
+variance across cells is 1 This step gives equal weight in downstream
+analyses, so that highly-expressed genes do not dominate The results of
+this are stored in pbmc[[“RNA”]]$scale.data By default, only variable
+features are scaled. You can specify the features argument to scale
+additional features</p>
+<pre class="r"><code>all.genes &lt;- rownames(pbmc)
+pbmc &lt;- ScaleData(pbmc, features = all.genes)</code></pre>
+<p>#Perform linear dimensional reduction Next we perform PCA on the
+scaled data. By default, only the previously determined variable
+features are used as input, but can be defined using features argument
+if you wish to choose a different subset (if you do want to use a custom
+subset of features, make sure you pass these to ScaleData first).</p>
+<p>For the first principal components, Seurat outputs a list of genes
+with the most positive and negative loadings, representing modules of
+genes that exhibit either correlation (or anti-correlation) across
+single-cells in the dataset.</p>
+<pre class="r"><code>pbmc &lt;- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
+DimPlot(pbmc, reduction = &quot;pca&quot;)</code></pre>
+<p><img src="figure/Single-cell.Rmd/unnamed-chunk-8-1.png" width="960" style="display: block; margin: auto;" />
+#Clustering on PCA and UMAP visualization Build a KNN graph in PCA space
+and perform graph-based clustering; the resolution parameter controls
+granularity (higher → more clusters). Then compute a UMAP using the
+selected PCs to obtain a 2D visualization that preserves local
+neighborhoods—use this plot to review cluster separations and potential
+mixing.</p>
+<pre class="r"><code>pbmc &lt;- FindNeighbors(pbmc, dims=1:2)
+pbmc &lt;- FindClusters(pbmc, resolution = 0.3)</code></pre>
+<pre><code>Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
+
+Number of nodes: 2638
+Number of edges: 59699
+
+Running Louvain algorithm...
+Maximum modularity in 10 random starts: 0.9317
+Number of communities: 8
+Elapsed time: 0 seconds</code></pre>
+<pre class="r"><code>pbmc &lt;- RunUMAP(pbmc, reduction = &quot;pca&quot;, dims = 1:20)
+DimPlot(pbmc, reduction = &quot;umap&quot;)</code></pre>
+<p><img src="figure/Single-cell.Rmd/unnamed-chunk-9-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>#KODAMA analysis</p>
+<pre class="r"><code>pbmc=RunKODAMAmatrix(pbmc,reduction=&quot;pca&quot;,dims=20,n.cores=4)</code></pre>
+<pre><code>Calculating Network</code></pre>
+<pre><code>socket cluster with 4 nodes on host &#39;localhost&#39;
+================================================================================
+Finished parallel computation
+
+[1] &quot;Calculation of dissimilarity matrix...&quot;
+================================================================================</code></pre>
+<pre class="r"><code>pbmc=RunKODAMAvisualization(pbmc)</code></pre>
+<p>#Clustering on KODAMA</p>
+<pre class="r"><code>pbmc &lt;- FindNeighbors(pbmc, dims=1:2, reduction=&quot;KODAMA&quot;)
+pbmc &lt;- FindClusters(pbmc, resolution = 0.05)</code></pre>
+<pre><code>Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
+
+Number of nodes: 2638
+Number of edges: 55817
+
+Running Louvain algorithm...
+Maximum modularity in 10 random starts: 0.9919
+Number of communities: 8
+Elapsed time: 0 seconds</code></pre>
+<pre class="r"><code>DimPlot(pbmc, reduction = &quot;KODAMA&quot;)</code></pre>
+<p><img src="figure/Single-cell.Rmd/unnamed-chunk-11-1.png" width="960" style="display: block; margin: auto;" />
+#Parameters adjustment</p>
+<pre class="r"><code>config=umap.defaults
+config$n_neighbors=50
+pbmc=RunKODAMAvisualization(pbmc,config=config)
+
+pbmc &lt;- FindNeighbors(pbmc, dims=1:2, reduction=&quot;KODAMA&quot;)
+pbmc &lt;- FindClusters(pbmc, resolution = 0.05)</code></pre>
+<pre><code>Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
+
+Number of nodes: 2638
+Number of edges: 56468
+
+Running Louvain algorithm...
+Maximum modularity in 10 random starts: 0.9917
+Number of communities: 8
+Elapsed time: 0 seconds</code></pre>
+<pre class="r"><code>DimPlot(pbmc, reduction = &quot;KODAMA&quot;)</code></pre>
+<p><img src="figure/Single-cell.Rmd/unnamed-chunk-12-1.png" width="960" style="display: block; margin: auto;" />
+#Find markers Identifies differentially expressed genes between two
+groups of cells using a Wilcoxon Rank Sum test (default); will use a
+fast implementation by Presto if installed</p>
+<pre class="r"><code>#remotes::install_github(&quot;immunogenomics/presto&quot;)
+markers &lt;- FindAllMarkers(pbmc)
+head(markers)</code></pre>
+<pre><code>             p_val avg_log2FC pct.1 pct.2     p_val_adj cluster gene
+LTB  3.005021e-120   1.528073 0.980 0.622 4.121086e-116       0  LTB
+IL32 3.818644e-110   1.329397 0.937 0.439 5.236889e-106       0 IL32
+IL7R  2.803815e-97   1.698772 0.754 0.299  3.845152e-93       0 IL7R
+LDHB  7.955346e-87   1.089419 0.945 0.595  1.090996e-82       0 LDHB
+AQP3  8.170006e-84   2.464054 0.428 0.090  1.120435e-79       0 AQP3
+CD3D  1.738899e-82   1.073968 0.900 0.408  2.384726e-78       0 CD3D</code></pre>
+<pre class="r"><code>markers %&gt;%
+    group_by(cluster) %&gt;%
+    dplyr::filter(avg_log2FC &gt; 1) %&gt;%
+    slice_head(n = 10) %&gt;%
+    ungroup() -&gt; top10
+DoHeatmap(pbmc, features = top10$gene) + NoLegend()</code></pre>
+<p><img src="figure/Single-cell.Rmd/unnamed-chunk-14-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>markers %&gt;%
+    group_by(cluster) %&gt;%
+    dplyr::filter(avg_log2FC &gt; 1) %&gt;%
+    slice_head(n = 5) %&gt;%
+    ungroup() -&gt; top5
+
+DotPlot(
+  pbmc,
+  features = unique(top5$gene),
+  group.by = &quot;seurat_clusters&quot;,
+  assay = &quot;RNA&quot;
+) + RotatedAxis()</code></pre>
+<p><img src="figure/Single-cell.Rmd/unnamed-chunk-15-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VlnPlot(pbmc, features = c(&quot;MS4A1&quot;, &quot;CD79A&quot;))</code></pre>
+<p><img src="figure/Single-cell.Rmd/unnamed-chunk-16-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>FeaturePlot(pbmc, features = c(&quot;MS4A1&quot;, &quot;GNLY&quot;, &quot;CD3E&quot;, &quot;CD14&quot;, &quot;FCER1A&quot;, &quot;FCGR3A&quot;, &quot;LYZ&quot;, &quot;PPBP&quot;, &quot;CD8A&quot;),reduction = &quot;KODAMA&quot;)</code></pre>
+<p><img src="figure/Single-cell.Rmd/unnamed-chunk-17-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>Naive CD4+ T: IL7R, CCR7<br />
+CD14+ Mono: CD14, LYZ<br />
+Memory CD4+: IL7R, S100A4<br />
+B cell: MS4A1<br />
+CD8+ T cell: CD8A<br />
+FCGR3A+ Monocyte: FCGR3A, MS4A7 NK cell: GNLY, NKG7 DC: FCER1A,
+CST3<br />
+Platelet: PPBP</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -890,27 +1131,66 @@ LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlap
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 
-time zone: Africa/Johannesburg
+time zone: Asia/Kolkata
 tzcode source: internal
 
 attached base packages:
-[1] stats     graphics  grDevices utils     datasets  methods   base     
+[1] parallel  stats     graphics  grDevices utils     datasets  methods  
+[8] base     
 
 other attached packages:
-[1] workflowr_1.7.1
+ [1] KODAMAextra_1.2    doSNOW_1.0.20      snow_0.4-4         misc3d_0.9-1      
+ [5] e1071_1.7-16       doParallel_1.0.17  iterators_1.0.14   foreach_1.5.2     
+ [9] KODAMA_3.1         umap_0.2.10.0      Rtsne_0.17         patchwork_1.3.1   
+[13] Seurat_5.2.1       SeuratObject_5.0.2 sp_2.1-4           dplyr_1.1.4       
+[17] workflowr_1.7.1   
 
 loaded via a namespace (and not attached):
- [1] vctrs_0.6.5       httr_1.4.7        cli_3.6.5         knitr_1.50       
- [5] rlang_1.1.6       xfun_0.52         stringi_1.8.7     processx_3.8.6   
- [9] promises_1.3.2    jsonlite_2.0.0    glue_1.8.0        rprojroot_2.0.4  
-[13] git2r_0.36.2      htmltools_0.5.8.1 httpuv_1.6.15     ps_1.9.0         
-[17] sass_0.4.9        rmarkdown_2.29    jquerylib_0.1.4   tibble_3.3.0     
-[21] evaluate_1.0.3    fastmap_1.2.0     yaml_2.3.10       lifecycle_1.0.4  
-[25] whisker_0.4.1     stringr_1.5.1     compiler_4.3.3    fs_1.6.6         
-[29] pkgconfig_2.0.3   Rcpp_1.1.0        rstudioapi_0.17.1 later_1.4.1      
-[33] digest_0.6.37     R6_2.6.1          pillar_1.11.0     callr_3.7.6      
-[37] magrittr_2.0.3    bslib_0.9.0       tools_4.3.3       cachem_1.1.0     
-[41] getPass_0.2-4    </code></pre>
+  [1] RColorBrewer_1.1-3     rstudioapi_0.17.1      jsonlite_2.0.0        
+  [4] magrittr_2.0.3         ggbeeswarm_0.7.2       spatstat.utils_3.1-3  
+  [7] farver_2.1.2           rmarkdown_2.29         minerva_1.5.10        
+ [10] fs_1.6.6               vctrs_0.6.5            ROCR_1.0-11           
+ [13] spatstat.explore_3.4-2 askpass_1.2.1          htmltools_0.5.8.1     
+ [16] sass_0.4.9             sctransform_0.4.1      parallelly_1.43.0     
+ [19] KernSmooth_2.23-26     bslib_0.9.0            htmlwidgets_1.6.4     
+ [22] ica_1.0-3              plyr_1.8.9             plotly_4.10.4         
+ [25] zoo_1.8-13             cachem_1.1.0           whisker_0.4.1         
+ [28] igraph_2.1.4           mime_0.13              lifecycle_1.0.4       
+ [31] pkgconfig_2.0.3        Matrix_1.6-5           R6_2.6.1              
+ [34] fastmap_1.2.0          fitdistrplus_1.2-2     future_1.34.0         
+ [37] shiny_1.10.0           digest_0.6.37          colorspace_2.1-1      
+ [40] ps_1.9.0               rprojroot_2.0.4        tensor_1.5            
+ [43] RSpectra_0.16-2        irlba_2.3.5.1          labeling_0.4.3        
+ [46] progressr_0.15.1       spatstat.sparse_3.1-0  httr_1.4.7            
+ [49] polyclip_1.10-7        abind_1.4-8            compiler_4.3.3        
+ [52] proxy_0.4-27           withr_3.0.2            fastDummies_1.7.5     
+ [55] R.utils_2.13.0         MASS_7.3-60.0.1        openssl_2.3.2         
+ [58] tools_4.3.3            vipor_0.4.7            lmtest_0.9-40         
+ [61] beeswarm_0.4.0         httpuv_1.6.15          future.apply_1.11.3   
+ [64] goftest_1.2-3          R.oo_1.27.0            glue_1.8.0            
+ [67] callr_3.7.6            nlme_3.1-168           promises_1.3.2        
+ [70] grid_4.3.3             getPass_0.2-4          cluster_2.1.8.1       
+ [73] reshape2_1.4.4         generics_0.1.4         gtable_0.3.6          
+ [76] spatstat.data_3.1-6    R.methodsS3_1.8.2      class_7.3-23          
+ [79] tidyr_1.3.1            data.table_1.17.8      spatstat.geom_3.3-6   
+ [82] RcppAnnoy_0.0.22       ggrepel_0.9.6          RANN_2.6.2            
+ [85] pillar_1.11.0          stringr_1.5.1          limma_3.58.1          
+ [88] spam_2.11-1            RcppHNSW_0.6.0         later_1.4.1           
+ [91] splines_4.3.3          lattice_0.22-6         survival_3.8-3        
+ [94] deldir_2.0-4           tidyselect_1.2.1       Rnanoflann_0.0.3      
+ [97] miniUI_0.1.1.1         pbapply_1.7-2          knitr_1.50            
+[100] git2r_0.36.2           gridExtra_2.3          scattermore_1.2       
+[103] xfun_0.52              statmod_1.5.0          matrixStats_1.5.0     
+[106] stringi_1.8.7          lazyeval_0.2.2         yaml_2.3.10           
+[109] evaluate_1.0.3         codetools_0.2-20       tcltk_4.3.3           
+[112] tibble_3.3.0           cli_3.6.5              uwot_0.2.3            
+[115] xtable_1.8-4           reticulate_1.42.0      processx_3.8.6        
+[118] jquerylib_0.1.4        Rcpp_1.1.0             globals_0.16.3        
+[121] spatstat.random_3.3-3  png_0.1-8              ggrastr_1.0.2         
+[124] spatstat.univar_3.1-2  ggplot2_3.5.2          presto_1.0.0          
+[127] dotCall64_1.2          listenv_0.9.1          viridisLite_0.4.2     
+[130] scales_1.4.0           ggridges_0.5.6         purrr_1.0.4           
+[133] rlang_1.1.6            cowplot_1.2.0         </code></pre>
 </div>
 </div>
 </div>
