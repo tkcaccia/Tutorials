@@ -568,15 +568,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree6a1a585e5304e1d71a5a56afa1456d24df5d1941targetblank6a1a585a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree16e4839fabb73dd31cc41201c44d19df850fe93dtargetblank16e4839a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/tkcaccia/Tutorials/tree/6a1a585e5304e1d71a5a56afa1456d24df5d1941" target="_blank">6a1a585</a>
+<a href="https://github.com/tkcaccia/Tutorials/tree/16e4839fabb73dd31cc41201c44d19df850fe93d" target="_blank">16e4839</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree6a1a585e5304e1d71a5a56afa1456d24df5d1941targetblank6a1a585a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomtkcacciaTutorialstree16e4839fabb73dd31cc41201c44d19df850fe93dtargetblank16e4839a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -586,7 +586,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/tkcaccia/Tutorials/tree/6a1a585e5304e1d71a5a56afa1456d24df5d1941" target="_blank">6a1a585</a>.
+<a href="https://github.com/tkcaccia/Tutorials/tree/16e4839fabb73dd31cc41201c44d19df850fe93d" target="_blank">16e4839</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -606,9 +606,11 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    data/.DS_Store
 
+Untracked files:
+    Untracked:  omnipathr-log/
+
 Unstaged changes:
     Modified:   analysis/Single-cell.Rmd
-    Deleted:    test.R
 
 </code></pre>
 <p>
@@ -653,6 +655,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/16e4839fabb73dd31cc41201c44d19df850fe93d/analysis/Single-cell.Rmd" target="_blank">16e4839</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2025-11-13
+</td>
+<td>
+last
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/tkcaccia/Tutorials/16e4839fabb73dd31cc41201c44d19df850fe93d/docs/Single-cell.html" target="_blank">16e4839</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2025-11-13
+</td>
+<td>
+last
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -950,6 +986,43 @@ stressed or dying cells</p>
 <pre class="r"><code># Visualize QC metrics as a violin plot
 VlnPlot(pbmc, features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent.mt&quot;), ncol = 3)</code></pre>
 <p><img src="figure/Single-cell.Rmd/unnamed-chunk-3-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/16e4839fabb73dd31cc41201c44d19df850fe93d/docs/figure/Single-cell.Rmd/unnamed-chunk-3-1.png" target="_blank">16e4839</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2025-11-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>pbmc &lt;- subset(pbmc, subset = nCount_RNA&gt;500 &amp; nFeature_RNA &gt; 200 &amp; nFeature_RNA &lt; 2500 &amp; percent.mt &lt; 5)</code></pre>
 <p>#Normalizing the data After removing unwanted cells from the dataset,
 the next step is to normalize the data. By default, we employ a
@@ -1003,11 +1076,48 @@ genes that exhibit either correlation (or anti-correlation) across
 single-cells in the dataset.</p>
 <pre class="r"><code>pbmc &lt;- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
 DimPlot(pbmc, reduction = &quot;pca&quot;)</code></pre>
-<p><img src="figure/Single-cell.Rmd/unnamed-chunk-8-1.png" width="960" style="display: block; margin: auto;" />
-#Clustering on PCA and UMAP visualization Build a KNN graph in PCA space
-and perform graph-based clustering; the resolution parameter controls
-granularity (higher → more clusters). Then compute a UMAP using the
-selected PCs to obtain a 2D visualization that preserves local
+<p><img src="figure/Single-cell.Rmd/unnamed-chunk-8-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/16e4839fabb73dd31cc41201c44d19df850fe93d/docs/figure/Single-cell.Rmd/unnamed-chunk-8-1.png" target="_blank">16e4839</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2025-11-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>#Clustering on PCA and UMAP visualization Build a KNN graph in PCA
+space and perform graph-based clustering; the resolution parameter
+controls granularity (higher → more clusters). Then compute a UMAP using
+the selected PCs to obtain a 2D visualization that preserves local
 neighborhoods—use this plot to review cluster separations and potential
 mixing.</p>
 <pre class="r"><code>pbmc &lt;- FindNeighbors(pbmc, dims=1:2)
@@ -1024,6 +1134,43 @@ Elapsed time: 0 seconds</code></pre>
 <pre class="r"><code>pbmc &lt;- RunUMAP(pbmc, reduction = &quot;pca&quot;, dims = 1:20)
 DimPlot(pbmc, reduction = &quot;umap&quot;)</code></pre>
 <p><img src="figure/Single-cell.Rmd/unnamed-chunk-9-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
+Past versions of unnamed-chunk-9-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/16e4839fabb73dd31cc41201c44d19df850fe93d/docs/figure/Single-cell.Rmd/unnamed-chunk-9-1.png" target="_blank">16e4839</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2025-11-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>#KODAMA analysis</p>
 <pre class="r"><code>pbmc=RunKODAMAmatrix(pbmc,reduction=&quot;pca&quot;,dims=20,n.cores=4)</code></pre>
 <pre><code>Calculating Network</code></pre>
@@ -1047,8 +1194,45 @@ Maximum modularity in 10 random starts: 0.9919
 Number of communities: 8
 Elapsed time: 0 seconds</code></pre>
 <pre class="r"><code>DimPlot(pbmc, reduction = &quot;KODAMA&quot;)</code></pre>
-<p><img src="figure/Single-cell.Rmd/unnamed-chunk-11-1.png" width="960" style="display: block; margin: auto;" />
-#Parameters adjustment</p>
+<p><img src="figure/Single-cell.Rmd/unnamed-chunk-11-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
+Past versions of unnamed-chunk-11-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-11-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/16e4839fabb73dd31cc41201c44d19df850fe93d/docs/figure/Single-cell.Rmd/unnamed-chunk-11-1.png" target="_blank">16e4839</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2025-11-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>#Parameters adjustment</p>
 <pre class="r"><code>config=umap.defaults
 config$n_neighbors=50
 pbmc=RunKODAMAvisualization(pbmc,config=config)
@@ -1065,8 +1249,45 @@ Maximum modularity in 10 random starts: 0.9917
 Number of communities: 8
 Elapsed time: 0 seconds</code></pre>
 <pre class="r"><code>DimPlot(pbmc, reduction = &quot;KODAMA&quot;)</code></pre>
-<p><img src="figure/Single-cell.Rmd/unnamed-chunk-12-1.png" width="960" style="display: block; margin: auto;" />
-#Find markers Identifies differentially expressed genes between two
+<p><img src="figure/Single-cell.Rmd/unnamed-chunk-12-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
+Past versions of unnamed-chunk-12-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/16e4839fabb73dd31cc41201c44d19df850fe93d/docs/figure/Single-cell.Rmd/unnamed-chunk-12-1.png" target="_blank">16e4839</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2025-11-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>#Find markers Identifies differentially expressed genes between two
 groups of cells using a Wilcoxon Rank Sum test (default); will use a
 fast implementation by Presto if installed</p>
 <pre class="r"><code>#remotes::install_github(&quot;immunogenomics/presto&quot;)
@@ -1086,6 +1307,43 @@ CD3D  1.738899e-82   1.073968 0.900 0.408  2.384726e-78       0 CD3D</code></pre
     ungroup() -&gt; top10
 DoHeatmap(pbmc, features = top10$gene) + NoLegend()</code></pre>
 <p><img src="figure/Single-cell.Rmd/unnamed-chunk-14-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-1">
+Past versions of unnamed-chunk-14-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-14-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/16e4839fabb73dd31cc41201c44d19df850fe93d/docs/figure/Single-cell.Rmd/unnamed-chunk-14-1.png" target="_blank">16e4839</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2025-11-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>markers %&gt;%
     group_by(cluster) %&gt;%
     dplyr::filter(avg_log2FC &gt; 1) %&gt;%
@@ -1099,10 +1357,135 @@ DotPlot(
   assay = &quot;RNA&quot;
 ) + RotatedAxis()</code></pre>
 <p><img src="figure/Single-cell.Rmd/unnamed-chunk-15-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-1">
+Past versions of unnamed-chunk-15-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-15-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/16e4839fabb73dd31cc41201c44d19df850fe93d/docs/figure/Single-cell.Rmd/unnamed-chunk-15-1.png" target="_blank">16e4839</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2025-11-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VlnPlot(pbmc, features = c(&quot;MS4A1&quot;, &quot;CD79A&quot;))</code></pre>
 <p><img src="figure/Single-cell.Rmd/unnamed-chunk-16-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-16-1">
+Past versions of unnamed-chunk-16-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-16-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/16e4839fabb73dd31cc41201c44d19df850fe93d/docs/figure/Single-cell.Rmd/unnamed-chunk-16-1.png" target="_blank">16e4839</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2025-11-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>FeaturePlot(pbmc, features = c(&quot;MS4A1&quot;, &quot;GNLY&quot;, &quot;CD3E&quot;, &quot;CD14&quot;, &quot;FCER1A&quot;, &quot;FCGR3A&quot;, &quot;LYZ&quot;, &quot;PPBP&quot;, &quot;CD8A&quot;),reduction = &quot;KODAMA&quot;)</code></pre>
 <p><img src="figure/Single-cell.Rmd/unnamed-chunk-17-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-17-1">
+Past versions of unnamed-chunk-17-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-17-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/tkcaccia/Tutorials/blob/16e4839fabb73dd31cc41201c44d19df850fe93d/docs/figure/Single-cell.Rmd/unnamed-chunk-17-1.png" target="_blank">16e4839</a>
+</td>
+<td>
+tkcaccia
+</td>
+<td>
+2025-11-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>temp=as.vector(pbmc$RNA_snn_res.0.05)
+temp[temp==&quot;0&quot;]=&quot;T cells memory&quot;
+temp[temp==&quot;1&quot;]=&quot;Naive T cells&quot;
+temp[temp==&quot;2&quot;]=&quot;Monocytes&quot;
+temp[temp==&quot;3&quot;]=&quot;B cells&quot;
+temp[temp==&quot;4&quot;]=&quot;CD8 T effector&quot;
+temp[temp==&quot;5&quot;]=&quot;NK cells&quot;
+temp[temp==&quot;6&quot;]=&quot;CD16+ monocytes&quot;
+temp[temp==&quot;7&quot;]=&quot;CD8 T effector-memory&quot;
+pbmc$cell_type=as.factor(temp)  
+Idents(pbmc) &lt;- pbmc$cell_type
+
+DimPlot(pbmc, reduction = &quot;KODAMA&quot;)</code></pre>
+<p><img src="figure/Single-cell.Rmd/unnamed-chunk-17-2.png" width="960" style="display: block; margin: auto;" /></p>
 <p>Naive CD4+ T: IL7R, CCR7<br />
 CD14+ Mono: CD14, LYZ<br />
 Memory CD4+: IL7R, S100A4<br />
@@ -1111,6 +1494,44 @@ CD8+ T cell: CD8A<br />
 FCGR3A+ Monocyte: FCGR3A, MS4A7 NK cell: GNLY, NKG7 DC: FCER1A,
 CST3<br />
 Platelet: PPBP</p>
+<pre class="r"><code># Install (only once)
+if (!requireNamespace(&quot;remotes&quot;)) install.packages(&quot;remotes&quot;)
+remotes::install_github(&quot;saezlab/liana&quot;)
+
+library(liana)
+library(magrittr)
+
+liana_res &lt;- liana_wrap(pbmc)
+
+
+liana_agg &lt;- liana_res %&gt;%
+  liana_aggregate()
+
+# Quick check
+head(liana_agg)</code></pre>
+<pre><code># A tibble: 6 × 16
+  source    target      ligand.complex receptor.complex aggregate_rank mean_rank
+  &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;          &lt;chr&gt;                     &lt;dbl&gt;     &lt;dbl&gt;
+1 Monocytes CD16+ mono… S100A9         CD68                0.000000664      187.
+2 Monocytes CD16+ mono… S100A8         CD68                0.000000893      189.
+3 Monocytes NK cells    S100A8         ITGB2               0.00000719       206.
+4 Monocytes Monocytes   S100A9         CD68                0.0000212        210.
+5 Monocytes Monocytes   S100A8         CD68                0.0000267        214.
+6 Monocytes CD16+ mono… S100A8         ITGB2               0.0000481        231.
+# ℹ 10 more variables: natmi.edge_specificity &lt;dbl&gt;, natmi.rank &lt;dbl&gt;,
+#   connectome.weight_sc &lt;dbl&gt;, connectome.rank &lt;dbl&gt;, logfc.logfc_comb &lt;dbl&gt;,
+#   logfc.rank &lt;dbl&gt;, sca.LRscore &lt;dbl&gt;, sca.rank &lt;dbl&gt;,
+#   cellphonedb.pvalue &lt;dbl&gt;, cellphonedb.rank &lt;dbl&gt;</code></pre>
+<pre class="r"><code># columns include: source, target, ligand.complex, receptor.complex, aggregate_rank, etc.
+
+# 2) Dotplot for cluster 0 -&gt; clusters 1 and 2
+liana_agg %&gt;%
+  liana_dotplot(
+    source_groups = c(&quot;T cells memory&quot;),         # sender
+    target_groups = c(&quot;Naive T cells&quot;, &quot;Monocytes&quot;,&quot;B cells&quot;),    # receivers
+    ntop = 20
+  ) + RotatedAxis()</code></pre>
+<p><img src="figure/Single-cell.Rmd/unnamed-chunk-18-1.png" width="960" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1139,58 +1560,118 @@ attached base packages:
 [8] base     
 
 other attached packages:
- [1] KODAMAextra_1.2    doSNOW_1.0.20      snow_0.4-4         misc3d_0.9-1      
- [5] e1071_1.7-16       doParallel_1.0.17  iterators_1.0.14   foreach_1.5.2     
- [9] KODAMA_3.1         umap_0.2.10.0      Rtsne_0.17         patchwork_1.3.1   
-[13] Seurat_5.2.1       SeuratObject_5.0.2 sp_2.1-4           dplyr_1.1.4       
-[17] workflowr_1.7.1   
+ [1] magrittr_2.0.3     liana_0.1.14       KODAMAextra_1.2    doSNOW_1.0.20     
+ [5] snow_0.4-4         misc3d_0.9-1       e1071_1.7-16       doParallel_1.0.17 
+ [9] iterators_1.0.14   foreach_1.5.2      KODAMA_3.1         umap_0.2.10.0     
+[13] Rtsne_0.17         patchwork_1.3.1    Seurat_5.2.1       SeuratObject_5.0.2
+[17] sp_2.1-4           dplyr_1.1.4        workflowr_1.7.1   
 
 loaded via a namespace (and not attached):
-  [1] RColorBrewer_1.1-3     rstudioapi_0.17.1      jsonlite_2.0.0        
-  [4] magrittr_2.0.3         ggbeeswarm_0.7.2       spatstat.utils_3.1-3  
-  [7] farver_2.1.2           rmarkdown_2.29         minerva_1.5.10        
- [10] fs_1.6.6               vctrs_0.6.5            ROCR_1.0-11           
- [13] spatstat.explore_3.4-2 askpass_1.2.1          htmltools_0.5.8.1     
- [16] sass_0.4.9             sctransform_0.4.1      parallelly_1.43.0     
- [19] KernSmooth_2.23-26     bslib_0.9.0            htmlwidgets_1.6.4     
- [22] ica_1.0-3              plyr_1.8.9             plotly_4.10.4         
- [25] zoo_1.8-13             cachem_1.1.0           whisker_0.4.1         
- [28] igraph_2.1.4           mime_0.13              lifecycle_1.0.4       
- [31] pkgconfig_2.0.3        Matrix_1.6-5           R6_2.6.1              
- [34] fastmap_1.2.0          fitdistrplus_1.2-2     future_1.34.0         
- [37] shiny_1.10.0           digest_0.6.37          colorspace_2.1-1      
- [40] ps_1.9.0               rprojroot_2.0.4        tensor_1.5            
- [43] RSpectra_0.16-2        irlba_2.3.5.1          labeling_0.4.3        
- [46] progressr_0.15.1       spatstat.sparse_3.1-0  httr_1.4.7            
- [49] polyclip_1.10-7        abind_1.4-8            compiler_4.3.3        
- [52] proxy_0.4-27           withr_3.0.2            fastDummies_1.7.5     
- [55] R.utils_2.13.0         MASS_7.3-60.0.1        openssl_2.3.2         
- [58] tools_4.3.3            vipor_0.4.7            lmtest_0.9-40         
- [61] beeswarm_0.4.0         httpuv_1.6.15          future.apply_1.11.3   
- [64] goftest_1.2-3          R.oo_1.27.0            glue_1.8.0            
- [67] callr_3.7.6            nlme_3.1-168           promises_1.3.2        
- [70] grid_4.3.3             getPass_0.2-4          cluster_2.1.8.1       
- [73] reshape2_1.4.4         generics_0.1.4         gtable_0.3.6          
- [76] spatstat.data_3.1-6    R.methodsS3_1.8.2      class_7.3-23          
- [79] tidyr_1.3.1            data.table_1.17.8      spatstat.geom_3.3-6   
- [82] RcppAnnoy_0.0.22       ggrepel_0.9.6          RANN_2.6.2            
- [85] pillar_1.11.0          stringr_1.5.1          limma_3.58.1          
- [88] spam_2.11-1            RcppHNSW_0.6.0         later_1.4.1           
- [91] splines_4.3.3          lattice_0.22-6         survival_3.8-3        
- [94] deldir_2.0-4           tidyselect_1.2.1       Rnanoflann_0.0.3      
- [97] miniUI_0.1.1.1         pbapply_1.7-2          knitr_1.50            
-[100] git2r_0.36.2           gridExtra_2.3          scattermore_1.2       
-[103] xfun_0.52              statmod_1.5.0          matrixStats_1.5.0     
-[106] stringi_1.8.7          lazyeval_0.2.2         yaml_2.3.10           
-[109] evaluate_1.0.3         codetools_0.2-20       tcltk_4.3.3           
-[112] tibble_3.3.0           cli_3.6.5              uwot_0.2.3            
-[115] xtable_1.8-4           reticulate_1.42.0      processx_3.8.6        
-[118] jquerylib_0.1.4        Rcpp_1.1.0             globals_0.16.3        
-[121] spatstat.random_3.3-3  png_0.1-8              ggrastr_1.0.2         
-[124] spatstat.univar_3.1-2  ggplot2_3.5.2          presto_1.0.0          
-[127] dotCall64_1.2          listenv_0.9.1          viridisLite_0.4.2     
-[130] scales_1.4.0           ggridges_0.5.6         purrr_1.0.4           
-[133] rlang_1.1.6            cowplot_1.2.0         </code></pre>
+  [1] fs_1.6.6                    matrixStats_1.5.0          
+  [3] spatstat.sparse_3.1-0       bitops_1.0-9               
+  [5] lubridate_1.9.4             httr_1.4.7                 
+  [7] RColorBrewer_1.1-3          backports_1.5.0            
+  [9] tools_4.3.3                 sctransform_0.4.1          
+ [11] utf8_1.2.6                  R6_2.6.1                   
+ [13] lazyeval_0.2.2              uwot_0.2.3                 
+ [15] GetoptLong_1.0.5            withr_3.0.2                
+ [17] prettyunits_1.2.0           gridExtra_2.3              
+ [19] progressr_0.15.1            cli_3.6.5                  
+ [21] Biobase_2.62.0              spatstat.explore_3.4-2     
+ [23] fastDummies_1.7.5           labeling_0.4.3             
+ [25] sass_0.4.9                  spatstat.data_3.1-6        
+ [27] readr_2.1.5                 proxy_0.4-27               
+ [29] ggridges_0.5.6              pbapply_1.7-2              
+ [31] askpass_1.2.1               R.utils_2.13.0             
+ [33] scater_1.30.1               sessioninfo_1.2.3          
+ [35] parallelly_1.43.0           limma_3.58.1               
+ [37] readxl_1.4.5                rstudioapi_0.17.1          
+ [39] RSQLite_2.3.9               generics_0.1.4             
+ [41] shape_1.4.6.1               ica_1.0-3                  
+ [43] spatstat.random_3.3-3       zip_2.3.2                  
+ [45] Matrix_1.6-5                ggbeeswarm_0.7.2           
+ [47] S4Vectors_0.40.2            logger_0.4.0               
+ [49] abind_1.4-8                 R.methodsS3_1.8.2          
+ [51] lifecycle_1.0.4             edgeR_4.0.16               
+ [53] whisker_0.4.1               yaml_2.3.10                
+ [55] SummarizedExperiment_1.32.0 SparseArray_1.2.4          
+ [57] blob_1.2.4                  grid_4.3.3                 
+ [59] dqrng_0.4.1                 promises_1.3.2             
+ [61] crayon_1.5.3                dir.expiry_1.10.0          
+ [63] miniUI_0.1.1.1              lattice_0.22-6             
+ [65] beachmat_2.18.1             cowplot_1.2.0              
+ [67] metapod_1.10.1              pillar_1.11.0              
+ [69] knitr_1.50                  ComplexHeatmap_2.16.0      
+ [71] GenomicRanges_1.54.1        tcltk_4.3.3                
+ [73] rjson_0.2.23                future.apply_1.11.3        
+ [75] codetools_0.2-20            Rnanoflann_0.0.3           
+ [77] glue_1.8.0                  getPass_0.2-4              
+ [79] spatstat.univar_3.1-2       data.table_1.17.8          
+ [81] minerva_1.5.10              remotes_2.5.0              
+ [83] vctrs_0.6.5                 png_0.1-8                  
+ [85] spam_2.11-1                 cellranger_1.1.0           
+ [87] gtable_0.3.6                cachem_1.1.0               
+ [89] OmnipathR_3.17.9            xfun_0.52                  
+ [91] S4Arrays_1.2.1              mime_0.13                  
+ [93] survival_3.8-3              SingleCellExperiment_1.24.0
+ [95] bluster_1.12.0              statmod_1.5.0              
+ [97] fitdistrplus_1.2-2          ROCR_1.0-11                
+ [99] nlme_3.1-168                bit64_4.6.0-1              
+[101] progress_1.2.3              filelock_1.0.3             
+[103] RcppAnnoy_0.0.22            GenomeInfoDb_1.38.8        
+[105] rprojroot_2.0.4             bslib_0.9.0                
+[107] irlba_2.3.5.1               vipor_0.4.7                
+[109] KernSmooth_2.23-26          DBI_1.2.3                  
+[111] colorspace_2.1-1            BiocGenerics_0.48.1        
+[113] ggrastr_1.0.2               tidyselect_1.2.1           
+[115] processx_3.8.6              bit_4.6.0                  
+[117] compiler_4.3.3              curl_6.2.2                 
+[119] git2r_0.36.2                rvest_1.0.4                
+[121] httr2_1.1.2                 BiocNeighbors_1.20.2       
+[123] basilisk.utils_1.14.1       xml2_1.3.8                 
+[125] DelayedArray_0.28.0         plotly_4.10.4              
+[127] checkmate_2.3.2             scales_1.4.0               
+[129] lmtest_0.9-40               callr_3.7.6                
+[131] rappdirs_0.3.3              stringr_1.5.1              
+[133] digest_0.6.37               goftest_1.2-3              
+[135] spatstat.utils_3.1-3        presto_1.0.0               
+[137] rmarkdown_2.29              basilisk_1.14.3            
+[139] XVector_0.42.0              htmltools_0.5.8.1          
+[141] pkgconfig_2.0.3             sparseMatrixStats_1.14.0   
+[143] MatrixGenerics_1.14.0       fastmap_1.2.0              
+[145] rlang_1.1.6                 GlobalOptions_0.1.2        
+[147] htmlwidgets_1.6.4           DelayedMatrixStats_1.24.0  
+[149] shiny_1.10.0                farver_2.1.2               
+[151] jquerylib_0.1.4             zoo_1.8-13                 
+[153] jsonlite_2.0.0              BiocParallel_1.36.0        
+[155] R.oo_1.27.0                 BiocSingular_1.18.0        
+[157] RCurl_1.98-1.17             scuttle_1.12.0             
+[159] GenomeInfoDbData_1.2.11     dotCall64_1.2              
+[161] Rcpp_1.1.0                  viridis_0.6.5              
+[163] reticulate_1.42.0           stringi_1.8.7              
+[165] zlibbioc_1.48.2             MASS_7.3-60.0.1            
+[167] plyr_1.8.9                  listenv_0.9.1              
+[169] ggrepel_0.9.6               deldir_2.0-4               
+[171] splines_4.3.3               tensor_1.5                 
+[173] hms_1.1.3                   circlize_0.4.16            
+[175] locfit_1.5-9.12             ps_1.9.0                   
+[177] igraph_2.1.4                spatstat.geom_3.3-6        
+[179] RcppHNSW_0.6.0              ScaledMatrix_1.10.0        
+[181] reshape2_1.4.4              stats4_4.3.3               
+[183] XML_3.99-0.18               evaluate_1.0.3             
+[185] scran_1.30.2                tzdb_0.5.0                 
+[187] httpuv_1.6.15               RANN_2.6.2                 
+[189] tidyr_1.3.1                 openssl_2.3.2              
+[191] purrr_1.0.4                 polyclip_1.10-7            
+[193] future_1.34.0               clue_0.3-66                
+[195] scattermore_1.2             ggplot2_3.5.2              
+[197] rsvd_1.0.5                  xtable_1.8-4               
+[199] RSpectra_0.16-2             later_1.4.1                
+[201] viridisLite_0.4.2           class_7.3-23               
+[203] tibble_3.3.0                memoise_2.0.1              
+[205] beeswarm_0.4.0              IRanges_2.36.0             
+[207] cluster_2.1.8.1             timechange_0.3.0           
+[209] globals_0.16.3             </code></pre>
 </div>
 </div>
 </div>

@@ -218,6 +218,19 @@ VlnPlot(pbmc, features = c("MS4A1", "CD79A"))
 
 FeaturePlot(pbmc, features = c("MS4A1", "GNLY", "CD3E", "CD14", "FCER1A", "FCGR3A", "LYZ", "PPBP", "CD8A"),reduction = "KODAMA")
 
+temp=as.vector(pbmc$RNA_snn_res.0.05)
+temp[temp=="0"]="T cells memory"
+temp[temp=="1"]="Naive T cells"
+temp[temp=="2"]="Monocytes"
+temp[temp=="3"]="B cells"
+temp[temp=="4"]="CD8 T effector"
+temp[temp=="5"]="NK cells"
+temp[temp=="6"]="CD16+ monocytes"
+temp[temp=="7"]="CD8 T effector-memory"
+pbmc$cell_type=as.factor(temp)  
+Idents(pbmc) <- pbmc$cell_type
+
+DimPlot(pbmc, reduction = "KODAMA")
 ```
 
 
@@ -230,3 +243,31 @@ FCGR3A+ Monocyte: FCGR3A, MS4A7
 NK cell: GNLY, NKG7	
 DC: FCER1A, CST3	
 Platelet: PPBP	
+
+```{r,fig.width=10,fig.height=8,warning=FALSE,message=FALSE}
+
+# Install (only once)
+if (!requireNamespace("remotes")) install.packages("remotes")
+remotes::install_github("saezlab/liana")
+
+library(liana)
+library(magrittr)
+
+liana_res <- liana_wrap(pbmc)
+
+
+liana_agg <- liana_res %>%
+  liana_aggregate()
+
+# Quick check
+head(liana_agg)
+# columns include: source, target, ligand.complex, receptor.complex, aggregate_rank, etc.
+
+# 2) Dotplot for cluster 0 -> clusters 1 and 2
+liana_agg %>%
+  liana_dotplot(
+    source_groups = c("T cells memory"),         # sender
+    target_groups = c("Naive T cells", "Monocytes","B cells"),    # receivers
+    ntop = 20
+  ) + RotatedAxis()
+```
